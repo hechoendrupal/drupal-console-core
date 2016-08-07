@@ -1,1 +1,3 @@
-# drupal-console-core
+# Drupal Console Core
+
+Drupal Console Core
