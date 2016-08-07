@@ -96,7 +96,7 @@ class ConfigurationManager
      *
      * @return string
      */
-    private function getHomeDirectory()
+    public function getHomeDirectory()
     {
         if (function_exists('posix_getuid')) {
             return posix_getpwuid(posix_getuid())['dir'];
