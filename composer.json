@@ -1,0 +1,50 @@
+{
+    "name": "drupal/console-core",
+    "description": "Drupal Console Core",
+    "keywords": ["Drupal", "Console", "Development", "Symfony"],
+    "homepage": "http://drupalconsole.com/",
+    "type": "project",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name":      "David Flores",
+            "email":     "dmousex@gmail.com",
+            "homepage":  "http://dmouse.net"
+        },
+        {
+            "name":      "Jesus Manuel Olivas",
+            "email":     "jesus.olivas@gmail.com",
+            "homepage":  "http://jmolivas.com"
+        },
+        {
+            "name":      "Eduardo Garcia",
+            "email":     "enzo@enzolutions.com",
+            "homepage":  "http://enzolutions.com/"
+        },
+        {
+            "name":      "Omar Aguirre",
+            "email":     "omersguchigu@gmail.com"
+        },
+        {
+            "name":      "Drupal Console Contributors",
+            "homepage":  "https://github.com/hechoendrupal/DrupalConsole/graphs/contributors"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/hechoendrupal/DrupalConsole/issues",
+        "forum": "https://gitter.im/hechoendrupal/DrupalConsole",
+        "docs": "https://hechoendrupal.gitbooks.io/drupal-console/"
+    },
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "dflydev/dot-access-configuration": "1.*",
+        "symfony/console": "~2.8",
+        "symfony/filesystem": "~2.8",
+        "symfony/finder": "~2.8",
+        "symfony/translation": "~2.8",
+        "symfony/yaml": "~2.8"
+    },
+    "autoload": {
+        "psr-4": {"Drupal\\Console\\": "src"}
+    }
+}
