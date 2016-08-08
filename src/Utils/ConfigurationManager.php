@@ -18,15 +18,16 @@ class ConfigurationManager
     private $configuration = null;
 
     /**
-     * ConfigurationReader constructor.
+     * ConfigurationManager constructor.
+     * @param $applicationRoot
      */
-    public function __construct()
+    public function __construct($applicationRoot)
     {
         $input = new ArgvInput();
         $root = $input->getParameterOption(['--root'], null);
 
         $files = [
-            __DIR__.'/../../config.yml',
+            $applicationRoot.'/../config.yml',
             $this->getHomeDirectory().'/.console/config.yml',
             getcwd().'/console/config.yml',
         ];
