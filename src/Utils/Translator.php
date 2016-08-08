@@ -44,8 +44,6 @@ class Translator
     {
         $this->parser = new Parser();
         $this->filesystem = new Filesystem();
-
-        $this->loadResource('en', __DIR__ . '/../../');
     }
 
     /**
@@ -73,6 +71,13 @@ class Translator
         );
     }
 
+    public function loadCoreLanguage($language) {
+        $this->loadResource(
+            $language,
+            __DIR__ . '/../../vendor/drupal/console-'.$language.'/'
+        );
+    }
+
     /**
      * @param $language
      * @param $directoryRoot
@@ -84,18 +89,18 @@ class Translator
         $this->addLoader(new ArrayLoader(), 'array');
         $this->addLoader(new YamlFileLoader(), 'yaml');
 
-        $languageDirectory = $directoryRoot.'config/translations/'.$language;
+//        $languageDirectory = $directoryRoot.'config/translations/'.$language;
+//        if (!is_dir($languageDirectory)) {
+//            $languageDirectory = $directoryRoot.'config/translations/en';
+//        }
 
-        if (!is_dir($languageDirectory)) {
-            $languageDirectory = $directoryRoot.'config/translations/en';
-        }
         $finder = new Finder();
         $finder->files()
             ->name('*.yml')
-            ->in($languageDirectory);
+            ->in($directoryRoot);
 
         foreach ($finder as $file) {
-            $resource = $languageDirectory.'/'.$file->getBasename();
+            $resource = $directoryRoot.'/'.$file->getBasename();
             $filename = $file->getBasename('.yml');
 
             // Handle application file different than commands
