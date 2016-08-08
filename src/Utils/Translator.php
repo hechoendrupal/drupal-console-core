@@ -71,10 +71,10 @@ class Translator
         );
     }
 
-    public function loadCoreLanguage($language) {
+    public function loadCoreLanguage($language, $directoryRoot) {
         $this->loadResource(
             $language,
-            __DIR__ . '/../../vendor/drupal/console-'.$language.'/'
+            $directoryRoot . 'vendor/drupal/console-'.$language.'/'
         );
     }
 
