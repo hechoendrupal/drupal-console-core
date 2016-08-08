@@ -35,21 +35,10 @@ class AboutCommand extends Command
         $io = new DrupalStyle($input, $output);
         $application = $this->getApplication();
 
-//        $site = $this->get('site');
-//        $drupalVersion = $this->trans('commands.site.status.messages.not_installed');
-//        if ($site->isInstalled()) {
-//            $drupalVersion = sprintf(
-//                $this->trans('commands.site.status.messages.current_version'),
-//                $site->getDrupalVersion()
-//            );
-//        }
-
         $aboutTitle = sprintf(
-            '%s (%s) | %s',
-            $this->trans('commands.site.status.messages.console'),
-            $application->getVersion(),
-            null
-//            $drupalVersion
+            '%s (%s)',
+            $application->getName(),
+            $application->getVersion()
         );
 
         $io->setDecorated(false);
