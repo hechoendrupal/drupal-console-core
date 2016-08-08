@@ -44,6 +44,8 @@ class Translator
     {
         $this->parser = new Parser();
         $this->filesystem = new Filesystem();
+
+        $this->loadResource('en', __DIR__ . '/../../');
     }
 
     /**
