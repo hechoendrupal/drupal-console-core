@@ -18,10 +18,9 @@ class ConfigurationManager
     private $configuration = null;
 
     /**
-     * ConfigurationManager constructor.
      * @param $applicationRoot
      */
-    public function __construct($applicationRoot)
+    public function loadConfiguration($applicationRoot)
     {
         $input = new ArgvInput();
         $root = $input->getParameterOption(['--root'], null);
