@@ -20,10 +20,16 @@ class ArgvInputReader
     protected $input;
 
     /**
+     * @var array
+     */
+    protected $originalArgvValues;
+
+    /**
      * ArgvInputReader constructor.
      */
     public function __construct()
     {
+        $this->originalArgvValues = $_SERVER['argv'];
         $this->options = [];
         $this->setOptionsFromPlaceHolders();
         $this->readArgvInputValues();
@@ -200,5 +206,9 @@ class ArgvInputReader
                 $_SERVER['argv'][] = '--'.$optionName.'='.$optionValue;
             }
         }
+    }
+
+    public function restoreOriginalArgvValues() {
+        return $_SERVER['argv'] = $this->originalArgvValues;
     }
 }
