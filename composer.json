@@ -35,9 +35,16 @@
         "forum": "https://gitter.im/hechoendrupal/DrupalConsole",
         "docs": "https://hechoendrupal.gitbooks.io/drupal-console/"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "/Users/jmolivas/develop/drupal/modules/drupal-console-en"
+        }
+    ],
     "require": {
         "php": "^5.6 || ^7.0",
         "dflydev/dot-access-configuration": "1.*",
+        "drupal/console-en" : "dev-master",
         "symfony/console": "~2.8",
         "symfony/filesystem": "~2.8",
         "symfony/finder": "~2.8",

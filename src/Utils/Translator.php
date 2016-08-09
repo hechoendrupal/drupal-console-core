@@ -93,10 +93,7 @@ class Translator
         $this->addLoader(new ArrayLoader(), 'array');
         $this->addLoader(new YamlFileLoader(), 'yaml');
 
-//        $languageDirectory = $directoryRoot.'config/translations/'.$language;
-//        if (!is_dir($languageDirectory)) {
-//            $languageDirectory = $directoryRoot.'config/translations/en';
-//        }
+        /* @TODO fallback to en */
 
         $finder = new Finder();
         $finder->files()
@@ -114,13 +111,14 @@ class Translator
                 } catch (ParseException $e) {
                     echo 'application.yml'.' '.$e->getMessage();
                 }
-            } else {
-                $key = 'commands.'.$filename;
-                try {
-                    $this->loadTranslationByFile($resource, $key);
-                } catch (ParseException $e) {
-                    echo $key.'.yml '.$e->getMessage();
-                }
+
+                continue;
+            }
+            $key = 'commands.'.$filename;
+            try {
+                $this->loadTranslationByFile($resource, $key);
+            } catch (ParseException $e) {
+                echo $key.'.yml '.$e->getMessage();
             }
         }
     }
