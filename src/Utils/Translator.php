@@ -93,6 +93,8 @@ class Translator
         $this->addLoader(new ArrayLoader(), 'array');
         $this->addLoader(new YamlFileLoader(), 'yaml');
 
+        /* @TODO fallback to en */
+
         $finder = new Finder();
         $finder->files()
             ->name('*.yml')
