@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3f7a37ae79a4eeb4e9aa7943ecbd5e74",
-    "content-hash": "e7dc5f14c8b21b6b0b29b2e8bb611421",
+    "hash": "94ed27173c9e9d253fcb694ad399870d",
+    "content-hash": "5a02087d875ac806671227a99caa03bf",
     "packages": [
         {
             "name": "dflydev/dot-access-configuration",
@@ -178,10 +178,17 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "/Users/jmolivas/develop/drupal/modules/drupal-console-en",
+                "url": "https://github.com/hechoendrupal/drupal-console-en.git",
                 "reference": "fb425356f97fffb67784b34d3bab4bcf209f6542"
             },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/fb425356f97fffb67784b34d3bab4bcf209f6542",
+                "reference": "fb425356f97fffb67784b34d3bab4bcf209f6542",
+                "shasum": ""
+            },
             "type": "drupal-console-language",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-2.0+"
             ],
@@ -197,6 +204,10 @@
                     "homepage": "http://jmolivas.com"
                 },
                 {
+                    "name": "Drupal Console Contributors",
+                    "homepage": "https://github.com/hechoendrupal/DrupalConsole/graphs/contributors"
+                },
+                {
                     "name": "Eduardo Garcia",
                     "email": "enzo@enzolutions.com",
                     "homepage": "http://enzolutions.com/"
@@ -204,25 +215,16 @@
                 {
                     "name": "Omar Aguirre",
                     "email": "omersguchigu@gmail.com"
-                },
-                {
-                    "name": "Drupal Console Contributors",
-                    "homepage": "https://github.com/hechoendrupal/DrupalConsole/graphs/contributors"
                 }
             ],
             "description": "Drupal Console English Language",
             "homepage": "http://drupalconsole.com/",
             "keywords": [
-                "Console",
-                "Development",
-                "Drupal",
-                "Symfony"
+                "console",
+                "development",
+                "drupal",
+                "symfony"
             ],
-            "support": {
-                "issues": "https://github.com/hechoendrupal/DrupalConsole/issues",
-                "forum": "https://gitter.im/hechoendrupal/DrupalConsole",
-                "docs": "https://hechoendrupal.gitbooks.io/drupal-console/"
-            },
             "time": "2016-08-09 05:19:50"
         },
         {
