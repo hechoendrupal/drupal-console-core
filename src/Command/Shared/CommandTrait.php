@@ -58,19 +58,4 @@ trait CommandTrait
 
         return parent::getDescription();
     }
-
-//    public function getApplication()
-//    {
-//        return parent::getApplication();
-//    }
-
-//    public function getOptions()
-//    {
-//        return parent::getOptions();
-//    }
-//
-//    public function getArguments()
-//    {
-//        return parent::getArguments();
-//    }
 }
