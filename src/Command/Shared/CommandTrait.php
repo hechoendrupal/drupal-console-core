@@ -7,7 +7,7 @@
 
 namespace Drupal\Console\Command\Shared;
 
-use Drupal\Console\Utils\Translator;
+//use Drupal\Console\Utils\TranslatorManager;
 
 /**
  * Class CommandTrait
@@ -15,18 +15,18 @@ use Drupal\Console\Utils\Translator;
  */
 trait CommandTrait
 {
-    /**
-     * @var  Translator
-     */
-    protected $translator;
-
-    /**
-     * @param $translator
-     */
-    public function setTranslator($translator)
-    {
-        $this->translator = $translator;
-    }
+//    /**
+//     * @var  TranslatorManager
+//     */
+//    protected $translator;
+//
+//    /**
+//     * @param $translator
+//     */
+//    public function setTranslator($translator)
+//    {
+//        $this->translator = $translator;
+//    }
 
     /**
      * @param $key
@@ -50,11 +50,11 @@ trait CommandTrait
      */
     public function trans($key)
     {
-        if (!$this->translator) {
+        if (!$this->get('console.translator_manager')) {
             return $key;
         }
 
-        return $this->translator->trans($key);
+        return $this->get('console.translator_manager')->trans($key);
     }
 
     /**
@@ -74,21 +74,18 @@ trait CommandTrait
         return parent::getDescription();
     }
 
-    /**
-     * @return \Drupal\Console\Application;
-     */
-    public function getApplication()
-    {
-        return parent::getApplication();
-    }
+//    public function getApplication()
+//    {
+//        return parent::getApplication();
+//    }
 
-    public function getOptions()
-    {
-        return parent::getOptions();
-    }
-
-    public function getArguments()
-    {
-        return parent::getArguments();
-    }
+//    public function getOptions()
+//    {
+//        return parent::getOptions();
+//    }
+//
+//    public function getArguments()
+//    {
+//        return parent::getArguments();
+//    }
 }
