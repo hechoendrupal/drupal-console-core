@@ -7,7 +7,7 @@
 
 namespace Drupal\Console\Command\Shared;
 
-//use Drupal\Console\Utils\TranslatorManager;
+use Drupal\Console\Utils\TranslatorManager;
 
 /**
  * Class CommandTrait
@@ -15,32 +15,17 @@ namespace Drupal\Console\Command\Shared;
  */
 trait CommandTrait
 {
-//    /**
-//     * @var  TranslatorManager
-//     */
-//    protected $translator;
-//
-//    /**
-//     * @param $translator
-//     */
-//    public function setTranslator($translator)
-//    {
-//        $this->translator = $translator;
-//    }
+    /**
+     * @var  TranslatorManager
+     */
+    protected $translator;
 
     /**
-     * @param $key
-     * @return null|object
+     * @param $translator
      */
-    public function get($key)
+    public function setTranslator($translator)
     {
-        if (!$key) {
-            return null;
-        }
-
-        if ($this->getApplication()->getContainer()->has($key)) {
-            return $this->getApplication()->getContainer()->get($key);
-        }
+        $this->translator = $translator;
     }
 
     /**
@@ -50,11 +35,11 @@ trait CommandTrait
      */
     public function trans($key)
     {
-        if (!$this->get('console.translator_manager')) {
+        if (!$this->translator) {
             return $key;
         }
 
-        return $this->get('console.translator_manager')->trans($key);
+        return $this->translator->trans($key);
     }
 
     /**
