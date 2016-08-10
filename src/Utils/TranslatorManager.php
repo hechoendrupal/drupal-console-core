@@ -52,7 +52,7 @@ class TranslatorManager
 
     /**
      * @param $resource
-     * @param string $name
+     * @param string   $name
      */
     private function addResource($resource, $name = 'yaml')
     {
@@ -80,7 +80,8 @@ class TranslatorManager
      * @param $directoryRoot
      * @return $this
      */
-    public function loadCoreLanguage($language, $directoryRoot) {
+    public function loadCoreLanguage($language, $directoryRoot)
+    {
         $this->loadResource(
             $language,
             $directoryRoot . 'vendor/drupal/console-'.$language.'/translations/'
@@ -174,7 +175,8 @@ class TranslatorManager
     /**
      * @return Translator
      */
-    public function getTranslator() {
+    public function getTranslator()
+    {
         return $this->translator;
     }
 

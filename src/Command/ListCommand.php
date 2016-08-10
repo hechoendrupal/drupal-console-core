@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains \Drupal\AppConsole\Command\ConfigDebugCommand.
+ * Contains \Drupal\Console\Command\ListCommand.
  */
 namespace Drupal\Console\Command;
 

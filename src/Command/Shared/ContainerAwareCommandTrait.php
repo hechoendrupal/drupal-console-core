@@ -94,6 +94,7 @@ trait ContainerAwareCommandTrait
 
     /**
      * Gets the current Drupal container.
+     *
      * @deprecated
      *
      * @return ContainerInterface
