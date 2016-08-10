@@ -18,6 +18,34 @@ trait ContainerAwareCommandTrait
     use CommandTrait;
 
     /**
+     * @param $key
+     * @return null|object
+     */
+    public function has($key)
+    {
+        if (!$key) {
+            return null;
+        }
+
+        return $this->getApplication()->getContainer()->has($key);
+    }
+
+    /**
+     * @param $key
+     * @return null|object
+     */
+    public function get($key)
+    {
+        if (!$key) {
+            return null;
+        }
+
+        if ($this->has($key)) {
+            return $this->getApplication()->getContainer()->get($key);
+        }
+    }
+
+    /**
      * @deprecated
      *
      * @param $serviceId
@@ -40,6 +68,8 @@ trait ContainerAwareCommandTrait
     }
 
     /**
+     * @deprecated
+     *
      * @param $id
      * @return mixed
      */
@@ -52,6 +82,8 @@ trait ContainerAwareCommandTrait
     }
 
     /**
+     * @deprecated
+     *
      * @param $id
      * @return mixed
      */
@@ -62,6 +94,7 @@ trait ContainerAwareCommandTrait
 
     /**
      * Gets the current Drupal container.
+     * @deprecated
      *
      * @return ContainerInterface
      *   A ContainerInterface instance.

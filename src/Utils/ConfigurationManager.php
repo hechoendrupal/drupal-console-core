@@ -19,6 +19,7 @@ class ConfigurationManager
 
     /**
      * @param $applicationRoot
+     * @return $this
      */
     public function loadConfiguration($applicationRoot)
     {
@@ -38,6 +39,8 @@ class ConfigurationManager
         $builder = new YamlFileConfigurationBuilder($files);
 
         $this->configuration = $builder->build();
+
+        return $this;
     }
 
     /**
