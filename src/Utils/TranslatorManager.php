@@ -7,7 +7,7 @@
 
 namespace Drupal\Console\Utils;
 
-use Symfony\Component\Translation\Translator as BaseTranslator;
+use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 use Symfony\Component\Translation\Loader\ArrayLoader;
 use Symfony\Component\Finder\Finder;
@@ -15,7 +15,11 @@ use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Exception\ParseException;
 
-class Translator
+/**
+ * Class TranslatorManager
+ * @package Drupal\Console\Utils
+ */
+class TranslatorManager
 {
     /**
      * @var string
@@ -23,19 +27,19 @@ class Translator
     private $language;
 
     /**
-     * @var BaseTranslator
+     * @var Translator
      */
     private $translator;
 
     /**
      * @var Parser
      */
-    protected $parser;
+    private $parser;
 
     /**
      * @var Filesystem
      */
-    protected $filesystem;
+    private $filesystem;
 
     /**
      * Translator constructor.
@@ -74,12 +78,15 @@ class Translator
     /**
      * @param $language
      * @param $directoryRoot
+     * @return $this
      */
     public function loadCoreLanguage($language, $directoryRoot) {
         $this->loadResource(
             $language,
             $directoryRoot . 'vendor/drupal/console-'.$language.'/translations/'
         );
+
+        return $this;
     }
 
     /**
