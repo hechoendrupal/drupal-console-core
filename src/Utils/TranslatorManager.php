@@ -96,7 +96,7 @@ class TranslatorManager
     public function loadResource($language, $directoryRoot)
     {
         $this->language = $language;
-        $this->translator = new BaseTranslator($this->language);
+        $this->translator = new Translator($this->language);
         $this->addLoader(new ArrayLoader(), 'array');
         $this->addLoader(new YamlFileLoader(), 'yaml');
 
@@ -169,6 +169,13 @@ class TranslatorManager
         $previous[$parent] = $resource;
 
         return $parentsArray;
+    }
+
+    /**
+     * @return Translator
+     */
+    public function getTranslator() {
+        return $this->translator;
     }
 
     /**
