@@ -8,8 +8,8 @@ use Symfony\Component\Console\Application;
  * Class Application
  * @package Drupal\Console
  */
-class ConsoleApplication extends Application {
-
+class ConsoleApplication extends Application
+{
     protected $container;
 
     public function getConfiguration()
@@ -45,10 +45,8 @@ class ConsoleApplication extends Application {
         return null;
     }
 
-    /**
-     * @return string
-     */
-    public function getContainer() {
+    public function getContainer()
+    {
         if ($this->container) {
             return $this->container;
         }

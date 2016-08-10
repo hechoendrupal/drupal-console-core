@@ -167,7 +167,7 @@ class ArgvInputReader
 
     /**
      * @param $option
-     * @param null $value
+     * @param null   $value
      *
      * @return string
      */
@@ -208,7 +208,8 @@ class ArgvInputReader
         }
     }
 
-    public function restoreOriginalArgvValues() {
+    public function restoreOriginalArgvValues()
+    {
         return $_SERVER['argv'] = $this->originalArgvValues;
     }
 }

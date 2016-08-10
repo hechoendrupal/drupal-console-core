@@ -45,7 +45,8 @@ class HelpCommand extends Command
     /**
      * Sets the command.
      *
-     * @param $command The command to set
+     * @param $command
+     *  The command to set
      */
     public function setCommand($command)
     {
