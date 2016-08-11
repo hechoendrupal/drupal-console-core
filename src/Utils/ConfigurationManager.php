@@ -31,7 +31,7 @@ class ConfigurationManager
         $root = $input->getParameterOption(['--root'], null);
 
         $files = [
-            $applicationRoot.'/../config.yml',
+            $applicationDirectory.'/../config.yml',
             $this->getHomeDirectory().'/.console/config.yml',
             getcwd().'/console/config.yml',
         ];
