@@ -1,0 +1,34 @@
+services:
+  # DrupalConsoleCore Services
+  console.translator_manager:
+    class: Drupal\Console\Utils\TranslatorManager
+  console.configuration_manager:
+    class: Drupal\Console\Utils\ConfigurationManager
+  console.drupal_checker:
+      class: Drupal\Console\Utils\DrupalChecker
+  console.requirement_checker:
+    class: Drupal\Console\Utils\RequirementChecker
+  console.chain_queue:
+    class: Drupal\Console\Utils\ChainQueue
+  # DrupalConsoleCore Commands
+  console.about:
+    class: Drupal\Console\Command\AboutCommand
+    tags:
+      - { name: console.command }
+  console.list:
+    class: Drupal\Console\Command\ListCommand
+    tags:
+      - { name: console.command }
+  console.help:
+    class: Drupal\Console\Command\HelpCommand
+    tags:
+      - { name: console.command }
+  console.complete:
+    class: Drupal\Console\Command\CompleteCommand
+    tags:
+      - { name: console.command }
+  console.check:
+    class: Drupal\Console\Command\CheckCommand
+    arguments: ['@console.requirement_checker', '@console.chain_queue', '@console.configuration_manager']
+    tags:
+      - { name: console.command }
