@@ -17,12 +17,16 @@ class ConfigurationManager
      */
     private $configuration = null;
 
+    private $applicationDirectory = null;
+
     /**
-     * @param $applicationRoot
+     * @param $applicationDirectory
      * @return $this
      */
-    public function loadConfiguration($applicationRoot)
+    public function loadConfiguration($applicationDirectory)
     {
+        $this->applicationDirectory = $applicationDirectory;
+
         $input = new ArgvInput();
         $root = $input->getParameterOption(['--root'], null);
 
@@ -106,6 +110,13 @@ class ConfigurationManager
         }
 
         return rtrim(getenv('HOME') ?: getenv('USERPROFILE'), '/\\');
+    }
+
+    /**
+     * @return string
+     */
+    public function getApplicationDirectory() {
+        return $this->applicationDirectory;
     }
 
     /**
