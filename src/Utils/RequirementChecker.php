@@ -37,7 +37,6 @@ class RequirementChecker
 
     /**
      * RequirementChecker constructor.
-     * @param $parser
      */
     public function __construct()
     {

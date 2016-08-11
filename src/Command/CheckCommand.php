@@ -65,8 +65,13 @@ class CheckCommand extends BaseCommand
         $checks = $this->requirementChecker->getCheckResult();
         if (!$checks) {
             $phpCheckFile = $this->configurationManager->getHomeDirectory().'/.console/phpcheck.yml';
+
+            echo $phpCheckFile . PHP_EOL;
+
             if (!file_exists($phpCheckFile)) {
                 $phpCheckFile = $this->configurationManager->getApplicationDirectory().'config/dist/phpcheck.yml';
+
+                echo $phpCheckFile . PHP_EOL;
             }
             $this->requirementChecker->validate($phpCheckFile);
             $checks = $this->requirementChecker->validate($phpCheckFile);
