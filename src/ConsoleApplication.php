@@ -58,22 +58,16 @@ class ConsoleApplication extends Application
     }
 
     public function doRun(InputInterface $input, OutputInterface $output) {
-
-        $dispatcher = new EventDispatcher();
-        $dispatcher->addSubscriber(new CallCommandListener());
-        $this->setDispatcher($dispatcher);
-
-        echo 'doRun' . PHP_EOL;
-
+        $this->registerEvents();
         return parent::doRun(
             $input,
             $output
         );
     }
 
-//    public function registerEventDispatcher($events = []) {
-//        $dispatcher = new EventDispatcher();
-//        $dispatcher->addSubscriber(new CallCommandListener());
-//        $this->setDispatcher($dispatcher);
-//    }
+    private function registerEvents() {
+        $dispatcher = new EventDispatcher();
+        $dispatcher->addSubscriber(new CallCommandListener());
+        $this->setDispatcher($dispatcher);
+    }
 }
