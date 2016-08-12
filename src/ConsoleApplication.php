@@ -48,15 +48,6 @@ class ConsoleApplication extends Application
         return null;
     }
 
-    public function getContainer()
-    {
-        if ($this->container) {
-            return $this->container;
-        }
-
-        return null;
-    }
-
     public function doRun(InputInterface $input, OutputInterface $output) {
         $this->registerEvents();
         return parent::doRun(
@@ -67,7 +58,10 @@ class ConsoleApplication extends Application
 
     private function registerEvents() {
         $dispatcher = new EventDispatcher();
-        $dispatcher->addSubscriber(new CallCommandListener());
+        /* @todo Register listeners as services */
+        $dispatcher->addSubscriber(new CallCommandListener(
+            $this->container->get('console.chain_queue')
+        ));
         $this->setDispatcher($dispatcher);
     }
 }

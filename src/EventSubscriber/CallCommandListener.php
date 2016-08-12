@@ -17,6 +17,16 @@ use Drupal\Console\Style\DrupalStyle;
 
 class CallCommandListener implements EventSubscriberInterface
 {
+    protected $chainQueue;
+
+    /**
+     * CallCommandListener constructor.
+     * @param $chainQueue
+     */
+    public function __construct($chainQueue) {
+        $this->chainQueue = $chainQueue;
+    }
+
     /**
      * @param ConsoleTerminateEvent $event
      */
@@ -32,8 +42,7 @@ class CallCommandListener implements EventSubscriberInterface
         }
 
         $application = $command->getApplication();
-        $commands = $application->getContainer()
-            ->get('console.chain_queue')->getCommands();
+        $commands = $this->chainQueue->getCommands();
 
         if (!$commands) {
             return;
@@ -43,6 +52,10 @@ class CallCommandListener implements EventSubscriberInterface
 
         foreach ($commands as $chainedCommand) {
             $callCommand = $application->find($chainedCommand['name']);
+
+            if (!$callCommand) {
+                continue;
+            }
 
             $input = new ArrayInput($chainedCommand['inputs']);
             if (!is_null($chainedCommand['interactive'])) {
