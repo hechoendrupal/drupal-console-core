@@ -62,6 +62,7 @@ class DebugCommand extends Command
         unset($configApplication['autowire']);
         unset($configApplication['languages']);
         unset($configApplication['aliases']);
+        unset($configApplication['composer']);
         unset($configApplication['default']['commands']);
 
         $configApplicationFlatten = [];
