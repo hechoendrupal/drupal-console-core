@@ -5,7 +5,7 @@
  * Contains Drupal\Console\NestedArray.
  */
 
-namespace Drupal\Console\Helper;
+namespace Drupal\Console\Utils;
 
 class NestedArrayHelper
 {
