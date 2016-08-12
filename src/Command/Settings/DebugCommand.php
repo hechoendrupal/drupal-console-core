@@ -12,6 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Command\Shared\CommandTrait;
 use Drupal\Console\Style\DrupalStyle;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class DebugCommand
@@ -65,6 +66,8 @@ class DebugCommand extends Command
 //        $keyFlatten = '';
 
         var_export($configApplication);
+
+        $io->writeln(Yaml::dump($configApplication, 1, 2));
 
 //        $nestedArray->yamlFlattenArray($configApplication, $configApplicationFlatten, $keyFlatten);
 
