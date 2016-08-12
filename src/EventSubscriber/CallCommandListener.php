@@ -11,7 +11,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\ConsoleEvents;
-//use Drupal\Console\Command\Command as ConsoleCommad;
 use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Style\DrupalStyle;
 
@@ -33,8 +32,8 @@ class CallCommandListener implements EventSubscriberInterface
     public function callCommands(ConsoleTerminateEvent $event)
     {
         $command = $event->getCommand();
-        /* @var DrupalStyle $io */
 
+        /* @var DrupalStyle $io */
         $io = new DrupalStyle($event->getInput(), $event->getOutput());
 
         if (!$command instanceof Command) {
@@ -47,8 +46,6 @@ class CallCommandListener implements EventSubscriberInterface
         if (!$commands) {
             return;
         }
-
-        var_export($commands);
 
         foreach ($commands as $chainedCommand) {
             $callCommand = $application->find($chainedCommand['name']);
@@ -64,31 +61,6 @@ class CallCommandListener implements EventSubscriberInterface
 
             $io->text($chainedCommand['name']);
             $callCommand->run($input, $io);
-
-//            $drupal = $application->getContainer()->get('site');
-//
-//            if ($chainedCommand['name'] === 'site:new') {
-//                if ($chainedCommand['inputs']['directory']) {
-//                    $siteRoot = sprintf(
-//                        '%s/%s', getcwd(),
-//                        $chainedCommand['inputs']['directory']
-//                    );
-//                    chdir($siteRoot);
-//                }
-//                $drupal->isValidRoot(getcwd());
-//                $drupal->getAutoLoadClass();
-//
-//                $application->prepare($drupal);
-//            }
-
-//            if ($chainedCommand['name'] === 'site:install') {
-//                $drupal->isValidRoot(getcwd());
-//                $application->prepare($drupal);
-//            }
-//
-//            if ($chainedCommand['name'] === 'settings:set') {
-//                $application->prepare($drupal);
-//            }
         }
     }
 
