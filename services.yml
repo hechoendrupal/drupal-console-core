@@ -32,3 +32,12 @@ services:
     arguments: ['@console.requirement_checker', '@console.chain_queue', '@console.configuration_manager']
     tags:
       - { name: console.command }
+  console.check:
+    class: Drupal\Console\Command\CheckCommand
+    arguments: ['@console.requirement_checker', '@console.chain_queue', '@console.configuration_manager']
+    tags:
+      - { name: console.command }
+  console.settings_debug:
+    class: Drupal\Console\Command\Settings\DebugCommand
+    tags:
+      - { name: console.command }

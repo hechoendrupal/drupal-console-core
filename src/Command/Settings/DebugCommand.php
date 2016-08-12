@@ -21,6 +21,20 @@ class DebugCommand extends Command
 {
     use CommandTrait;
 
+    protected $configurationManager;
+
+    /**
+     * CheckCommand constructor.
+     * @param $configurationManager
+     */
+    public function __construct(
+        $configurationManager
+    ) {
+        $this->configurationManager = $configurationManager;
+
+        parent::__construct();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -39,9 +53,7 @@ class DebugCommand extends Command
         $io = new DrupalStyle($input, $output);
 //        $nestedArray = $this->getApplication()->getNestedArrayHelper();
 
-        $application = $this->getApplication();
-        $configuration = $application->getConfiguration();
-
+        $configuration = $this->configurationManager->getConfiguration();
         $configApplication = $configuration->get('application');
 
         unset($configApplication['autowire']);
@@ -79,7 +91,10 @@ class DebugCommand extends Command
         );
 
         $io->comment(
-            sprintf('%s/.console/config.yml', $config->getUserHomeDir()),
+            sprintf(
+                '%s/.console/config.yml',
+                $this->configurationManager->getHomeDirectory()
+            ),
             true
         );
 
