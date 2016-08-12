@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Command\Shared\CommandTrait;
 use Drupal\Console\Style\DrupalStyle;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class DebugCommand
@@ -24,14 +23,18 @@ class DebugCommand extends Command
 
     protected $configurationManager;
 
+    protected $nestedArray;
+
     /**
      * CheckCommand constructor.
      * @param $configurationManager
      */
     public function __construct(
-        $configurationManager
+        $configurationManager,
+        $nestedArray
     ) {
         $this->configurationManager = $configurationManager;
+        $this->nestedArray = $nestedArray;
 
         parent::__construct();
     }
@@ -52,7 +55,6 @@ class DebugCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
-//        $nestedArray = $this->getApplication()->getNestedArrayHelper();
 
         $configuration = $this->configurationManager->getConfiguration();
         $configApplication = $configuration->get('application');
@@ -62,27 +64,27 @@ class DebugCommand extends Command
         unset($configApplication['aliases']);
         unset($configApplication['default']['commands']);
 
-//        $configApplicationFlatten = [];
-//        $keyFlatten = '';
+        $configApplicationFlatten = [];
+        $keyFlatten = '';
 
-        var_export($configApplication);
+        $this->nestedArray->yamlFlattenArray(
+            $configApplication,
+            $configApplicationFlatten,
+            $keyFlatten
+        );
 
-        $io->writeln(Yaml::dump($configApplication, 1, 2));
+        $tableHeader = [
+            $this->trans('commands.settings.debug.messages.config-key'),
+            $this->trans('commands.settings.debug.messages.config-value'),
+        ];
 
-//        $nestedArray->yamlFlattenArray($configApplication, $configApplicationFlatten, $keyFlatten);
-
-//        $tableHeader = [
-//            $this->trans('commands.settings.debug.messages.config-key'),
-//            $this->trans('commands.settings.debug.messages.config-value'),
-//        ];
-
-//        $tableRows = [];
-//        foreach ($configApplicationFlatten as $yamlKey => $yamlValue) {
-//            $tableRows[] = [
-//                $yamlKey,
-//                $yamlValue
-//            ];
-//        }
+        $tableRows = [];
+        foreach ($configApplicationFlatten as $yamlKey => $yamlValue) {
+            $tableRows[] = [
+                $yamlKey,
+                $yamlValue
+            ];
+        }
 
         $io->newLine();
         $io->info(
@@ -103,6 +105,6 @@ class DebugCommand extends Command
 
         $io->newLine();
 
-//        $io->table($tableHeader, $tableRows, 'compact');
+        $io->table($tableHeader, $tableRows, 'compact');
     }
 }

@@ -10,6 +10,8 @@ services:
     class: Drupal\Console\Utils\RequirementChecker
   console.chain_queue:
     class: Drupal\Console\Utils\ChainQueue
+  console.nested_array:
+    class: Drupal\Console\Utils\NestedArray
   # DrupalConsoleCore Commands
   console.about:
     class: Drupal\Console\Command\AboutCommand
@@ -39,6 +41,6 @@ services:
       - { name: console.command }
   console.settings_debug:
     class: Drupal\Console\Command\Settings\DebugCommand
-    arguments: ['@console.configuration_manager']
+    arguments: ['@console.configuration_manager', '@console.nested_array']
     tags:
       - { name: console.command }
