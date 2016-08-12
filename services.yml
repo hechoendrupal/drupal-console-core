@@ -39,5 +39,6 @@ services:
       - { name: console.command }
   console.settings_debug:
     class: Drupal\Console\Command\Settings\DebugCommand
+    arguments: ['@console.configuration_manager']
     tags:
       - { name: console.command }
