@@ -11,7 +11,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\ConsoleEvents;
-use Drupal\Console\Command\Command as ConsoleCommad;
+//use Drupal\Console\Command\Command as ConsoleCommad;
 use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Style\DrupalStyle;
 
@@ -24,14 +24,10 @@ class CallCommandListener implements EventSubscriberInterface
     {
         $command = $event->getCommand();
         /* @var DrupalStyle $io */
-        $io = new DrupalStyle(
-            $event->getInput(),
-            $event->getOutput()
-        );
 
-        if (!$command instanceof Command
-            && !$command instanceof ConsoleCommad
-        ) {
+        $io = new DrupalStyle($event->getInput(), $event->getOutput());
+
+        if (!$command instanceof Command) {
             return;
         }
 
