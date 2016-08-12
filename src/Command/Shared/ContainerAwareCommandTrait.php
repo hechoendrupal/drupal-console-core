@@ -15,23 +15,17 @@ trait ContainerAwareCommandTrait
 {
     use CommandTrait;
 
-    protected $container;
-
-    public function setContainer($container) {
-        $this->container = $container;
-    }
-
     /**
      * @param $key
      * @return null|object
      */
     public function has($key)
     {
-        if (!$key || !$this->container) {
+        if (!$key || !$this->getApplication()->getContainer()) {
             return null;
         }
 
-        return $this->container->has($key);
+        return $this->getApplication()->getContainer()->has($key);
     }
 
     /**
@@ -40,12 +34,12 @@ trait ContainerAwareCommandTrait
      */
     public function get($key)
     {
-        if (!$key || !$this->container) {
+        if (!$key || !$this->getApplication()->getContainer()) {
             return null;
         }
 
         if ($this->has($key)) {
-            return $this->container->get($key);
+            return $this->getApplication()->getContainer()->get($key);
         }
 
         return null;
