@@ -42,6 +42,11 @@ class TranslatorManager
     private $filesystem;
 
     /**
+     * @var string
+     */
+    private $coreLanguageRoot;
+
+    /**
      * Translator constructor.
      */
     public function __construct()
@@ -76,19 +81,23 @@ class TranslatorManager
     }
 
     private function buildCoreLanguageDirectory($language, $directoryRoot) {
-        $languageDirectory = sprintf(
-            '%svendor/drupal/console-%s/translations/',
+        $coreLanguageRootDirectory = sprintf(
+            '%s/vendor/drupal/console-%s/translations/',
             $directoryRoot,
             $language
         );
 
-        echo 'languageDirectory ' . $languageDirectory . PHP_EOL;
+        echo 'languageDirectory ' . $coreLanguageRootDirectory . PHP_EOL;
 
-        if (!is_dir($languageDirectory)) {
+        if (!is_dir($coreLanguageRootDirectory)) {
             return $this->buildCoreLanguageDirectory('en', $directoryRoot);
         }
 
-        return $languageDirectory;
+        if (!$this->coreLanguageRoot) {
+            $this->coreLanguageRoot = $directoryRoot;
+        }
+
+        return $coreLanguageRootDirectory;
     }
 
     /**
