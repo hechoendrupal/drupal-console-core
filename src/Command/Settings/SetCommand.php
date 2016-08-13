@@ -122,7 +122,7 @@ class SetCommand extends Command
         if ($settingName == 'language') {
             $this->getApplication()
                 ->getTranslator()
-                ->loadCoreLanguage(
+                ->changeCoreLanguage(
                     $settingValue
                 );
         }

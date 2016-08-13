@@ -98,7 +98,7 @@ class TranslatorManager
             $this->coreLanguageRoot = $directoryRoot;
         }
 
-        return $coreLanguageDirectory;
+        return [$language, $coreLanguageDirectory];
     }
 
     /**
@@ -106,23 +106,28 @@ class TranslatorManager
      * @param $directoryRoot
      * @return $this
      */
-    public function loadCoreLanguage($language, $directoryRoot = null)
+    public function loadCoreLanguage($language, $directoryRoot)
     {
-        if (!$directoryRoot && $this->coreLanguageRoot) {
-            $directoryRoot = $this->coreLanguageRoot;
-        }
-
-        $directoryRoot = $this->buildCoreLanguageDirectory(
+        $coreLanguageDirectory = $this->buildCoreLanguageDirectory(
             $language,
             $directoryRoot
         );
 
         $this->loadResource(
-            $language,
-            $directoryRoot
+            $coreLanguageDirectory[0],
+            $coreLanguageDirectory[1]
         );
 
         return $this;
+    }
+
+    /**
+     * @param $language
+     * @return $this
+     */
+    public function changeCoreLanguage($language)
+    {
+        return $this->loadCoreLanguage($language, $this->coreLanguageRoot);
     }
 
     /**
