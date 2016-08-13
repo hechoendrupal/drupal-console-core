@@ -137,6 +137,12 @@ class CheckCommand extends BaseCommand
             }
         }
 
+        if ($this->requirementChecker->isValid() && !$this->requirementChecker->isOverwritten()) {
+            $io->success(
+                $this->trans('commands.check.messages.success')
+            );
+        }
+
         return $this->requirementChecker->isValid();
     }
 }
