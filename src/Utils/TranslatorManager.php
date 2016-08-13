@@ -108,10 +108,15 @@ class TranslatorManager
      */
     public function loadCoreLanguage($language, $directoryRoot)
     {
+
+        echo 'loadCoreLanguage : ' . $language . ' - ' . $directoryRoot;
+
         $coreLanguageDirectory = $this->buildCoreLanguageDirectory(
             $language,
             $directoryRoot
         );
+
+        var_export($coreLanguageDirectory);
 
         $this->loadResource(
             $coreLanguageDirectory[0],
