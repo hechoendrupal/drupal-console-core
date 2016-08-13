@@ -87,6 +87,7 @@ class TranslatorManager
             $language
         );
 
+        echo 'coreLanguageRoot ' . $this->coreLanguageRoot . PHP_EOL;
         echo 'languageDirectory ' . $coreLanguageRootDirectory . PHP_EOL;
 
         if (!is_dir($coreLanguageRootDirectory)) {
