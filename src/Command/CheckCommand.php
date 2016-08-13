@@ -69,9 +69,10 @@ class CheckCommand extends BaseCommand
                 $phpCheckFile = $this->configurationManager->getApplicationDirectory().'config/dist/phpcheck.yml';
             }
 
-            $io->block(
-                'Loading file from:',
-                $phpCheckFile
+            $io->info([
+                    'Loading file from:',
+                    $phpCheckFile
+                ]
             );
 
             $this->requirementChecker->validate($phpCheckFile);
