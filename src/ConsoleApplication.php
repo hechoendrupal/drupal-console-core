@@ -15,6 +15,13 @@ class ConsoleApplication extends Application
 {
     protected $container;
 
+    /**
+     * @return mixed
+     */
+    public function getContainer() {
+        return $this->container;
+    }
+
     public function getConfiguration()
     {
         if ($this->container) {
