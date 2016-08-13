@@ -42,6 +42,11 @@ class TranslatorManager
     private $filesystem;
 
     /**
+     * @var string
+     */
+    private $coreLanguageRoot;
+
+    /**
      * Translator constructor.
      */
     public function __construct()
@@ -75,6 +80,27 @@ class TranslatorManager
         );
     }
 
+    private function buildCoreLanguageDirectory(
+        $language,
+        $directoryRoot
+    ) {
+        $coreLanguageDirectory = sprintf(
+            '%svendor/drupal/console-%s/translations/',
+            $directoryRoot,
+            $language
+        );
+
+        if (!is_dir($coreLanguageDirectory)) {
+            return $this->buildCoreLanguageDirectory('en', $directoryRoot);
+        }
+
+        if (!$this->coreLanguageRoot) {
+            $this->coreLanguageRoot = $directoryRoot;
+        }
+
+        return [$language, $coreLanguageDirectory];
+    }
+
     /**
      * @param $language
      * @param $directoryRoot
@@ -82,9 +108,14 @@ class TranslatorManager
      */
     public function loadCoreLanguage($language, $directoryRoot)
     {
-        $this->loadResource(
+        $coreLanguageDirectory = $this->buildCoreLanguageDirectory(
             $language,
-            $directoryRoot . 'vendor/drupal/console-'.$language.'/translations/'
+            $directoryRoot
+        );
+
+        $this->loadResource(
+            $coreLanguageDirectory[0],
+            $coreLanguageDirectory[1]
         );
 
         return $this;
@@ -92,17 +123,31 @@ class TranslatorManager
 
     /**
      * @param $language
+     * @return $this
+     */
+    public function changeCoreLanguage($language)
+    {
+        return $this->loadCoreLanguage($language, $this->coreLanguageRoot);
+    }
+
+    /**
+     * @param $language
      * @param $directoryRoot
+     *
+     * @return mixed
      */
     public function loadResource($language, $directoryRoot)
     {
+        if (!is_dir($directoryRoot)) {
+            return false;
+        }
+
         $this->language = $language;
         $this->translator = new Translator($this->language);
         $this->addLoader(new ArrayLoader(), 'array');
         $this->addLoader(new YamlFileLoader(), 'yaml');
 
         /* @TODO fallback to en */
-
         $finder = new Finder();
         $finder->files()
             ->name('*.yml')
@@ -178,6 +223,13 @@ class TranslatorManager
     public function getTranslator()
     {
         return $this->translator;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguage() {
+        return $this->language;
     }
 
     /**
