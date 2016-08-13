@@ -82,6 +82,8 @@ class TranslatorManager
             $language
         );
 
+        echo 'languageDirectory ' . $languageDirectory . PHP_EOL;
+
         if (!is_dir($languageDirectory)) {
             return $this->buildCoreLanguageDirectory('en', $directoryRoot);
         }
