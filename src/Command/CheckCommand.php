@@ -131,20 +131,6 @@ class CheckCommand extends BaseCommand
             }
         }
 
-        if ($this->requirementChecker->isValid() && !$this->requirementChecker->isOverwritten()) {
-            $io->success(
-                $this->trans('commands.check.messages.success')
-            );
-            $this->chainQueue->addCommand(
-                'settings:set',
-                [
-                    'setting-name' => 'checked',
-                    'setting-value' => 'true',
-                    '--quiet'
-                ]
-            );
-        }
-
         return $this->requirementChecker->isValid();
     }
 }
