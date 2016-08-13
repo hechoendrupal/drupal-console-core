@@ -80,22 +80,22 @@ class TranslatorManager
         );
     }
 
-    private function buildCoreLanguageDirectory($language, $directoryRoot) {
-        if (!$this->coreLanguageRoot) {
-            $this->coreLanguageRoot = $directoryRoot;
-        }
-
+    private function buildCoreLanguageDirectory(
+        $language,
+        $directoryRoot
+    ) {
         $coreLanguageDirectory = sprintf(
             '%svendor/drupal/console-%s/translations/',
-            $this->coreLanguageRoot,
+            $directoryRoot,
             $language
         );
 
-        echo 'coreLanguageRoot ' . $this->coreLanguageRoot . PHP_EOL;
-        echo 'languageDirectory ' . $coreLanguageDirectory . PHP_EOL;
-
         if (!is_dir($coreLanguageDirectory)) {
             return $this->buildCoreLanguageDirectory('en', $directoryRoot);
+        }
+
+        if (!$this->coreLanguageRoot) {
+            $this->coreLanguageRoot = $directoryRoot;
         }
 
         return $coreLanguageDirectory;
@@ -106,8 +106,12 @@ class TranslatorManager
      * @param $directoryRoot
      * @return $this
      */
-    public function loadCoreLanguage($language, $directoryRoot)
+    public function loadCoreLanguage($language, $directoryRoot = null)
     {
+        if (!$directoryRoot && $this->coreLanguageRoot) {
+            $directoryRoot = $this->coreLanguageRoot;
+        }
+
         $directoryRoot = $this->buildCoreLanguageDirectory(
             $language,
             $directoryRoot

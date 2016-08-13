@@ -123,8 +123,7 @@ class SetCommand extends Command
             $this->getApplication()
                 ->getTranslator()
                 ->loadCoreLanguage(
-                    $settingValue,
-                    $this->configurationManager->getApplicationDirectory()
+                    $settingValue
                 );
         }
 
