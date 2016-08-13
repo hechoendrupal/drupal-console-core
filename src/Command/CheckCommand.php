@@ -69,7 +69,7 @@ class CheckCommand extends BaseCommand
                 $phpCheckFile = $this->configurationManager->getApplicationDirectory().'config/dist/phpcheck.yml';
             }
 
-            $io->info([
+            $io->comment([
                     'Loading file from:',
                     $phpCheckFile
                 ]
