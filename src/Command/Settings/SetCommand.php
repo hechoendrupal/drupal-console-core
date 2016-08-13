@@ -51,15 +51,15 @@ class SetCommand extends Command
         $this
             ->setName('settings:set')
             ->addArgument(
-                'setting-name',
+                'name',
                 InputArgument::REQUIRED,
-                $this->trans('commands.settings.set.arguments.setting-name'),
+                $this->trans('commands.settings.set.arguments.name'),
                 null
             )
             ->addArgument(
-                'setting-value',
+                'value',
                 InputArgument::REQUIRED,
-                $this->trans('commands.settings.set.arguments.setting-value'),
+                $this->trans('commands.settings.set.arguments.value'),
                 null
             )
             ->setDescription($this->trans('commands.settings.set.description'));
@@ -73,8 +73,8 @@ class SetCommand extends Command
         $parser = new Parser();
         $dumper = new Dumper();
 
-        $settingName = $input->getArgument('setting-name');
-        $settingValue = $input->getArgument('setting-value');
+        $settingName = $input->getArgument('name');
+        $settingValue = $input->getArgument('value');
 
         $userConfigFile = sprintf(
             '%s/.console/config.yml',
@@ -135,9 +135,8 @@ class SetCommand extends Command
             if ($translatorLanguage != $settingValue)
             {
                 $io->error(
-//                    $this->trans('commands.settings.set.messages.error-language')
                     sprintf(
-                        'Provided language: "%s", not found',
+                        $this->trans('commands.settings.set.messages.missing-language'),
                         $settingValue
                     )
                 );

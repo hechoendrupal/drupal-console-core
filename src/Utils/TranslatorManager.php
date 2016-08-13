@@ -108,15 +108,10 @@ class TranslatorManager
      */
     public function loadCoreLanguage($language, $directoryRoot)
     {
-
-        echo 'loadCoreLanguage : ' . $language . ' - ' . $directoryRoot . PHP_EOL;
-
         $coreLanguageDirectory = $this->buildCoreLanguageDirectory(
             $language,
             $directoryRoot
         );
-
-        var_export($coreLanguageDirectory);
 
         $this->loadResource(
             $coreLanguageDirectory[0],
@@ -143,9 +138,6 @@ class TranslatorManager
      */
     public function loadResource($language, $directoryRoot)
     {
-
-        echo 'loadResource: '. $language .' - ' . $directoryRoot . PHP_EOL;
-
         if (!is_dir($directoryRoot)) {
             return false;
         }
