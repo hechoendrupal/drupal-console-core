@@ -128,12 +128,14 @@ class SetCommand extends Command
                 );
         }
 
-        $io->success(
-            sprintf(
-                $this->trans('commands.settings.set.messages.success'),
-                $settingName,
-                $settingValue
-            )
-        );
+        if ($this->getApplication()->getTranslator()->getLanguage()!=$settingValue) {
+            $io->success(
+                sprintf(
+                    $this->trans('commands.settings.set.messages.success'),
+                    $settingName,
+                    $settingValue
+                )
+            );
+        }
     }
 }

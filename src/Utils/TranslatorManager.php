@@ -93,11 +93,13 @@ class TranslatorManager
     /**
      * @param $language
      * @param $directoryRoot
+     *
+     * @return mixed
      */
     public function loadResource($language, $directoryRoot)
     {
         if (!is_dir($directoryRoot)) {
-            return null;
+            return false;
         }
 
         $this->language = $language;
@@ -182,6 +184,13 @@ class TranslatorManager
     public function getTranslator()
     {
         return $this->translator;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguage() {
+        return $this->language;
     }
 
     /**
