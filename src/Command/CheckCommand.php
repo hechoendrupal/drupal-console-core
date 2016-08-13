@@ -68,6 +68,11 @@ class CheckCommand extends BaseCommand
             if (!file_exists($phpCheckFile)) {
                 $phpCheckFile = $this->configurationManager->getApplicationDirectory().'config/dist/phpcheck.yml';
             }
+
+            $io->newLine();
+            $io->info($this->trans('commands.check.messages.file'));
+            $io->comment($phpCheckFile);
+
             $this->requirementChecker->validate($phpCheckFile);
             $checks = $this->requirementChecker->validate($phpCheckFile);
         }
@@ -129,6 +134,12 @@ class CheckCommand extends BaseCommand
                     )
                 );
             }
+        }
+
+        if ($this->requirementChecker->isValid() && !$this->requirementChecker->isOverwritten()) {
+            $io->success(
+                $this->trans('commands.check.messages.success')
+            );
         }
 
         return $this->requirementChecker->isValid();
