@@ -81,24 +81,24 @@ class TranslatorManager
     }
 
     private function buildCoreLanguageDirectory($language, $directoryRoot) {
-        $coreLanguageRootDirectory = sprintf(
-            '%s/vendor/drupal/console-%s/translations/',
-            $directoryRoot,
-            $language
-        );
-
-        echo 'coreLanguageRoot ' . $this->coreLanguageRoot . PHP_EOL;
-        echo 'languageDirectory ' . $coreLanguageRootDirectory . PHP_EOL;
-
-        if (!is_dir($coreLanguageRootDirectory)) {
-            return $this->buildCoreLanguageDirectory('en', $directoryRoot);
-        }
-
         if (!$this->coreLanguageRoot) {
             $this->coreLanguageRoot = $directoryRoot;
         }
 
-        return $coreLanguageRootDirectory;
+        $coreLanguageDirectory = sprintf(
+            '%svendor/drupal/console-%s/translations/',
+            $this->coreLanguageRoot,
+            $language
+        );
+
+        echo 'coreLanguageRoot ' . $this->coreLanguageRoot . PHP_EOL;
+        echo 'languageDirectory ' . $coreLanguageDirectory . PHP_EOL;
+
+        if (!is_dir($coreLanguageDirectory)) {
+            return $this->buildCoreLanguageDirectory('en', $directoryRoot);
+        }
+
+        return $coreLanguageDirectory;
     }
 
     /**
