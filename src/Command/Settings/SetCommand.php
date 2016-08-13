@@ -129,12 +129,10 @@ class SetCommand extends Command
         if ($settingName == 'language') {
             $this->getApplication()
                 ->getTranslator()
-                ->changeCoreLanguage(
-                    $settingValue
-                );
+                ->changeCoreLanguage($settingValue);
 
-            if ($this->getApplication()->getTranslator()->getLanguage()
-                === $settingValue)
+            $translatorLanguage = $this->getApplication()->getTranslator()->getLanguage();
+            if ($translatorLanguage != $settingValue)
             {
                 $io->error(
 //                    $this->trans('commands.settings.set.messages.error-language')
@@ -151,7 +149,12 @@ class SetCommand extends Command
         try {
             file_put_contents($userConfigFile, $userConfigFileDump);
         } catch (\Exception $e) {
-            $io->error($this->trans('commands.settings.set.messages.error-writing').': '.$e->getMessage());
+            $io->error(
+                [
+                    $this->trans('commands.settings.set.messages.error-writing'),
+                    $e->getMessage()
+                ]
+            );
 
             return 1;
         }
