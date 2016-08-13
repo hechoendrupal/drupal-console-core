@@ -128,7 +128,7 @@ class SetCommand extends Command
                 );
         }
 
-        if ($this->getApplication()->getTranslator()->getLanguage()!=$settingValue) {
+        if ($this->getApplication()->getTranslator()->getLanguage()===$settingValue) {
             $io->success(
                 sprintf(
                     $this->trans('commands.settings.set.messages.success'),
