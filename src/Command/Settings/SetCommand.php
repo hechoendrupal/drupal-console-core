@@ -24,6 +24,25 @@ class SetCommand extends Command
 {
     use CommandTrait;
 
+    protected $configurationManager;
+
+    protected $nestedArray;
+
+    /**
+     * CheckCommand constructor.
+     * @param $configurationManager
+     * @param $nestedArray
+     */
+    public function __construct(
+        $configurationManager,
+        $nestedArray
+    ) {
+        $this->configurationManager = $configurationManager;
+        $this->nestedArray = $nestedArray;
+
+        parent::__construct();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -52,20 +71,15 @@ class SetCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
-        $yaml = new Parser();
+        $parser = new Parser();
         $dumper = new Dumper();
 
         $settingName = $input->getArgument('setting-name');
         $settingValue = $input->getArgument('setting-value');
 
-        $nestedArray = $this->getApplication()->getNestedArrayHelper();
-
-        $application = $this->getApplication();
-        $config = $application->getConfig();
-
         $userConfigFile = sprintf(
             '%s/.console/config.yml',
-            $config->getUserHomeDir()
+            $this->configurationManager->getHomeDirectory()
         );
 
         if (!file_exists($userConfigFile)) {
@@ -79,7 +93,7 @@ class SetCommand extends Command
         }
 
         try {
-            $userConfigFileParsed = $yaml->parse(file_get_contents($userConfigFile));
+            $userConfigFileParsed = $parser->parse(file_get_contents($userConfigFile));
         } catch (\Exception $e) {
             $io->error($this->trans('commands.settings.set.messages.error-parsing').': '.$e->getMessage());
             return 1;
@@ -87,7 +101,7 @@ class SetCommand extends Command
 
         $parents = array_merge(['application'], explode(".", $settingName));
 
-        $nestedArray->setValue($userConfigFileParsed, $parents, $settingValue, true);
+        $this->nestedArray->setValue($userConfigFileParsed, $parents, $settingValue, true);
 
         try {
             $userConfigFileDump = $dumper->dump($userConfigFileParsed, 10);
@@ -106,8 +120,12 @@ class SetCommand extends Command
         }
 
         if ($settingName == 'language') {
-            $this->get('translator')
-                ->loadResource($settingValue, $application->getDirectoryRoot());
+            $this->getApplication()
+                ->getTranslator()
+                ->loadCoreLanguage(
+                    $settingValue,
+                    $this->configurationManager->getApplicationDirectory()
+                );
         }
 
         $io->success(

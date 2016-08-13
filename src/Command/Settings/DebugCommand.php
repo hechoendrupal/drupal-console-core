@@ -25,9 +25,11 @@ class DebugCommand extends Command
 
     protected $nestedArray;
 
+
     /**
      * CheckCommand constructor.
      * @param $configurationManager
+     * @param $nestedArray
      */
     public function __construct(
         $configurationManager,
@@ -80,10 +82,10 @@ class DebugCommand extends Command
         ];
 
         $tableRows = [];
-        foreach ($configApplicationFlatten as $yamlKey => $yamlValue) {
+        foreach ($configApplicationFlatten as $ymlKey => $ymlValue) {
             $tableRows[] = [
-                $yamlKey,
-                $yamlValue
+                $ymlKey,
+                $ymlValue
             ];
         }
 
