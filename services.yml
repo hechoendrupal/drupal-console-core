@@ -44,3 +44,8 @@ services:
     arguments: ['@console.configuration_manager', '@console.nested_array']
     tags:
       - { name: console.command }
+  console.settings_set:
+    class: Drupal\Console\Command\Settings\SetCommand
+    arguments: ['@console.configuration_manager', '@console.nested_array']
+    tags:
+      - { name: console.command }
