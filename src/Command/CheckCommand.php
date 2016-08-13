@@ -71,7 +71,6 @@ class CheckCommand extends BaseCommand
 
             $io->newLine();
             $io->info('Loading file from:');
-            $io->newLine();
             $io->comment($phpCheckFile);
 
             $this->requirementChecker->validate($phpCheckFile);
