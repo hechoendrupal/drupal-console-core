@@ -68,8 +68,7 @@ class SetCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+    protected function execute(InputInterface $input, OutputInterface $output) {
         $io = new DrupalStyle($input, $output);
         $parser = new Parser();
         $dumper = new Dumper();
@@ -93,28 +92,36 @@ class SetCommand extends Command
         }
 
         try {
-            $userConfigFileParsed = $parser->parse(file_get_contents($userConfigFile));
+            $userConfigFileParsed = $parser->parse(
+                file_get_contents($userConfigFile)
+            );
         } catch (\Exception $e) {
-            $io->error($this->trans('commands.settings.set.messages.error-parsing').': '.$e->getMessage());
+            $io->error(
+                $this->trans(
+                    'commands.settings.set.messages.error-parsing'
+                ) . ': ' . $e->getMessage()
+            );
             return 1;
         }
 
         $parents = array_merge(['application'], explode(".", $settingName));
 
-        $this->nestedArray->setValue($userConfigFileParsed, $parents, $settingValue, true);
+        $this->nestedArray->setValue(
+            $userConfigFileParsed,
+            $parents,
+            $settingValue,
+            TRUE
+        );
 
         try {
             $userConfigFileDump = $dumper->dump($userConfigFileParsed, 10);
         } catch (\Exception $e) {
-            $io->error($this->trans('commands.settings.set.messages.error-generating').': '.$e->getMessage());
-
-            return 1;
-        }
-
-        try {
-            file_put_contents($userConfigFile, $userConfigFileDump);
-        } catch (\Exception $e) {
-            $io->error($this->trans('commands.settings.set.messages.error-writing').': '.$e->getMessage());
+            $io->error(
+                [
+                    $this->trans('commands.settings.set.messages.error-generating'),
+                    $e->getMessage()
+                ]
+            );
 
             return 1;
         }
@@ -125,16 +132,36 @@ class SetCommand extends Command
                 ->changeCoreLanguage(
                     $settingValue
                 );
+
+            if ($this->getApplication()->getTranslator()->getLanguage()
+                === $settingValue)
+            {
+                $io->error(
+//                    $this->trans('commands.settings.set.messages.error-language')
+                    sprintf(
+                        'Provided language: "%s", not found',
+                        $settingValue
+                    )
+                );
+
+                return 1;
+            }
         }
 
-        if ($this->getApplication()->getTranslator()->getLanguage()===$settingValue) {
-            $io->success(
-                sprintf(
-                    $this->trans('commands.settings.set.messages.success'),
-                    $settingName,
-                    $settingValue
-                )
-            );
+        try {
+            file_put_contents($userConfigFile, $userConfigFileDump);
+        } catch (\Exception $e) {
+            $io->error($this->trans('commands.settings.set.messages.error-writing').': '.$e->getMessage());
+
+            return 1;
         }
+
+        $io->success(
+            sprintf(
+                $this->trans('commands.settings.set.messages.success'),
+                $settingName,
+                $settingValue
+            )
+        );
     }
 }
