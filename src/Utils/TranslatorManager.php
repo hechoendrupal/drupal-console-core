@@ -75,6 +75,20 @@ class TranslatorManager
         );
     }
 
+    private function buildCoreLanguageDirectory($language, $directoryRoot) {
+        $languageDirectory = sprintf(
+            '%svendor/drupal/console-%s/translations/',
+            $directoryRoot,
+            $language
+        );
+
+        if (!is_dir($languageDirectory)) {
+            return $this->buildCoreLanguageDirectory('en', $directoryRoot);
+        }
+
+        return $languageDirectory;
+    }
+
     /**
      * @param $language
      * @param $directoryRoot
@@ -82,9 +96,14 @@ class TranslatorManager
      */
     public function loadCoreLanguage($language, $directoryRoot)
     {
+        $directoryRoot = $this->buildCoreLanguageDirectory(
+            $language,
+            $directoryRoot
+        );
+
         $this->loadResource(
             $language,
-            $directoryRoot . 'vendor/drupal/console-'.$language.'/translations/'
+            $directoryRoot
         );
 
         return $this;
@@ -108,7 +127,6 @@ class TranslatorManager
         $this->addLoader(new YamlFileLoader(), 'yaml');
 
         /* @TODO fallback to en */
-
         $finder = new Finder();
         $finder->files()
             ->name('*.yml')
