@@ -96,6 +96,10 @@ class TranslatorManager
      */
     public function loadResource($language, $directoryRoot)
     {
+        if (!is_dir($directoryRoot)) {
+            return null;
+        }
+
         $this->language = $language;
         $this->translator = new Translator($this->language);
         $this->addLoader(new ArrayLoader(), 'array');
