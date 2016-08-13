@@ -25,7 +25,6 @@ class DebugCommand extends Command
 
     protected $nestedArray;
 
-
     /**
      * CheckCommand constructor.
      * @param $configurationManager
