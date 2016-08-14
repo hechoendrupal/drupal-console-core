@@ -15,11 +15,6 @@ trait ContainerAwareCommandTrait
 {
     use CommandTrait;
 
-    public function getContainer()
-    {
-        return $this->getApplication()->getContainer();
-    }
-
     /**
      * @param $key
      * @return null|object
