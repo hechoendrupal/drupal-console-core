@@ -26,13 +26,6 @@ class ConsoleApplication extends Application
         parent::__construct($name, $version);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getContainer() {
-        return $this->container;
-    }
-
     public function getConfiguration()
     {
         if ($this->container) {
