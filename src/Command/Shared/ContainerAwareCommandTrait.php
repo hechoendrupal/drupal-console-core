@@ -15,9 +15,13 @@ trait ContainerAwareCommandTrait
 {
     use CommandTrait;
 
-    public function getContainer()
-    {
-        return $this->getApplication()->getContainer();
+    protected $container;
+
+    /**
+     * @param mixed $container
+     */
+    public function setContainer($container) {
+        $this->container = $container;
     }
 
     /**
@@ -30,7 +34,7 @@ trait ContainerAwareCommandTrait
             return null;
         }
 
-        return $this->getContainer()->has($key);
+        return $this->container->has($key);
     }
 
     /**
@@ -44,7 +48,7 @@ trait ContainerAwareCommandTrait
         }
 
         if ($this->has($key)) {
-            return $this->getContainer()->get($key);
+            return $this->container->get($key);
         }
 
         return null;
