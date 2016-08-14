@@ -15,6 +15,24 @@ class ConsoleApplication extends Application
 {
     protected $container;
 
+    /**
+     * ConsoleApplication constructor.
+     * @param $container
+     * @param $name
+     * @param $version
+     */
+    public function __construct($container, $name, $version) {
+        $this->container = $container;
+        parent::__construct($name, $version);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContainer() {
+        return $this->container;
+    }
+
     public function getConfiguration()
     {
         if ($this->container) {
