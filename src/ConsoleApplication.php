@@ -23,10 +23,8 @@ class ConsoleApplication extends Application
      */
     public function __construct($container, $name, $version) {
         $this->container = $container;
-
         parent::__construct($name, $version);
     }
-
 
     /**
      * @return mixed
