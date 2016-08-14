@@ -16,8 +16,6 @@ Drupal Console Core, this project contains commands and features to be shared ac
 #### Pending
 ```
 * init                  Copy configuration files.
-* settings:debug        List user Drupal Console settings.
-* settings:set          Change a specific setting value in DrupalConsole config file
 * site:debug            List all known local and remote sites.
 * site:import:local     Import/Configure an existing local Drupal project
 * translation:cleanup   Clean up translation files
