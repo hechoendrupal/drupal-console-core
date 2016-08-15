@@ -26,16 +26,6 @@ class ConsoleApplication extends Application
         parent::__construct($name, $version);
     }
 
-    public function getConfiguration()
-    {
-        if ($this->container) {
-            return $this->container->get('console.configuration_manager')
-                ->getConfiguration();
-        }
-
-        return null;
-    }
-
     public function getTranslator()
     {
         if ($this->container) {
