@@ -22,7 +22,8 @@ class CallCommandListener implements EventSubscriberInterface
      * CallCommandListener constructor.
      * @param $chainQueue
      */
-    public function __construct($chainQueue) {
+    public function __construct($chainQueue)
+    {
         $this->chainQueue = $chainQueue;
     }
 

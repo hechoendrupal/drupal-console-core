@@ -8,6 +8,7 @@ use Drupal\Console\Helper\HelperTrait;
 
 /**
  * Class Command
+ *
  * @package Drupal\Console\Command
  *
  * @deprecated

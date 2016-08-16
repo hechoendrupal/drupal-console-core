@@ -68,7 +68,8 @@ class SetCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         $io = new DrupalStyle($input, $output);
         $parser = new Parser();
         $dumper = new Dumper();
@@ -110,7 +111,7 @@ class SetCommand extends Command
             $userConfigFileParsed,
             $parents,
             $settingValue,
-            TRUE
+            true
         );
 
         try {
@@ -132,8 +133,7 @@ class SetCommand extends Command
                 ->changeCoreLanguage($settingValue);
 
             $translatorLanguage = $this->getApplication()->getTranslator()->getLanguage();
-            if ($translatorLanguage != $settingValue)
-            {
+            if ($translatorLanguage != $settingValue) {
                 $io->error(
                     sprintf(
                         $this->trans('commands.settings.set.messages.missing-language'),

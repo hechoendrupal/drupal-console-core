@@ -7,6 +7,7 @@ use Drupal\Core\Site\Settings;
 
 /**
  * Class ContainerAwareCommand
+ *
  * @package Drupal\Console\Command
  *
  * @deprecated

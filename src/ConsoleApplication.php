@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Drupal\Console\EventSubscriber\CallCommandListener;
+
 /**
  * Class Application
  * @package Drupal\Console
@@ -21,7 +22,8 @@ class ConsoleApplication extends Application
      * @param $name
      * @param $version
      */
-    public function __construct($container, $name, $version) {
+    public function __construct($container, $name, $version)
+    {
         $this->container = $container;
         parent::__construct($name, $version);
     }
@@ -49,7 +51,8 @@ class ConsoleApplication extends Application
         return null;
     }
 
-    public function doRun(InputInterface $input, OutputInterface $output) {
+    public function doRun(InputInterface $input, OutputInterface $output)
+    {
         $this->registerEvents();
         return parent::doRun(
             $input,
@@ -57,12 +60,15 @@ class ConsoleApplication extends Application
         );
     }
 
-    private function registerEvents() {
+    private function registerEvents()
+    {
         $dispatcher = new EventDispatcher();
         /* @todo Register listeners as services */
-        $dispatcher->addSubscriber(new CallCommandListener(
-            $this->container->get('console.chain_queue')
-        ));
+        $dispatcher->addSubscriber(
+            new CallCommandListener(
+                $this->container->get('console.chain_queue')
+            )
+        );
         $this->setDispatcher($dispatcher);
     }
 }

@@ -26,15 +26,14 @@ abstract class Generator
         $target,
         $parameters,
         $flag = null
-    )
-    {
+    ) {
         if (!is_dir(dirname($target))) {
             mkdir(dirname($target), 0777, true);
         }
 
         $content = $this->renderer->render($template, $parameters);
 
-         if (file_put_contents($target, $content, $flag)) {
+        if (file_put_contents($target, $content, $flag)) {
             $this->fileQueue->addFile($target);
 
             return true;

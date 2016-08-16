@@ -229,7 +229,8 @@ class TranslatorManager
     /**
      * @return string
      */
-    public function getLanguage() {
+    public function getLanguage()
+    {
         return $this->language;
     }
 
