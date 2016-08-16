@@ -7,7 +7,7 @@
 
 namespace Drupal\Console\Generator;
 
-class AutoCompleteGenerator extends Generator
+class InitGenerator extends Generator
 {
     public function __construct(
         $renderer,

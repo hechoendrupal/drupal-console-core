@@ -88,8 +88,6 @@ class InitCommand extends Command
         $finder->files();
 
         foreach ($finder as $configFile) {
-            $io->info($configFile->getRelativePathname());
-
             $source = sprintf(
                 '%svendor/drupal/console-core/config/dist/%s',
                 $this->configurationManager->getApplicationDirectory(),

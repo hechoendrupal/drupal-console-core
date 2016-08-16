@@ -44,7 +44,7 @@ services:
       - { name: console.command }
   console.init:
     class: Drupal\Console\Command\InitCommand
-    arguments: ['@console.show_file', '@console.configuration_manager', '@console.autocomplete_generator']
+    arguments: ['@console.show_file', '@console.configuration_manager', '@console.init_generator']
     tags:
       - { name: console.command }
   console.settings_debug:
@@ -58,8 +58,8 @@ services:
     tags:
       - { name: console.command }
   # DrupalConsoleCore Generators
-  console.autocomplete_generator:
-    class: Drupal\Console\Generator\AutoCompleteGenerator
+  console.init_generator:
+    class: Drupal\Console\Generator\InitGenerator
     arguments: ['@console.renderer', '@console.file_queue']
     tags:
       - { name: console.generator }
