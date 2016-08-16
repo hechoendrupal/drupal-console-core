@@ -88,7 +88,6 @@ class InitCommand extends Command
         $finder->files();
 
         foreach ($finder as $configFile) {
-
             $io->info($configFile->getRelativePathname());
 
             $source = sprintf(
@@ -96,11 +95,13 @@ class InitCommand extends Command
                 $this->configurationManager->getApplicationDirectory(),
                 $configFile->getRelativePathname()
             );
+
             $destination = sprintf(
                 '%s/%s',
                 $this->getConsoleDirectory(),
                 $configFile->getRelativePathname()
             );
+
             if ($this->copyFile($source, $destination, $override)) {
                 $copiedFiles[] = $configFile->getRelativePathname();
             }

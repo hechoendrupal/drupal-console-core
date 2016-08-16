@@ -33,13 +33,9 @@ abstract class Generator
         }
 
         $content = $this->renderer->render($template, $parameters);
-        if (file_put_contents($target, $content, $flag)) {
-            $this->fileQueue->addFile(
-                str_replace(
-                    $this->renderer->getRoot().'/', '',
-                    $target
-                )
-            );
+
+         if (file_put_contents($target, $content, $flag)) {
+            $this->fileQueue->addFile($target);
 
             return true;
         }
