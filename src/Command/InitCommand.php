@@ -17,6 +17,10 @@ use Symfony\Component\Console\Command\Command as Command;
 use Drupal\Console\Command\Shared\CommandTrait;
 use Drupal\Console\Style\DrupalStyle;
 
+/**
+ * Class InitCommand
+ * @package Drupal\Console\Command
+ */
 class InitCommand extends Command
 {
     use CommandTrait;
