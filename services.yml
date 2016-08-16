@@ -12,6 +12,9 @@ services:
     class: Drupal\Console\Utils\ChainQueue
   console.nested_array:
     class: Drupal\Console\Utils\NestedArray
+  console.show_file:
+    class: Drupal\Console\Utils\ShowFile
+    arguments: ['@app.root']
   # DrupalConsoleCore Commands
   console.about:
     class: Drupal\Console\Command\AboutCommand
@@ -36,7 +39,7 @@ services:
       - { name: console.command }
   console.init:
     class: Drupal\Console\Command\InitCommand
-    arguments: ['@app.root']
+    arguments: ['@console.show_file', '@console.configuration_manager']
     tags:
       - { name: console.command }
   console.settings_debug:

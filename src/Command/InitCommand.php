@@ -25,6 +25,21 @@ class InitCommand extends Command
 {
     use CommandTrait;
 
+    protected $showFile;
+    protected $configurationManager;
+
+    /**
+     * InitCommand constructor.
+     * @param $showFile
+     * @param $configurationManager
+     */
+    public function __construct($showFile, $configurationManager) {
+        $this->showFile = $showFile;
+        $this->configurationManager = $configurationManager;
+        parent::__construct();
+    }
+
+
     /**
      * {@inheritdoc}
      */
