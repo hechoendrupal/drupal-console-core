@@ -80,8 +80,8 @@ class InitCommand extends Command
         $finder->in(
             sprintf(
                 '%s%s/config/dist/',
-                DRUPAL_CONSOLE_CORE,
-                $this->configurationManager->getApplicationDirectory()
+                $this->configurationManager->getApplicationDirectory(),
+                DRUPAL_CONSOLE_CORE
             )
         );
         $finder->files();
@@ -89,8 +89,8 @@ class InitCommand extends Command
         foreach ($finder as $configFile) {
             $source = sprintf(
                 '%s%s/config/dist/%s',
-                DRUPAL_CONSOLE_CORE,
                 $this->configurationManager->getApplicationDirectory(),
+                DRUPAL_CONSOLE_CORE,
                 $configFile->getRelativePathname()
             );
 
