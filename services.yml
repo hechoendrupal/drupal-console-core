@@ -14,7 +14,12 @@ services:
     class: Drupal\Console\Utils\NestedArray
   console.show_file:
     class: Drupal\Console\Utils\ShowFile
-    arguments: ['@app.root']
+    arguments: ['@app.root', '@console.translator_manager']
+  console.renderer:
+    class: Drupal\Console\Utils\TwigRenderer
+    arguments: ['@console.translator_manager']
+  console.file_queue:
+    class: Drupal\Console\Utils\FileQueue
   # DrupalConsoleCore Commands
   console.about:
     class: Drupal\Console\Command\AboutCommand
@@ -39,7 +44,7 @@ services:
       - { name: console.command }
   console.init:
     class: Drupal\Console\Command\InitCommand
-    arguments: ['@console.show_file', '@console.configuration_manager']
+    arguments: ['@console.show_file', '@console.configuration_manager', '@console.autocomplete_generator']
     tags:
       - { name: console.command }
   console.settings_debug:
@@ -52,3 +57,9 @@ services:
     arguments: ['@console.configuration_manager', '@console.nested_array']
     tags:
       - { name: console.command }
+  # DrupalConsoleCore Generators
+  console.autocomplete_generator:
+    class: Drupal\Console\Generator\AutoCompleteGenerator
+    arguments: ['@console.renderer', '@console.file_queue']
+    tags:
+      - { name: console.generator }

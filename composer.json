@@ -45,7 +45,8 @@
         "symfony/process": "~2.8",
         "symfony/translation": "~2.8",
         "symfony/yaml": "~2.8",
-        "symfony/event-dispatcher": "~2.8"
+        "symfony/event-dispatcher": "~2.8",
+        "twig/twig": "^1.23.1"
     },
     "autoload": {
         "psr-4": {"Drupal\\Console\\": "src"}
