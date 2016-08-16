@@ -115,7 +115,8 @@ class ConfigurationManager
     /**
      * @return string
      */
-    public function getApplicationDirectory() {
+    public function getApplicationDirectory()
+    {
         return $this->applicationDirectory;
     }
 

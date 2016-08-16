@@ -8,14 +8,14 @@
 namespace Drupal\Console\Utils;
 
 /**
- * Class ChainCommandHelper
+ * Class ChainQueue
  * @package Drupal\Console\Helper
  */
 class ChainQueue
 {
     /**
- * @var $commands array 
-*/
+     * @var $commands array
+     */
     private $commands;
 
     /**

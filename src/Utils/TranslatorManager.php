@@ -84,11 +84,12 @@ class TranslatorManager
         $language,
         $directoryRoot
     ) {
-        $coreLanguageDirectory = sprintf(
-            '%svendor/drupal/console-%s/translations/',
-            $directoryRoot,
-            $language
-        );
+        $coreLanguageDirectory =
+            $directoryRoot .
+            sprintf(
+                DRUPAL_CONSOLE_LANGUAGE,
+                $language
+            );
 
         if (!is_dir($coreLanguageDirectory)) {
             return $this->buildCoreLanguageDirectory('en', $directoryRoot);
@@ -228,7 +229,8 @@ class TranslatorManager
     /**
      * @return string
      */
-    public function getLanguage() {
+    public function getLanguage()
+    {
         return $this->language;
     }
 
