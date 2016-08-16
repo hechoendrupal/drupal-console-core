@@ -7,14 +7,12 @@
 
 namespace Drupal\Console\Command;
 
-use Drupal\Console\Generator\AutoCompleteGenerator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-//use Drupal\Console\Generator\AutocompleteGenerator;
 use Symfony\Component\Process\ProcessBuilder;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Console\Command\Command as Command;
+use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Command\Shared\CommandTrait;
 use Drupal\Console\Style\DrupalStyle;
 
@@ -81,7 +79,8 @@ class InitCommand extends Command
         $finder = new Finder();
         $finder->in(
             sprintf(
-                '%svendor/drupal/console-core/config/dist/',
+                '%s%s/config/dist/',
+                DRUPAL_CONSOLE_CORE,
                 $this->configurationManager->getApplicationDirectory()
             )
         );
@@ -89,7 +88,8 @@ class InitCommand extends Command
 
         foreach ($finder as $configFile) {
             $source = sprintf(
-                '%svendor/drupal/console-core/config/dist/%s',
+                '%s%s/config/dist/%s',
+                DRUPAL_CONSOLE_CORE,
                 $this->configurationManager->getApplicationDirectory(),
                 $configFile->getRelativePathname()
             );

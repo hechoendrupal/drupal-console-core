@@ -66,7 +66,10 @@ class CheckCommand extends BaseCommand
         if (!$checks) {
             $phpCheckFile = $this->configurationManager->getHomeDirectory().'/.console/phpcheck.yml';
             if (!file_exists($phpCheckFile)) {
-                $phpCheckFile = $this->configurationManager->getApplicationDirectory().'config/dist/phpcheck.yml';
+                $phpCheckFile =
+                    $this->configurationManager->getApplicationDirectory().
+                    DRUPAL_CONSOLE_CORE.
+                    'config/dist/phpcheck.yml';
             }
 
             $io->newLine();
