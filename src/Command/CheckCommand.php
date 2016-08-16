@@ -82,8 +82,7 @@ class CheckCommand extends BaseCommand
             $io->newLine();
             $io->info($this->trans('commands.check.messages.file'));
             $io->comment($phpCheckFileDisplay);
-
-            //            $this->requirementChecker->validate($phpCheckFile);
+            
             $checks = $this->requirementChecker->validate($phpCheckFile);
         }
 
