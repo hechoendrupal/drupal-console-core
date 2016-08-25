@@ -1,5 +1,7 @@
 services:
   # DrupalConsoleCore Services
+  app.root:
+    class: SplString
   console.translator_manager:
     class: Drupal\Console\Utils\TranslatorManager
   console.configuration_manager:
