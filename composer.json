@@ -49,7 +49,10 @@
         "twig/twig": "^1.23.1"
     },
     "autoload": {
-        "files": ["src/constants.php"],
+        "files": [
+            "src/constants.php",
+            "src/functions.php"
+        ],
         "psr-4": {"Drupal\\Console\\": "src"}
     }
 }
