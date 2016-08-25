@@ -24,11 +24,28 @@ class TwigRenderer
         $this->translator = $translator;
     }
 
-    public function setSkeletonDirs($skeletonDirs)
+    /**
+     * @param array $skeletonDirs
+     */
+    public function setSkeletonDirs(array $skeletonDirs)
     {
-        $this->skeletonDirs = is_array($skeletonDirs) ? $skeletonDirs : array($skeletonDirs);
+        foreach ($skeletonDirs as $skeletonDir) {
+            $this->addSkeletonDir($skeletonDir);
+        }
     }
 
+    /**
+     * @param $skeletonDir
+     */
+    public function addSkeletonDir($skeletonDir) {
+        if (is_dir($skeletonDir)) {
+            $this->skeletonDirs[] = $skeletonDir;
+        }
+    }
+
+    /**
+     * @return array
+     */
     public function getSkeletonDirs()
     {
         if (!$this->skeletonDirs) {
