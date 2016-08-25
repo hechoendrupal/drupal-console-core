@@ -60,6 +60,11 @@ services:
     arguments: ['@console.configuration_manager', '@console.nested_array']
     tags:
       - { name: console.command }
+  console.exec:
+    class: Drupal\Console\Command\Exec\ExecCommand
+    arguments: ['@console.shell_process']
+    tags:
+      - { name: console.command }
   # DrupalConsoleCore Generators
   console.init_generator:
     class: Drupal\Console\Generator\InitGenerator
