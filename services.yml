@@ -20,6 +20,9 @@ services:
     arguments: ['@console.translator_manager']
   console.file_queue:
     class: Drupal\Console\Utils\FileQueue
+  console.shell_process:
+    class: Drupal\Console\Utils\ShellProcess
+    arguments: ['@app.root']
   # DrupalConsoleCore Commands
   console.about:
     class: Drupal\Console\Command\AboutCommand
