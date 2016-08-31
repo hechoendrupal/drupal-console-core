@@ -1,24 +1,29 @@
 <?php
 
-namespace Drupal\Console\Utils\Bootstrap;
+namespace Drupal\Console\Bootstrap;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-class DrupalConsoleCore {
-
+class DrupalConsoleCore
+{
+    /**
+     * @var string
+     */
     protected $root;
 
     /**
      * DrupalConsole constructor.
      * @param $root
      */
-    public function __construct($root) {
+    public function __construct($root)
+    {
         $this->root = $root;
     }
 
-    public function boot() {
+    public function boot()
+    {
         $container = new ContainerBuilder();
         $loader = new YamlFileLoader($container, new FileLocator($this->root));
         $loader->load($this->root.DRUPAL_CONSOLE_CORE.'/services.yml');

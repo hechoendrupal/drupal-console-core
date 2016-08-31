@@ -14,6 +14,9 @@ use Symfony\Component\Process\ProcessBuilder;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Command\Shared\CommandTrait;
+use Drupal\Console\Utils\ConfigurationManager;
+use Drupal\Console\Generator\InitGenerator;
+use Drupal\Console\Utils\ShowFile;
 use Drupal\Console\Style\DrupalStyle;
 
 /**
@@ -24,22 +27,31 @@ class InitCommand extends Command
 {
     use CommandTrait;
 
+    /**
+     * @var ShowFile
+     */
     protected $showFile;
 
+    /**
+     * @var ConfigurationManager
+     */
     protected $configurationManager;
 
+    /**
+     * @var InitGenerator
+     */
     protected $generator;
 
     /**
      * InitCommand constructor.
-     * @param $showFile
-     * @param $configurationManager
-     * @param $generator
+     * @param ShowFile             $showFile
+     * @param ConfigurationManager $configurationManager
+     * @param InitGenerator        $generator
      */
     public function __construct(
-        $showFile,
-        $configurationManager,
-        $generator
+        ShowFile $showFile,
+        ConfigurationManager $configurationManager,
+        InitGenerator $generator
     ) {
         $this->showFile = $showFile;
         $this->configurationManager = $configurationManager;

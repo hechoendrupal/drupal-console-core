@@ -12,10 +12,14 @@ use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Utils\ChainQueue;
 use Drupal\Console\Style\DrupalStyle;
 
 class CallCommandListener implements EventSubscriberInterface
 {
+    /**
+     * @var ChainQueue
+     */
     protected $chainQueue;
 
     /**

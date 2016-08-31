@@ -7,11 +7,36 @@
 
 namespace Drupal\Console\Generator;
 
+use Drupal\Console\Utils\TwigRenderer;
+use Drupal\Console\Utils\FileQueue;
+
 abstract class Generator
 {
+    /**
+     * @var TwigRenderer
+     */
     protected $renderer;
 
+    /**
+     * @var FileQueue
+     */
     protected $fileQueue;
+
+    /**
+     * @param $renderer
+     */
+    public function setRenderer(TwigRenderer $renderer)
+    {
+        $this->renderer = $renderer;
+    }
+
+    /**
+     * @param $fileQueue
+     */
+    public function setFileQueue(FileQueue $fileQueue)
+    {
+        $this->fileQueue = $fileQueue;
+    }
 
     /**
      * @param string $template

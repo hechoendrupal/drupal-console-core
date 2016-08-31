@@ -37,7 +37,8 @@ class TwigRenderer
     /**
      * @param $skeletonDir
      */
-    public function addSkeletonDir($skeletonDir) {
+    public function addSkeletonDir($skeletonDir)
+    {
         if (is_dir($skeletonDir)) {
             $this->skeletonDirs[] = $skeletonDir;
         }
