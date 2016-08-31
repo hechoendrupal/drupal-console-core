@@ -65,6 +65,11 @@ services:
     arguments: ['@console.shell_process']
     tags:
       - { name: console.command }
+  console.server:
+    class: Drupal\Console\Command\ServerCommand
+    arguments: ['@app.root', '@console.configuration_manager']
+    tags:
+      - { name: console.command }
   # DrupalConsoleCore Generators
   console.init_generator:
     class: Drupal\Console\Generator\InitGenerator
