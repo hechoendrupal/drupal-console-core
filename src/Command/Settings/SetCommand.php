@@ -14,6 +14,8 @@ use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Command\Shared\CommandTrait;
+use Drupal\Console\Utils\ConfigurationManager;
+use Drupal\Console\Utils\NestedArray;
 use Drupal\Console\Style\DrupalStyle;
 
 /**
@@ -24,18 +26,25 @@ class SetCommand extends Command
 {
     use CommandTrait;
 
+    /**
+     * @var ConfigurationManager
+     */
     protected $configurationManager;
 
+    /**
+     * @var NestedArray
+     */
     protected $nestedArray;
+
 
     /**
      * CheckCommand constructor.
-     * @param $configurationManager
-     * @param $nestedArray
+     * @param ConfigurationManager $configurationManager
+     * @param NestedArray          $nestedArray
      */
     public function __construct(
-        $configurationManager,
-        $nestedArray
+        ConfigurationManager $configurationManager,
+        NestedArray $nestedArray
     ) {
         $this->configurationManager = $configurationManager;
         $this->nestedArray = $nestedArray;
@@ -165,5 +174,7 @@ class SetCommand extends Command
                 $settingValue
             )
         );
+
+        return 0;
     }
 }

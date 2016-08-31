@@ -11,6 +11,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Command\Shared\CommandTrait;
+use Drupal\Console\Utils\ConfigurationManager;
+use Drupal\Console\Utils\NestedArray;
 use Drupal\Console\Style\DrupalStyle;
 
 /**
@@ -21,22 +23,27 @@ class DebugCommand extends Command
 {
     use CommandTrait;
 
+    /**
+     * @var ConfigurationManager
+     */
     protected $configurationManager;
 
+    /**
+     * @var NestedArray
+     */
     protected $nestedArray;
 
     /**
      * CheckCommand constructor.
-     * @param $configurationManager
-     * @param $nestedArray
+     * @param ConfigurationManager $configurationManager
+     * @param NestedArray          $nestedArray
      */
     public function __construct(
-        $configurationManager,
-        $nestedArray
+        ConfigurationManager $configurationManager,
+        NestedArray $nestedArray
     ) {
         $this->configurationManager = $configurationManager;
         $this->nestedArray = $nestedArray;
-
         parent::__construct();
     }
 
@@ -108,5 +115,7 @@ class DebugCommand extends Command
         $io->newLine();
 
         $io->table($tableHeader, $tableRows, 'compact');
+
+        return 0;
     }
 }

@@ -3,6 +3,7 @@
 namespace Drupal\Console;
 
 use Symfony\Component\Console\Application;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -14,6 +15,9 @@ use Drupal\Console\EventSubscriber\CallCommandListener;
  */
 class ConsoleApplication extends Application
 {
+    /**
+     * @var ContainerInterface
+     */
     protected $container;
 
     /**

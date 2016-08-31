@@ -9,14 +9,6 @@ namespace Drupal\Console\Generator;
 
 class InitGenerator extends Generator
 {
-    public function __construct(
-        $renderer,
-        $fileQueue
-    ) {
-        $this->renderer = $renderer;
-        $this->fileQueue = $fileQueue;
-    }
-
     public function generate($userHome, $executableName)
     {
         $parameters = array(

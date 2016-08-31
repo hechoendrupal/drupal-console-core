@@ -11,6 +11,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command as BaseCommand;
 use Drupal\Console\Command\Shared\CommandTrait;
+use Drupal\Console\Utils\ConfigurationManager;
+use Drupal\Console\Utils\RequirementChecker;
+use Drupal\Console\Utils\ChainQueue;
 use Drupal\Console\Style\DrupalStyle;
 
 /**
@@ -21,22 +24,31 @@ class CheckCommand extends BaseCommand
 {
     use CommandTrait;
 
+    /**
+     * @var RequirementChecker
+     */
     protected $requirementChecker;
 
+    /**
+     * @var ChainQueue
+     */
     protected $chainQueue;
 
+    /**
+     * @var ConfigurationManager
+     */
     protected $configurationManager;
 
     /**
      * CheckCommand constructor.
-     * @param $requirementChecker
-     * @param $chainQueue
-     * @param $configurationManager
+     * @param RequirementChecker   $requirementChecker
+     * @param ChainQueue           $chainQueue
+     * @param ConfigurationManager $configurationManager
      */
     public function __construct(
-        $requirementChecker,
-        $chainQueue,
-        $configurationManager
+        RequirementChecker $requirementChecker,
+        ChainQueue $chainQueue,
+        ConfigurationManager $configurationManager
     ) {
         $this->requirementChecker = $requirementChecker;
         $this->chainQueue = $chainQueue;

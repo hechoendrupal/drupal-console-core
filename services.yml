@@ -68,6 +68,6 @@ services:
   # DrupalConsoleCore Generators
   console.init_generator:
     class: Drupal\Console\Generator\InitGenerator
-    arguments: ['@console.renderer', '@console.file_queue']
+#    arguments: ['@console.renderer', '@console.file_queue']
     tags:
       - { name: console.generator }
