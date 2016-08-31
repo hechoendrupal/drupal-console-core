@@ -31,13 +31,24 @@ class ConfigurationManager
         $root = $input->getParameterOption(['--root'], null);
 
         $files = [
-            $applicationDirectory.'/../config.yml',
+            $applicationDirectory.'config.yml',
+            $applicationDirectory.DRUPAL_CONSOLE_CORE.'config.yml',
+            $applicationDirectory.DRUPAL_CONSOLE_CORE.'config/dist/config.yml',
+            $applicationDirectory.DRUPAL_CONSOLE.'config.yml',
+            $applicationDirectory.DRUPAL_CONSOLE.'config/dist/config.yml',
             $this->getHomeDirectory().'/.console/config.yml',
             getcwd().'/console/config.yml',
+            $applicationDirectory.'console/config.yml',
         ];
 
         if ($root) {
             $files[] = $root.'/console/config.yml';
+        }
+
+        foreach ($files as $key => $file) {
+            if (!file_exists($file)) {
+                unset($files[$key]);
+            }
         }
 
         $builder = new YamlFileConfigurationBuilder($files);
