@@ -22,11 +22,15 @@ class ConsoleApplication extends Application
 
     /**
      * ConsoleApplication constructor.
-     * @param $container
-     * @param $name
-     * @param $version
+     * @param ContainerInterface    $container
+     * @param string                $name
+     * @param string                $version
      */
-    public function __construct($container, $name, $version)
+    public function __construct(
+        ContainerInterface$container,
+        $name,
+        $version
+    )
     {
         $this->container = $container;
         parent::__construct($name, $version);
