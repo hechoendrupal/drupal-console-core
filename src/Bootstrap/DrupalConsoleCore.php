@@ -22,7 +22,7 @@ class DrupalConsoleCore
      * @param $root
      * @param $appRoot
      */
-    public function __construct($root, $appRoot)
+    public function __construct($root, $appRoot = null)
     {
         $this->root = $root;
         $this->appRoot = $appRoot;
@@ -52,7 +52,7 @@ class DrupalConsoleCore
 
         $container->set(
             'app.root',
-            $this->appRoot
+            $this->appRoot?$this->appRoot:$this->root
         );
 
         $container->get('console.renderer')
