@@ -14,12 +14,18 @@ class DrupalConsoleCore
     protected $root;
 
     /**
+     * @var string
+     */
+    protected $appRoot;
+    /**
      * DrupalConsole constructor.
      * @param $root
+     * @param $appRoot
      */
-    public function __construct($root)
+    public function __construct($root, $appRoot)
     {
         $this->root = $root;
+        $this->appRoot = $appRoot;
     }
 
     public function boot()
@@ -31,6 +37,12 @@ class DrupalConsoleCore
             $loader->load('services.yml');
         }
 
+        if (file_exists($this->root.DRUPAL_CONSOLE.'/services-drupal-install')) {
+            $loader->load(
+                $this->root . DRUPAL_CONSOLE . '/services-drupal-install'
+            );
+        }
+
         $container->get('console.configuration_manager')
             ->loadConfiguration($this->root)
             ->getConfiguration();
@@ -40,7 +52,7 @@ class DrupalConsoleCore
 
         $container->set(
             'app.root',
-            $this->root
+            $this->appRoot
         );
 
         $container->get('console.renderer')
