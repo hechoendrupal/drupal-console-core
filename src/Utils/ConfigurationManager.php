@@ -136,7 +136,7 @@ class ConfigurationManager
      *
      * @return string
      */
-    private function getSitesDirectory()
+    public function getSitesDirectory()
     {
         return sprintf(
             '%s%s.console%ssites',
