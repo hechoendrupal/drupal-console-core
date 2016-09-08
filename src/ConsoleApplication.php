@@ -22,6 +22,11 @@ class ConsoleApplication extends Application
     protected $container;
 
     /**
+     * @var string
+     */
+    protected $commandName;
+
+    /**
      * ConsoleApplication constructor.
      * @param ContainerInterface $container
      * @param string             $name
@@ -62,6 +67,9 @@ class ConsoleApplication extends Application
 
     public function doRun(InputInterface $input, OutputInterface $output)
     {
+        if ($commandName = $this->getCommandName($input)) {
+            $this->commandName = $commandName;
+        }
         $this->registerEvents();
         $this->registerCommandsFromAutoWireConfiguration();
         return parent::doRun(
