@@ -63,6 +63,7 @@ class ConsoleApplication extends Application
     public function doRun(InputInterface $input, OutputInterface $output)
     {
         $this->registerEvents();
+        $this->registerCommandsFromAutoWireConfiguration();
         return parent::doRun(
             $input,
             $output
@@ -163,5 +164,80 @@ class ConsoleApplication extends Application
                 $this->trans('application.options.yes')
             )
         );
+    }
+
+    private function registerCommandsFromAutoWireConfiguration()
+    {
+        $configuration = $this->container->get('console.configuration_manager')
+            ->getConfiguration();
+
+        $autoWireForcedCommands = $configuration->get(
+            sprintf(
+                'application.autowire.commands.forced'
+            )
+        );
+
+        foreach ($autoWireForcedCommands as $autoWireForcedCommand) {
+            try {
+                $reflectionClass = new \ReflectionClass(
+                    $autoWireForcedCommand['class']
+                );
+
+                $command = $reflectionClass->newInstance();
+
+                if (method_exists($command, 'setTranslator')) {
+                    $command->setTranslator(
+                        $this->container->get('console.translator_manager')
+                    );
+                }
+                if (method_exists($command, 'setContainer')) {
+                    $command->setContainer(
+                        $this->container->get('service_container')
+                    );
+                }
+
+                $this->add($command);
+            } catch (\Exception $e) {
+                continue;
+            }
+        }
+
+        $autoWireNameCommand = $configuration->get(
+            sprintf(
+                'application.autowire.commands.name.%s',
+                $this->commandName
+            )
+        );
+
+        if ($autoWireNameCommand) {
+            try {
+                $arguments = [];
+                if (array_key_exists('arguments', $autoWireNameCommand)) {
+                    foreach ($autoWireNameCommand['arguments'] as $argument) {
+                        $argument = substr($argument, 1);
+                        $arguments[] = $this->container->get($argument);
+                    }
+                }
+
+                $reflectionClass = new \ReflectionClass(
+                    $autoWireNameCommand['class']
+                );
+                $command = $reflectionClass->newInstanceArgs($arguments);
+
+                if (method_exists($command, 'setTranslator')) {
+                    $command->setTranslator(
+                        $this->container->get('console.translator_manager')
+                    );
+                }
+                if (method_exists($command, 'setContainer')) {
+                    $command->setContainer(
+                        $this->container->get('service_container')
+                    );
+                }
+
+                $this->add($command);
+            } catch (\Exception $e) {
+            }
+        }
     }
 }

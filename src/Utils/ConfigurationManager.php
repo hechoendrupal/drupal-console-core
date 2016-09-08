@@ -145,4 +145,37 @@ class ConfigurationManager
             DIRECTORY_SEPARATOR
         );
     }
+
+    /**
+     * @param string $commandName
+     * @return mixed
+     */
+    public function readDrushEquivalents($commandName)
+    {
+        $drushFile = sprintf(
+            '%s%s.console/drush.yml',
+            $this->getHomeDirectory(),
+            DIRECTORY_SEPARATOR
+        );
+
+        $equivalents = [];
+        $aliasInformation = Yaml::parse(file_get_contents($drushFile));
+
+        foreach ($aliasInformation['commands'] as $key => $commands) {
+            foreach ($commands as $drush => $console) {
+                $equivalents[$drush] = $console;
+            }
+        }
+
+        if (array_key_exists($commandName, $equivalents)) {
+            return $equivalents[$commandName] ?: ' ';
+        }
+
+        $aliasInformation = [];
+        foreach ($equivalents as $key => $alternative) {
+            $aliasInformation[] = [$key, $alternative];
+        }
+
+        return $aliasInformation;
+    }
 }
