@@ -52,7 +52,7 @@ class DrupliconCommand extends Command
 
         $directory = sprintf(
             '%s/templates/core/druplicon/',
-            $this->appRoot . DRUPAL_CONSOLE
+            $this->appRoot . DRUPAL_CONSOLE_CORE
         );
 
         $finder = new Finder();
