@@ -139,10 +139,9 @@ class ConfigurationManager
     public function getSitesDirectory()
     {
         return sprintf(
-            '%s%s.console%ssites',
-            $this->getHomeDirectory(),
-            DIRECTORY_SEPARATOR,
-            DIRECTORY_SEPARATOR
+            '%s%sconfig/dist/config.yml',
+            $this->applicationDirectory,
+            DRUPAL_CONSOLE_CORE
         );
     }
 
@@ -152,14 +151,12 @@ class ConfigurationManager
      */
     public function readDrushEquivalents($commandName)
     {
-        $drushFile = sprintf(
-            '%s%s.console/drush.yml',
-            $this->getHomeDirectory(),
-            DIRECTORY_SEPARATOR
-        );
-
         $equivalents = [];
-        $aliasInformation = Yaml::parse(file_get_contents($drushFile));
+        $aliasInformation = Yaml::parse(
+            file_get_contents(
+                $this->applicationDirectory.DRUPAL_CONSOLE_CORE.'config/drush.yml'
+            )
+        );
 
         foreach ($aliasInformation['commands'] as $key => $commands) {
             foreach ($commands as $drush => $console) {
