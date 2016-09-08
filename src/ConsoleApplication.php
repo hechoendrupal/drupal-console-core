@@ -33,8 +33,8 @@ class ConsoleApplication extends Application
         $version
     ) {
         $this->container = $container;
-        $this->addOptions();
         parent::__construct($name, $version);
+        $this->addOptions();
     }
 
     public function getTranslator()
