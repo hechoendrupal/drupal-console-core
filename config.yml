@@ -10,10 +10,10 @@ application:
           arguments: ['@console.configuration_manager', '@console.chain_queue']
         elephpant:
           class: '\Drupal\Console\Command\Exclude\ElephpantCommand'
-          arguments: ['@console.root', '@console.renderer']
+          arguments: ['@app.root', '@console.renderer']
         druplicon:
           class: '\Drupal\Console\Command\Exclude\DrupliconCommand'
-          arguments: ['@console.root', '@console.renderer']
+          arguments: ['@app.root', '@console.renderer']
         'develop:example':
           class: '\Drupal\Console\Command\Develop\ExampleCommand'
         'develop:example:container:aware':

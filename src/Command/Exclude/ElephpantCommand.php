@@ -52,7 +52,7 @@ class ElephpantCommand extends Command
 
         $directory = sprintf(
             '%stemplates/core/elephpant/',
-            $this->appRoot . DRUPAL_CONSOLE
+            $this->appRoot . DRUPAL_CONSOLE_CORE
         );
 
         $finder = new Finder();
