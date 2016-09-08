@@ -1,0 +1,26 @@
+commands:
+  core:
+    archive-dump: ~
+    config-debug: config:debug
+    config-export: config:export
+    config-import: config:import
+    archive-dump: ~
+    archive-restore: ~
+    browse: ~
+    core-cli: ~
+    core-config: ~
+    core-cron: ~
+    core-execute: ~
+    core-init: init
+    core-quick-drupal: ~
+    core-requirements: site:status
+    core-rsync: ~
+    core-status: site:status
+    core-topic: ~
+    drupal-directory: ~
+    entity-updates: update:entities
+    help: help
+    site-install: site:install
+  make:
+    make: ~
+    make-convert: ~
