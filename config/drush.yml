@@ -1,26 +1,159 @@
 commands:
   core:
-    archive-dump: ~
-    config-debug: config:debug
-    config-export: config:export
-    config-import: config:import
-    archive-dump: ~
-    archive-restore: ~
-    browse: ~
-    core-cli: ~
-    core-config: ~
-    core-cron: ~
-    core-execute: ~
-    core-init: init
-    core-quick-drupal: ~
-    core-requirements: site:status
-    core-rsync: ~
-    core-status: site:status
-    core-topic: ~
-    drupal-directory: ~
-    entity-updates: update:entities
-    help: help
-    site-install: site:install
+   archive-dump: ~
+   archive-restore:
+   browse:
+   core-cli:
+   core-config:
+   core-cron:
+   core-execute:
+   core-init:
+   core-quick-drupal:
+   core-requirements: site:status
+   core-rsync:
+   core-status: site:status
+   core-topic:
+   drupal-directory:
+   entity-updates: update:entities
+   help:
+   image-derive:
+   image-flush:queue-list
+   php-eval:
+   php-script:
+   queue-list: queue:debug
+   queue-run: queue:run
+   shell-alias:
+   site-alias:
+   site-install: site:install
+   site-set:
+   site-ssh:
+   twig-compile:
+   updatedb: update:execute
+   updatedb-status: update:debug
+   variable-delete:
+   variable-get:
+   variable-set: config:override
+   version: --version
+  site_audit:
+   audit_all:
+   audit_best_practices:
+   audit_block:
+   audit_cache:
+   audit_codebase:
+   audit_content:
+   audit_cron:
+   audit_database:
+   audit_extensions:
+   audit_insights:
+   audit_security:
+   audit_status:
+   audit_users:
+   audit_views:
+   audit_watchdog:
+   site-audit-version:
+   cache-clear:
+   cache-get:
+   cache-rebuild:
+   cache-set:
+  config:
+   config-edit:
+   config-debug: config:debug
+   config-export: config:export
+   config-get:
+   config-import: config:import
+   config-list:
+   config-pull:
+   config-set:
+  drush_extras:
+   block-configure:
+   block-disable:
+   block-show:
+   copy-id:
+   give-comment:
+   give-node:
+   grep:
+   sql-compare:
+   sql-hash:
+  field:
+   field-clone:
+   field-create:
+   field-delete:
+   field-info:
+   field-update:
   make:
-    make: ~
-    make-convert: ~
+   make:
+   make-convert:
+   make-generate:
+   make-lock:
+   make-update:
+  pm:
+   pm-disable:
+   pm-download:
+   pm-enable:
+   pm-info:
+   pm-list:
+   pm-projectinfo:
+   pm-refresh:
+   pm-releasenotes:
+   pm-releases:
+   pm-uninstall:
+   pm-update:
+   pm-updatecode:
+   pm-updatestatus:
+  role:
+   role-add-perm:
+   role-create:
+   role-delete:
+   role-list:
+   role-remove-perm:
+  runserver:
+   runserver: server
+   sql-cli: database:client
+   sql-connect: database:connect
+   sql-create:
+   sql-drop: database:drop
+   sql-dump: database:dump
+   sql-query:
+   sql-sanitize:
+   sql-sync:
+  search:
+   search-index:
+   search-reindex:
+   search-status:
+  state:
+   state-delete: state:delete
+   state-get: state:debug
+   state-set: state:override
+  user:
+   user-add-role:
+   user-block:
+   user-cancel:
+   user-create:
+   user-information:
+   user-login: user:login:url
+   user-password:
+   user-remove-role:
+   user-unblock:
+  watchdog:
+   watchdog-delete: database:log:clear
+   watchdog-list:
+   watchdog-show: database:log:debug
+  language:
+   language-add:
+   language-default:
+   language-disable:
+   language-enable:
+   language-prefix:
+  language_translations:
+   language-export-translations:
+   language-groups-info:
+   language-import-translations:
+   language-refresh-translations:
+  other:
+   clean-modules:
+   coder-format:
+   coder-review:
+   composer:
+   registry-rebuild:
+   vimrc-install:
+   vimrc-tag-gen:
