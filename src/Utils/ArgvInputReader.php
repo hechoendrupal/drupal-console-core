@@ -68,23 +68,33 @@ class ArgvInputReader
      */
     private function setArgvOptions($options)
     {
+        $argvInput = new ArgvInput();
         foreach ($options as $key => $option) {
-            if ($option == 1) {
-                $_SERVER['argv'][] = sprintf('--%s', $key);
+            if (!$option) {
                 continue;
             }
-            if (!empty($option)) {
-                if ($key = 'root') {
-                    foreach ($_SERVER['argv'] as $argvKey => $argv) {
-                        if (strpos($argv, '--'.$key) === 0) {
-                            $argvValue = str_replace('--'.$key.'=', '', $argv);
-                            $_SERVER['argv'][$argvKey] = sprintf('--%s=%s%s', $key, $argvValue, $option);
-                        } else {
-                            $_SERVER['argv'][] = sprintf('--%s=%s', $key, $option);
-                        }
+
+            if (!$argvInput->hasParameterOption($key)){
+                if ($option == 1) {
+                    $_SERVER['argv'][] = sprintf('--%s', $key);
+                }
+                $_SERVER['argv'][] = sprintf('--%s=%s', $key, $option);
+                continue;
+            }
+            if ($key === 'root') {
+                $option = sprintf(
+                    '%s%s',
+                    $argvInput->getParameterOption(['--root'], null),
+                    $option
+                );
+            }
+            foreach ($_SERVER['argv'] as $argvKey => $argv) {
+                if (strpos($argv, '--'.$key) === 0) {
+                    if ($option == 1) {
+                        $_SERVER['argv'][$argvKey] = sprintf('--%s', $key);
                     }
-                } else {
-                    $_SERVER['argv'][] = sprintf('--%s=%s', $key, $option);
+                    $_SERVER['argv'][$argvKey] = sprintf('--%s=%s', $key, $option);
+                    continue;
                 }
             }
         }
