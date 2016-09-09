@@ -14,10 +14,6 @@ application:
         druplicon:
           class: '\Drupal\Console\Command\Exclude\DrupliconCommand'
           arguments: ['@app.root', '@console.renderer']
-        'develop:example':
-          class: '\Drupal\Console\Command\Develop\ExampleCommand'
-        'develop:example:container:aware':
-          class: '\Drupal\Console\Command\Develop\ExampleContainerAwareCommand'
   languages:
     en: 'English'
     es: 'Español'
