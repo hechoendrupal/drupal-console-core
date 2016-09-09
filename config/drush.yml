@@ -17,7 +17,11 @@ commands:
    entity-updates: update:entities
    help:
    image-derive:
+<<<<<<< HEAD
    image-flush: image:styles:flush
+=======
+   image-flush:queue-list
+>>>>>>> upstream/master
    php-eval:
    php-script:
    queue-list: queue:debug
