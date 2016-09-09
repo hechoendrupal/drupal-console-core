@@ -17,7 +17,7 @@ commands:
    entity-updates: update:entities
    help:
    image-derive:
-   image-flush:queue-list
+   image-flush: image:styles:flush
    php-eval:
    php-script:
    queue-list: queue:debug
