@@ -73,6 +73,12 @@ class InitCommand extends Command
                 null,
                 InputOption::VALUE_NONE,
                 $this->trans('commands.init.options.override')
+            )
+            ->addOption(
+                'no-interaction',
+                null,
+                InputOption::VALUE_NONE,
+                $this->trans('commands.init.options.no-interaction')
             );
     }
 
@@ -80,12 +86,15 @@ class InitCommand extends Command
      * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
-    {
+    {die("88888");
         $io = new DrupalStyle($input, $output);
         $copiedFiles = [];
         $override = false;
         if ($input->hasOption('override')) {
             $override = $input->getOption('override');
+        }
+        if ($input->hasOption('no-interaction')) {
+            $no_interaction = $input->getOption('no-interaction');
         }
 
         $finder = new Finder();
@@ -97,7 +106,9 @@ class InitCommand extends Command
             )
         );
         $finder->files();
-
+print_r($no_interaction);
+print_r($finder);
+die();
         foreach ($finder as $configFile) {
             $source = sprintf(
                 '%s%s/config/dist/%s',
