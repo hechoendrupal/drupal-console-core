@@ -27,4 +27,15 @@ class InitGenerator extends Generator
             $parameters
         );
     }
+
+    public function generateConfig($path, $values)
+    {
+
+        $this->renderFile(
+            'autocomplete/console.config.twig',
+            $path.'config.yml',
+            $values
+        );
+
+    }
 }

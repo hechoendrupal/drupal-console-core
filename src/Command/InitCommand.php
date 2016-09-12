@@ -75,10 +75,10 @@ class InitCommand extends Command
                 $this->trans('commands.init.options.override')
             )
             ->addOption(
-                'no-interaction',
+                'auto',
                 null,
                 InputOption::VALUE_NONE,
-                $this->trans('commands.init.options.no-interaction')
+                $this->trans('commands.init.options.auto')
             );
     }
 
@@ -86,15 +86,17 @@ class InitCommand extends Command
      * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
-    {die("88888");
+    {
         $io = new DrupalStyle($input, $output);
+        $configuration = $this->configurationManager->getConfiguration();
+        $configApplication = $configuration->get('application');
         $copiedFiles = [];
         $override = false;
         if ($input->hasOption('override')) {
             $override = $input->getOption('override');
         }
-        if ($input->hasOption('no-interaction')) {
-            $no_interaction = $input->getOption('no-interaction');
+        if ($input->hasOption('auto')) {
+            $no_interaction = $input->getOption('auto');
         }
 
         $finder = new Finder();
@@ -106,10 +108,29 @@ class InitCommand extends Command
             )
         );
         $finder->files();
-print_r($no_interaction);
-print_r($finder);
-die();
+
         foreach ($finder as $configFile) {
+
+          if ($configFile->getBaseName() == "config.yml"){
+
+            $values = (!$no_interaction)?
+              $this->getUserChoices($io, $configApplication):
+              $values = $this->getDefaultUserChoices();
+
+            //@TODO: ¿ $override option ?
+            try {
+              $this->generator->generateConfig(
+                // @TODO: detect --root, @site or we are in a site
+                $this->getConsoleDirectory(), //@FIXME
+                $values
+              );
+            } catch (\Exception $e) {
+              $io->error($this->trans('commands.module.init.error-config'));
+              return;
+            }
+
+          }else{
+
             $source = sprintf(
                 '%s%s/config/dist/%s',
                 $this->configurationManager->getApplicationDirectory(),
@@ -117,15 +138,17 @@ die();
                 $configFile->getRelativePathname()
             );
 
-            $destination = sprintf(
-                '%s/%s',
-                $this->getConsoleDirectory(),
-                $configFile->getRelativePathname()
-            );
+                  $destination = sprintf(
+                      '%s/%s',
+                      $this->getConsoleDirectory(),
+                      $configFile->getRelativePathname()
+                  );
 
             if ($this->copyFile($source, $destination, $override)) {
                 $copiedFiles[] = $configFile->getRelativePathname();
             }
+
+          }
         }
 
         if ($copiedFiles) {
@@ -135,6 +158,7 @@ die();
         $this->createAutocomplete();
         $io->newLine(1);
         $io->writeln($this->trans('application.messages.autocomplete'));
+
     }
 
     protected function createAutocomplete()
@@ -179,5 +203,69 @@ die();
     private function getConsoleDirectory()
     {
         return sprintf('%s/.console/', $this->configurationManager->getHomeDirectory());
+    }
+
+    private function getUserChoices($io, $configApplication)
+    {
+      // global or site configuration
+      $user_choices['globally'] = $io->choice(
+        $this->trans('commands.module.init.questions.global'),
+        ['yes', 'no']
+      );
+
+      if ($user_choices['globally']) {
+        $filepath = $this->getConsoleDirectory() . "config.yml";
+      }
+
+      // language
+      $user_choices['language'] = $io->choice(
+        $this->trans('commands.module.init.questions.language'),
+        $configApplication['languages']
+      );
+      // temp
+      $user_choices['temp'] = $io->ask(
+        $this->trans('commands.module.init.questions.temp'),
+        '/tmp'
+      );
+
+      // options.learning
+      $user_choices['learning'] = $io->confirm(
+        $this->trans('commands.module.init.questions.learning'),
+        true
+      );
+
+      // options.learning
+      $user_choices['examples'] = $io->confirm(
+        $this->trans('commands.module.init.questions.examples'),
+        true
+      );
+
+      // options.learning
+      $user_choices['generate_inline'] = $io->confirm(
+        $this->trans('commands.module.init.questions.generate-inline'),
+        false
+      );
+
+      // options.learning
+      $user_choices['generate_chain'] = $io->confirm(
+        $this->trans('commands.module.init.questions.generate-chain'),
+        false
+      );
+
+      return $user_choices;
+    }
+
+
+    private function getDefaultUserChoices()
+    {
+      $user_choices['globally'] = $this->getConsoleDirectory(); //@FIXME
+      $user_choices['language'] = 'en';
+      $user_choices['temp'] = '/tmp';
+      $user_choices['learning'] = false;
+      $user_choices['examples'] = false;
+      $user_choices['generate_inline'] = false;
+      $user_choices['generate_chain'] = false;
+
+      return $user_choices;
     }
 }
