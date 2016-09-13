@@ -37,7 +37,7 @@ class InitGenerator extends Generator
             }
         }
 
-        if ($override) {
+        if (file_exists($userHome . 'config.yml') && $override) {
             $this->renderFile(
                 'core/init/config.yml.twig',
                 $userHome . 'config.yml',
