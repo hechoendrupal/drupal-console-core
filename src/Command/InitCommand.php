@@ -31,12 +31,10 @@ class InitCommand extends Command
      * @var ShowFile
      */
     protected $showFile;
-
     /**
      * @var ConfigurationManager
      */
     protected $configurationManager;
-
     /**
      * @var InitGenerator
      */
@@ -200,12 +198,20 @@ class InitCommand extends Command
         );
     }
 
+    /**
+     * @return string
+     */
     private function getConsoleDirectory()
     {
         return sprintf('%s/.console/', $this->configurationManager->getHomeDirectory());
     }
 
-    private function getUserChoices($io, $configApplication)
+    /**
+     * @param DrupalStyle $io
+     * @param $configApplication
+     * @return array
+     */
+    private function getUserChoices(DrupalStyle $io, $configApplication)
     {
         // global or site configuration
         $user_choices['globally'] = $io->confirm(
@@ -258,7 +264,9 @@ class InitCommand extends Command
         return $user_choices;
     }
 
-
+    /**
+     * @return array
+     */
     private function getDefaultUserChoices()
     {
         $user_choices['globally'] = $this->getConsoleDirectory(); //@FIXME
