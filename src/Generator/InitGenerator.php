@@ -4,11 +4,21 @@
  * @file
  * Contains Drupal\Console\Generator\InitGenerator.
  */
-
 namespace Drupal\Console\Generator;
 
+/**
+ * Class InitGenerator
+ * @package Drupal\Console\Generator
+ */
 class InitGenerator extends Generator
 {
+    /**
+     * @param string  $userHome
+     * @param string  $executableName
+     * @param boolean $override
+     * @param boolean $local
+     * @param array   $configParameters
+     */
     public function generate(
         $userHome,
         $executableName,
