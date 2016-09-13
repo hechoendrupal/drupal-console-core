@@ -40,10 +40,12 @@ application:
 #      - create
   options:
     learning: {{learning}}
-    examples: {{examples}}
 #    target: drupalvm.dev
 #    uri: miltisite.dev
     generate-inline: {{generate_inline}}
     generate-chain: {{generate_chain}}
-    yes: false
+##    yes: false
     composer: false
+{% if root is defined and root is not empty %}
+    root: '{{root}}'
+{% endif %}

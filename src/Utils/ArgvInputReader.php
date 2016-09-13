@@ -74,11 +74,12 @@ class ArgvInputReader
                 continue;
             }
 
-            if (!$argvInput->hasParameterOption($key)){
+            if (!$argvInput->hasParameterOption($key)) {
                 if ($option == 1) {
                     $_SERVER['argv'][] = sprintf('--%s', $key);
+                } else {
+                    $_SERVER['argv'][] = sprintf('--%s=%s', $key, $option);
                 }
-                $_SERVER['argv'][] = sprintf('--%s=%s', $key, $option);
                 continue;
             }
             if ($key === 'root') {
@@ -92,8 +93,13 @@ class ArgvInputReader
                 if (strpos($argv, '--'.$key) === 0) {
                     if ($option == 1) {
                         $_SERVER['argv'][$argvKey] = sprintf('--%s', $key);
+                    } else {
+                        $_SERVER['argv'][$argvKey] = sprintf(
+                            '--%s=%s',
+                            $key,
+                            $option
+                        );
                     }
-                    $_SERVER['argv'][$argvKey] = sprintf('--%s=%s', $key, $option);
                     continue;
                 }
             }

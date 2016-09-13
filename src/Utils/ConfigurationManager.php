@@ -33,9 +33,8 @@ class ConfigurationManager
         $files = [
             $applicationDirectory.'config.yml',
             $applicationDirectory.DRUPAL_CONSOLE_CORE.'config.yml',
-            $applicationDirectory.DRUPAL_CONSOLE_CORE.'config/dist/config.yml',
+            $applicationDirectory.DRUPAL_CONSOLE_CORE.'config/config.yml',
             $applicationDirectory.DRUPAL_CONSOLE.'config.yml',
-            $applicationDirectory.DRUPAL_CONSOLE.'config/dist/config.yml',
             $this->getHomeDirectory().'/.console/config.yml',
             getcwd().'/console/config.yml',
             $applicationDirectory.'console/config.yml',
