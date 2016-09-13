@@ -2,40 +2,63 @@
 
 /**
  * @file
- * Contains Drupal\Console\Generator\AutocompleteGenerator.
+ * Contains Drupal\Console\Generator\InitGenerator.
  */
 
 namespace Drupal\Console\Generator;
 
 class InitGenerator extends Generator
 {
-    public function generate($userHome, $executableName)
-    {
-        $parameters = array(
-          'executable' => $executableName,
+    public function generate(
+        $userHome,
+        $executableName,
+        $override,
+        $local,
+        $configParameters
+    ) {
+        $configParameters = array_map(
+            function ($item) {
+                if (is_bool($item)) {
+                    return $item?"true":"false";
+                }
+                return $item;
+            },
+            $configParameters
         );
 
+        if ($local) {
+            $this->renderFile(
+                'core/init/config.yml.twig',
+                getcwd().'/console/config.yml',
+                $configParameters
+            );
+            if (array_key_exists('root', $configParameters)) {
+                unset($configParameters['root']);
+            }
+        }
+
+        if ($override) {
+            $this->renderFile(
+                'core/init/config.yml.twig',
+                $userHome . 'config.yml',
+                $configParameters
+            );
+        }
+
+        $parameters = [
+          'executable' => $executableName,
+        ];
+
         $this->renderFile(
-            'autocomplete/console.rc.twig',
+            'core/autocomplete/console.rc.twig',
             $userHome.'console.rc',
             $parameters
         );
 
         $this->renderFile(
-            'autocomplete/console.fish.twig',
+            'core/autocomplete/console.fish.twig',
             $userHome.'drupal.fish',
             $parameters
         );
-    }
-
-    public function generateConfig($path, $values)
-    {
-
-        $this->renderFile(
-            'autocomplete/console.config.twig',
-            $path.'config.yml',
-            $values
-        );
-
     }
 }

@@ -40,10 +40,9 @@ application:
 #      - create
   options:
     learning: false
-    examples: false
 #    target: drupalvm.dev
 #    uri: miltisite.dev
     generate-inline: false
     generate-chain: false
-    yes: false
+#    yes: false
     composer: false
