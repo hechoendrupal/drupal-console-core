@@ -208,13 +208,15 @@ class InitCommand extends Command
     private function getUserChoices($io, $configApplication)
     {
         // global or site configuration
-        $user_choices['globally'] = $io->choice(
+        $user_choices['globally'] = $io->confirm(
             $this->trans('commands.module.init.questions.global'),
-            ['yes', 'no']
+            false
         );
 
         if ($user_choices['globally']) {
-            $filepath = $this->getConsoleDirectory() . "config.yml";
+            $user_choices['globally'] = $this->getConsoleDirectory() . 'config.yml';
+        } else {
+            $user_choices['globally'] = $this->getConsoleDirectory() . 'config.yml';
         }
 
         // language
@@ -222,6 +224,7 @@ class InitCommand extends Command
             $this->trans('commands.module.init.questions.language'),
             $configApplication['languages']
         );
+
         // temp
         $user_choices['temp'] = $io->ask(
             $this->trans('commands.module.init.questions.temp'),
