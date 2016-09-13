@@ -31,12 +31,10 @@ class InitCommand extends Command
      * @var ShowFile
      */
     protected $showFile;
-
     /**
      * @var ConfigurationManager
      */
     protected $configurationManager;
-
     /**
      * @var InitGenerator
      */
@@ -111,44 +109,44 @@ class InitCommand extends Command
 
         foreach ($finder as $configFile) {
 
-          if ($configFile->getBaseName() == "config.yml"){
+            if ($configFile->getBaseName() == "config.yml"){
 
-            $values = (!$no_interaction)?
-              $this->getUserChoices($io, $configApplication):
-              $values = $this->getDefaultUserChoices();
+                $values = (!$no_interaction)?
+                    $this->getUserChoices($io, $configApplication):
+                    $values = $this->getDefaultUserChoices();
 
-            //@TODO: ¿ $override option ?
-            try {
-              $this->generator->generateConfig(
-                // @TODO: detect --root, @site or we are in a site
-                $this->getConsoleDirectory(), //@FIXME
-                $values
-              );
-            } catch (\Exception $e) {
-              $io->error($this->trans('commands.module.init.error-config'));
-              return;
+                //@TODO: ¿ $override option ?
+                try {
+                    $this->generator->generateConfig(
+                    // @TODO: detect --root, @site or we are in a site
+                        $this->getConsoleDirectory(), //@FIXME
+                        $values
+                    );
+                } catch (\Exception $e) {
+                    $io->error($this->trans('commands.module.init.error-config'));
+                    return;
+                }
+
+            } else{
+
+                $source = sprintf(
+                    '%s%s/config/dist/%s',
+                    $this->configurationManager->getApplicationDirectory(),
+                    DRUPAL_CONSOLE_CORE,
+                    $configFile->getRelativePathname()
+                );
+
+                $destination = sprintf(
+                    '%s/%s',
+                    $this->getConsoleDirectory(),
+                    $configFile->getRelativePathname()
+                );
+
+                if ($this->copyFile($source, $destination, $override)) {
+                    $copiedFiles[] = $configFile->getRelativePathname();
+                }
+
             }
-
-          }else{
-
-            $source = sprintf(
-                '%s%s/config/dist/%s',
-                $this->configurationManager->getApplicationDirectory(),
-                DRUPAL_CONSOLE_CORE,
-                $configFile->getRelativePathname()
-            );
-
-                  $destination = sprintf(
-                      '%s/%s',
-                      $this->getConsoleDirectory(),
-                      $configFile->getRelativePathname()
-                  );
-
-            if ($this->copyFile($source, $destination, $override)) {
-                $copiedFiles[] = $configFile->getRelativePathname();
-            }
-
-          }
         }
 
         if ($copiedFiles) {
@@ -200,72 +198,85 @@ class InitCommand extends Command
         );
     }
 
+    /**
+     * @return string
+     */
     private function getConsoleDirectory()
     {
         return sprintf('%s/.console/', $this->configurationManager->getHomeDirectory());
     }
 
-    private function getUserChoices($io, $configApplication)
+    /**
+     * @param DrupalStyle $io
+     * @param $configApplication
+     * @return array
+     */
+    private function getUserChoices(DrupalStyle $io, $configApplication)
     {
-      // global or site configuration
-      $user_choices['globally'] = $io->choice(
-        $this->trans('commands.module.init.questions.global'),
-        ['yes', 'no']
-      );
+        // global or site configuration
+        $user_choices['globally'] = $io->confirm(
+            $this->trans('commands.module.init.questions.global'),
+            false
+        );
 
-      if ($user_choices['globally']) {
-        $filepath = $this->getConsoleDirectory() . "config.yml";
-      }
+        if ($user_choices['globally']) {
+            $user_choices['globally'] = $this->getConsoleDirectory() . 'config.yml';
+        } else {
+            $user_choices['globally'] = $this->getConsoleDirectory() . 'config.yml';
+        }
 
-      // language
-      $user_choices['language'] = $io->choice(
-        $this->trans('commands.module.init.questions.language'),
-        $configApplication['languages']
-      );
-      // temp
-      $user_choices['temp'] = $io->ask(
-        $this->trans('commands.module.init.questions.temp'),
-        '/tmp'
-      );
+        // language
+        $user_choices['language'] = $io->choice(
+            $this->trans('commands.module.init.questions.language'),
+            $configApplication['languages']
+        );
 
-      // options.learning
-      $user_choices['learning'] = $io->confirm(
-        $this->trans('commands.module.init.questions.learning'),
-        true
-      );
+        // temp
+        $user_choices['temp'] = $io->ask(
+            $this->trans('commands.module.init.questions.temp'),
+            '/tmp'
+        );
 
-      // options.learning
-      $user_choices['examples'] = $io->confirm(
-        $this->trans('commands.module.init.questions.examples'),
-        true
-      );
+        // options.learning
+        $user_choices['learning'] = $io->confirm(
+            $this->trans('commands.module.init.questions.learning'),
+            true
+        );
 
-      // options.learning
-      $user_choices['generate_inline'] = $io->confirm(
-        $this->trans('commands.module.init.questions.generate-inline'),
-        false
-      );
+        // options.learning
+        $user_choices['examples'] = $io->confirm(
+            $this->trans('commands.module.init.questions.examples'),
+            true
+        );
 
-      // options.learning
-      $user_choices['generate_chain'] = $io->confirm(
-        $this->trans('commands.module.init.questions.generate-chain'),
-        false
-      );
+        // options.learning
+        $user_choices['generate_inline'] = $io->confirm(
+            $this->trans('commands.module.init.questions.generate-inline'),
+            false
+        );
 
-      return $user_choices;
+        // options.learning
+        $user_choices['generate_chain'] = $io->confirm(
+            $this->trans('commands.module.init.questions.generate-chain'),
+            false
+        );
+
+        return $user_choices;
     }
 
-
+    /**
+     * @return array
+     */
     private function getDefaultUserChoices()
     {
-      $user_choices['globally'] = $this->getConsoleDirectory(); //@FIXME
-      $user_choices['language'] = 'en';
-      $user_choices['temp'] = '/tmp';
-      $user_choices['learning'] = false;
-      $user_choices['examples'] = false;
-      $user_choices['generate_inline'] = false;
-      $user_choices['generate_chain'] = false;
+        $user_choices['globally'] = $this->getConsoleDirectory(); //@FIXME
+        $user_choices['language'] = 'en';
+        $user_choices['temp'] = '/tmp';
+        $user_choices['learning'] = false;
+        $user_choices['examples'] = false;
+        $user_choices['generate_inline'] = false;
+        $user_choices['generate_chain'] = false;
 
-      return $user_choices;
+        return $user_choices;
     }
 }
