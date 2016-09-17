@@ -49,7 +49,7 @@ abstract class Generator
     protected function renderFile(
         $template,
         $target,
-        $parameters,
+        $parameters = [],
         $flag = null
     ) {
         if (!is_dir(dirname($target))) {

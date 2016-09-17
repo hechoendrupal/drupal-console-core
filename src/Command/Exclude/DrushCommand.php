@@ -64,10 +64,16 @@ class DrushCommand extends Command
 
         $alternative = $this->configurationManager->readDrushEquivalents($commandName);
 
-        $io->info('Drupal Console equivalents');
+        $io->info($this->trans('application.commands.drush.description'));
         $tableHeader = ['drush','drupal console'];
 
-        if (!$commandName && is_array($alternative)) {
+        if (!$alternative) {
+            $io->error($this->trans('application.commands.drush.messages.not-found'));
+
+            return 1;
+        }
+
+        if (is_array($alternative)) {
             $io->table(
                 $tableHeader,
                 $alternative
