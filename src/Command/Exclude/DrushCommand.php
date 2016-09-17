@@ -48,7 +48,7 @@ class DrushCommand extends Command
     {
         $this
             ->setName('drush')
-            ->setDescription($this->trans('application.commands.drush.description'))
+            ->setDescription($this->trans('commands.drush.description'))
             ->addArgument(
                 'command-name',
                 InputArgument::OPTIONAL,
@@ -64,15 +64,17 @@ class DrushCommand extends Command
 
         $alternative = $this->configurationManager->readDrushEquivalents($commandName);
 
-        $io->info($this->trans('application.commands.drush.description'));
-        $tableHeader = ['drush','drupal console'];
+        $io->newLine();
+        $io->info($this->trans('commands.drush.description'));
+        $io->newLine();
 
         if (!$alternative) {
-            $io->error($this->trans('application.commands.drush.messages.not-found'));
+            $io->error($this->trans('commands.drush.messages.not-found'));
 
             return 1;
         }
 
+        $tableHeader = ['drush','drupal console'];
         if (is_array($alternative)) {
             $io->table(
                 $tableHeader,
