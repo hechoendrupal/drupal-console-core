@@ -163,15 +163,19 @@ class ConfigurationManager
             }
         }
 
+        if (!$commandName) {
+            $aliasInformation = [];
+            foreach ($equivalents as $key => $alternative) {
+                $aliasInformation[] = [$key, $alternative];
+            }
+
+            return $aliasInformation;
+        }
+
         if (array_key_exists($commandName, $equivalents)) {
             return $equivalents[$commandName] ?: ' ';
         }
 
-        $aliasInformation = [];
-        foreach ($equivalents as $key => $alternative) {
-            $aliasInformation[] = [$key, $alternative];
-        }
-
-        return $aliasInformation;
+        return [];
     }
 }

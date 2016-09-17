@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d176f234228b6b535165e99bd2bc34d8",
+    "hash": "d2705b90fc38dcc719bdba2b44486cc7",
     "content-hash": "7f5c40bab089469d2a987a86b20d0f5a",
     "packages": [
         {
@@ -179,12 +179,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-en.git",
-                "reference": "48b666592cfdf16ee582ef35be73610e4f343744"
+                "reference": "31f93b7b966256cdf18278237378854a9e02a5cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/48b666592cfdf16ee582ef35be73610e4f343744",
-                "reference": "48b666592cfdf16ee582ef35be73610e4f343744",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/31f93b7b966256cdf18278237378854a9e02a5cf",
+                "reference": "31f93b7b966256cdf18278237378854a9e02a5cf",
                 "shasum": ""
             },
             "type": "drupal-console-language",
@@ -225,7 +225,7 @@
                 "drupal",
                 "symfony"
             ],
-            "time": "2016-09-13 03:09:15"
+            "time": "2016-09-17 02:43:14"
         },
         {
             "name": "stecman/symfony-console-completion",
