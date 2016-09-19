@@ -17,7 +17,7 @@ services:
     arguments: ['@app.root', '@console.translator_manager']
   console.renderer:
     class: Drupal\Console\Utils\TwigRenderer
-    arguments: ['@console.translator_manager']
+    arguments: ['@console.translator_manager', '@console.string_converter']
   console.file_queue:
     class: Drupal\Console\Utils\FileQueue
   console.shell_process:

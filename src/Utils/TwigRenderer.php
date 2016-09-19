@@ -7,6 +7,8 @@
 
 namespace Drupal\Console\Utils;
 
+use Drupal\Console\Utils\StringConverter;
+
 class TwigRenderer
 {
     protected $translator;
@@ -16,12 +18,21 @@ class TwigRenderer
     protected $skeletonDirs;
 
     /**
+     * @var StringConverter
+     */
+    protected $stringConverter;
+
+    /**
      * TwigRenderer constructor.
      * @param $translator
+     * @param StringConverter  $stringConverter
      */
-    public function __construct($translator)
-    {
+    public function __construct(
+        $translator,
+        StringConverter $stringConverter
+    ){
         $this->translator = $translator;
+        $this->stringConverter = $stringConverter;
     }
 
     /**
@@ -239,7 +250,7 @@ class TwigRenderer
     {
         return new \Twig_SimpleFilter(
             'machine_name', function ($var) {
-                return $this->getStringHelper()->createMachineName($var);
+                return $this->stringConverter->createMachineName($var);
             }
         );
     }
