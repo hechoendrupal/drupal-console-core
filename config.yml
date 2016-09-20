@@ -1,4 +1,5 @@
 application:
+  language: 'en'
   autowire:
     commands:
       forced:
