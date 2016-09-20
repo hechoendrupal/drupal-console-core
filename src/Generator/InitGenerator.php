@@ -36,29 +36,23 @@ class InitGenerator extends Generator
             $configParameters
         );
 
+        $configFile = $userHome . 'config.yml';
         if ($local) {
-            $this->renderFile(
-                'core/init/config.yml.twig',
-                getcwd().'/console/config.yml',
-                $configParameters
-            );
-            if (array_key_exists('root', $configParameters)) {
-                unset($configParameters['root']);
-            }
+            $configFile = getcwd().'/console/config.yml';
         }
 
-        if (file_exists($userHome . 'config.yml') && $override) {
+        if (file_exists($configFile) && $override) {
             copy(
-                $userHome . 'config.yml',
-                $userHome . 'config.yml' . '.old'
-            );
-
-            $this->renderFile(
-                'core/init/config.yml.twig',
-                $userHome . 'config.yml',
-                $configParameters
+                $configFile,
+                $configFile . '.old'
             );
         }
+
+        $this->renderFile(
+            'core/init/config.yml.twig',
+            $configFile,
+            $configParameters
+        );
 
         $parameters = [
           'executable' => $executableName,
