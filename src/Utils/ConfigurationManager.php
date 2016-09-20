@@ -32,11 +32,14 @@ class ConfigurationManager
         $input = new ArgvInput();
         $root = $input->getParameterOption(['--root'], null);
 
-        $configFiles = [
-            $this->getConsoleDirectory().'config.yml',
-            getcwd().'/console/config.yml',
-            $applicationDirectory.'/console/config.yml'
-        ];
+        $configFiles[] = $this->getConsoleDirectory().'config.yml';
+        if ($this->getHomeDirectory() != getcwd()) {
+            $configFiles[] = getcwd().'/console/config.yml';
+        }
+
+        if (stripos($applicationDirectory, '/bin/') <= 0) {
+            $configFiles[] = $applicationDirectory.'/console/config.yml';
+        }
 
         $files = [
             $applicationDirectory.'config.yml',
@@ -63,9 +66,7 @@ class ConfigurationManager
 
         foreach ($configFiles as $key => $file) {
             if (!file_exists($file)) {
-                if (stripos($file, '/bin/') <= 0) {
-                    $this->missingConfigurationFiles[] = $file;
-                }
+                $this->missingConfigurationFiles[] = $file;
             } else {
                 $this->missingConfigurationFiles = [];
                 break;
