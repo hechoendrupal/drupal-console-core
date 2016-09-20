@@ -23,6 +23,8 @@ services:
   console.shell_process:
     class: Drupal\Console\Utils\ShellProcess
     arguments: ['@app.root']
+  console.string_converter:
+      class: Drupal\Console\Utils\StringConverter
   # DrupalConsoleCore Commands
   console.about:
     class: Drupal\Console\Command\AboutCommand
