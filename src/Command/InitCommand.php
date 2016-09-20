@@ -168,7 +168,7 @@ class InitCommand extends Command
 
             $destination = sprintf(
                 '%s/%s',
-                $this->getConsoleDirectory(),
+                $this->configurationManager->getConsoleDirectory(),
                 $configFile->getRelativePathname()
             );
 
@@ -191,7 +191,7 @@ class InitCommand extends Command
         $process->stop();
 
         $this->generator->generate(
-            $this->getConsoleDirectory(),
+            $this->configurationManager->getConsoleDirectory(),
             $executableName,
             $override,
             $local,
@@ -209,8 +209,15 @@ class InitCommand extends Command
      */
     private function copyFile($source, $destination, $override)
     {
-        if (file_exists($destination) && !$override) {
-            return false;
+        if (file_exists($destination)) {
+            if ($override) {
+                copy(
+                    $destination,
+                    $destination . '.old'
+                );
+            } else {
+                return false;
+            }
         }
 
         $filePath = dirname($destination);
@@ -222,10 +229,5 @@ class InitCommand extends Command
             $source,
             $destination
         );
-    }
-
-    private function getConsoleDirectory()
-    {
-        return sprintf('%s/.console/', $this->configurationManager->getHomeDirectory());
     }
 }

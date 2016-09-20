@@ -48,6 +48,11 @@ class InitGenerator extends Generator
         }
 
         if (file_exists($userHome . 'config.yml') && $override) {
+            copy(
+                $userHome . 'config.yml',
+                $userHome . 'config.yml' . '.old'
+            );
+
             $this->renderFile(
                 'core/init/config.yml.twig',
                 $userHome . 'config.yml',

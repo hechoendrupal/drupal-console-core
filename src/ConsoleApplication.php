@@ -2,6 +2,7 @@
 
 namespace Drupal\Console;
 
+use Drupal\Console\Utils\ConfigurationManager;
 use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Console\Input\InputInterface;
@@ -9,6 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Drupal\Console\EventSubscriber\CallCommandListener;
+use Drupal\Console\Style\DrupalStyle;
 
 /**
  * Class Application
@@ -72,10 +74,26 @@ class ConsoleApplication extends Application
         }
         $this->registerEvents();
         $this->registerCommandsFromAutoWireConfiguration();
-        return parent::doRun(
+
+        $code = parent::doRun(
             $input,
             $output
         );
+
+        /**
+         * @var ConfigurationManager $configurationManager
+         */
+        $configurationManager = $this->container->get('console.configuration_manager');
+        if ($this->commandName != 'init' && $configurationManager->getMissingConfigurationFiles()) {
+            $io = new DrupalStyle($input, $output);
+            $io->warning($this->trans('application.site.errors.missing-config-file'));
+            $io->listing($configurationManager->getMissingConfigurationFiles());
+            $io->commentBlock(
+                $this->trans('application.site.errors.missing-config-file-command')
+            );
+        }
+
+        return $code;
     }
 
     private function registerEvents()
@@ -187,6 +205,10 @@ class ConsoleApplication extends Application
 
         foreach ($autoWireForcedCommands as $autoWireForcedCommand) {
             try {
+                if (!$autoWireForcedCommand['class']) {
+                    continue;
+                }
+
                 $reflectionClass = new \ReflectionClass(
                     $autoWireForcedCommand['class']
                 );
@@ -206,6 +228,7 @@ class ConsoleApplication extends Application
 
                 $this->add($command);
             } catch (\Exception $e) {
+                echo $e->getMessage() . PHP_EOL;
                 continue;
             }
         }
@@ -245,6 +268,7 @@ class ConsoleApplication extends Application
 
                 $this->add($command);
             } catch (\Exception $e) {
+                echo $e->getMessage() . PHP_EOL;
             }
         }
     }

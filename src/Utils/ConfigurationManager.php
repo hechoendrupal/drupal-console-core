@@ -19,6 +19,8 @@ class ConfigurationManager
 
     private $applicationDirectory = null;
 
+    private $missingConfigurationFiles = [];
+
     /**
      * @param $applicationDirectory
      * @return $this
@@ -30,23 +32,43 @@ class ConfigurationManager
         $input = new ArgvInput();
         $root = $input->getParameterOption(['--root'], null);
 
+        $configFiles = [
+            $this->getConsoleDirectory().'config.yml',
+            getcwd().'/console/config.yml',
+            $applicationDirectory.'/console/config.yml'
+        ];
+
         $files = [
             $applicationDirectory.'config.yml',
             $applicationDirectory.DRUPAL_CONSOLE_CORE.'config.yml',
-            $applicationDirectory.DRUPAL_CONSOLE_CORE.'config/config.yml',
             $applicationDirectory.DRUPAL_CONSOLE.'config.yml',
-            $this->getHomeDirectory().'/.console/config.yml',
+            $this->getConsoleDirectory().'config.yml',
             getcwd().'/console/config.yml',
             $applicationDirectory.'console/config.yml',
         ];
 
         if ($root) {
             $files[] = $root.'/console/config.yml';
+            $configFiles[] = $root.'/console/config.yml';
         }
+
+        $files = array_unique($files);
+        $configFiles = array_unique($configFiles);
 
         foreach ($files as $key => $file) {
             if (!file_exists($file)) {
                 unset($files[$key]);
+            }
+        }
+
+        foreach ($configFiles as $key => $file) {
+            if (!file_exists($file)) {
+                if (stripos($file, '/bin/') <= 0) {
+                    $this->missingConfigurationFiles[] = $file;
+                }
+            } else {
+                $this->missingConfigurationFiles = [];
+                break;
             }
         }
 
@@ -138,9 +160,8 @@ class ConfigurationManager
     public function getSitesDirectory()
     {
         return sprintf(
-            '%s%sconfig/dist/config.yml',
-            $this->applicationDirectory,
-            DRUPAL_CONSOLE_CORE
+            '%s/sites',
+            $this->getConsoleDirectory()
         );
     }
 
@@ -177,5 +198,15 @@ class ConfigurationManager
         }
 
         return [];
+    }
+
+    public function getConsoleDirectory()
+    {
+        return sprintf('%s/.console/', $this->getHomeDirectory());
+    }
+
+    public function getMissingConfigurationFiles()
+    {
+        return $this->missingConfigurationFiles;
     }
 }
