@@ -213,7 +213,15 @@ class ConsoleApplication extends Application
                     $autoWireForcedCommand['class']
                 );
 
-                $command = $reflectionClass->newInstance();
+                $arguments = [];
+                if (array_key_exists('arguments', $autoWireForcedCommand)) {
+                    foreach ($autoWireForcedCommand['arguments'] as $argument) {
+                        $argument = substr($argument, 1);
+                        $arguments[] = $this->container->get($argument);
+                    }
+                }
+
+                $command = $reflectionClass->newInstanceArgs($arguments);
 
                 if (method_exists($command, 'setTranslator')) {
                     $command->setTranslator(
