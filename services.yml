@@ -29,44 +29,44 @@ services:
   console.about:
     class: Drupal\Console\Command\AboutCommand
     tags:
-      - { name: console.command }
+      - { name: drupal.command }
   console.list:
     class: Drupal\Console\Command\ListCommand
     tags:
-      - { name: console.command }
+      - { name: drupal.command }
   console.help:
     class: Drupal\Console\Command\HelpCommand
     tags:
-      - { name: console.command }
+      - { name: drupal.command }
   console.complete:
     class: Drupal\Console\Command\CompleteCommand
     tags:
-      - { name: console.command }
+      - { name: drupal.command }
   console.check:
     class: Drupal\Console\Command\CheckCommand
     arguments: ['@console.requirement_checker', '@console.chain_queue', '@console.configuration_manager']
     tags:
-      - { name: console.command }
+      - { name: drupal.command }
   console.init:
     class: Drupal\Console\Command\InitCommand
     arguments: ['@console.show_file', '@console.configuration_manager', '@console.init_generator']
     tags:
-      - { name: console.command }
+      - { name: drupal.command }
   console.settings_debug:
     class: Drupal\Console\Command\Settings\DebugCommand
     arguments: ['@console.configuration_manager', '@console.nested_array']
     tags:
-      - { name: console.command }
+      - { name: drupal.command }
   console.settings_set:
     class: Drupal\Console\Command\Settings\SetCommand
     arguments: ['@console.configuration_manager', '@console.nested_array']
     tags:
-      - { name: console.command }
+      - { name: drupal.command }
   console.exec:
     class: Drupal\Console\Command\Exec\ExecCommand
     arguments: ['@console.shell_process']
     tags:
-      - { name: console.command }
+      - { name: drupal.command }
   # DrupalConsoleCore Generators
   console.init_generator:
     class: Drupal\Console\Generator\InitGenerator
