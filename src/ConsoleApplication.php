@@ -2,14 +2,15 @@
 
 namespace Drupal\Console;
 
-use Drupal\Console\Utils\ConfigurationManager;
-use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Application;
+use Drupal\Console\EventSubscriber\ShowGeneratedFilesListener;
 use Drupal\Console\EventSubscriber\CallCommandListener;
+use Drupal\Console\Utils\ConfigurationManager;
 use Drupal\Console\Style\DrupalStyle;
 
 /**
@@ -103,6 +104,12 @@ class ConsoleApplication extends Application
         $dispatcher->addSubscriber(
             new CallCommandListener(
                 $this->container->get('console.chain_queue')
+            )
+        );
+        $dispatcher->addSubscriber(
+            new ShowGeneratedFilesListener(
+                $this->container->get('console.file_queue'),
+                $this->container->get('console.show_file')
             )
         );
         $this->setDispatcher($dispatcher);
