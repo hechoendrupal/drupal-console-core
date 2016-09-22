@@ -71,4 +71,4 @@ services:
   console.init_generator:
     class: Drupal\Console\Generator\InitGenerator
     tags:
-      - { name: console.generator }
+      - { name: drupal.generator }
