@@ -2,6 +2,11 @@
 
 namespace Drupal\Console;
 
+use Drupal\Console\EventSubscriber\DefaultValueEventListener;
+use Drupal\Console\EventSubscriber\ShowGenerateChainListener;
+use Drupal\Console\EventSubscriber\ShowTipsListener;
+use Drupal\Console\EventSubscriber\ShowWelcomeMessageListener;
+use Drupal\Console\EventSubscriber\ValidateExecutionListener;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -9,6 +14,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Application;
 use Drupal\Console\EventSubscriber\ShowGeneratedFilesListener;
+use Drupal\Console\EventSubscriber\ShowGenerateInlineListener;
 use Drupal\Console\EventSubscriber\CallCommandListener;
 use Drupal\Console\Utils\ConfigurationManager;
 use Drupal\Console\Style\DrupalStyle;
@@ -102,6 +108,27 @@ class ConsoleApplication extends Application
         $dispatcher = new EventDispatcher();
         /* @todo Register listeners as services */
         $dispatcher->addSubscriber(
+            new ValidateExecutionListener(
+                $this->container->get('console.translator_manager'),
+                $this->container->get('console.configuration_manager')
+            )
+        );
+        $dispatcher->addSubscriber(
+            new ShowWelcomeMessageListener(
+                $this->container->get('console.translator_manager')
+            )
+        );
+        $dispatcher->addSubscriber(
+            new DefaultValueEventListener(
+                $this->container->get('console.configuration_manager')
+            )
+        );
+        $dispatcher->addSubscriber(
+            new ShowTipsListener(
+                $this->container->get('console.translator_manager')
+            )
+        );
+        $dispatcher->addSubscriber(
             new CallCommandListener(
                 $this->container->get('console.chain_queue')
             )
@@ -112,6 +139,17 @@ class ConsoleApplication extends Application
                 $this->container->get('console.show_file')
             )
         );
+        $dispatcher->addSubscriber(
+            new ShowGenerateInlineListener(
+                $this->container->get('console.translator_manager')
+            )
+        );
+        $dispatcher->addSubscriber(
+            new ShowGenerateChainListener(
+                $this->container->get('console.translator_manager')
+            )
+        );
+
         $this->setDispatcher($dispatcher);
     }
 
