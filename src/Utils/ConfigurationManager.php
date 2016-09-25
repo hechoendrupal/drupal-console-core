@@ -88,6 +88,14 @@ class ConfigurationManager
         return $this->configuration;
     }
 
+    public function readSite($siteFile) {
+        if (!file_exists($siteFile)) {
+            return [];
+        }
+
+        return Yaml::parse(file_get_contents($siteFile));
+    }
+
     /**
      * @param $target
      *
