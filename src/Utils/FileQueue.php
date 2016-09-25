@@ -29,7 +29,7 @@ class FileQueue
     /**
      * @return array
      */
-    public function getFile()
+    public function getFiles()
     {
         return $this->files;
     }
