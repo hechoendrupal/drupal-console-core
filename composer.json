@@ -38,7 +38,7 @@
     "require": {
         "php": "^5.5.9 || ^7.0",
         "dflydev/dot-access-configuration": "1.*",
-        "drupal/console-en" : "dev-master",
+        "drupal/console-en" : "~1.0",
         "stecman/symfony-console-completion": "^0.5.1",
         "symfony/console": "~2.8",
         "symfony/dependency-injection": "~2.8",
@@ -51,6 +51,8 @@
         "symfony/event-dispatcher": "~2.8",
         "twig/twig": "^1.23.1"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "files": [
             "src/constants.php",
