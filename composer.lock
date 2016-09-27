@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d2705b90fc38dcc719bdba2b44486cc7",
-    "content-hash": "7f5c40bab089469d2a987a86b20d0f5a",
+    "hash": "063e319e3f60eea42bf98734c82444ea",
+    "content-hash": "459803a9d76abeceab85453f282dbc13",
     "packages": [
         {
             "name": "dflydev/dot-access-configuration",
@@ -175,16 +175,16 @@
         },
         {
             "name": "drupal/console-en",
-            "version": "dev-master",
+            "version": "1.0.0-rc1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-en.git",
-                "reference": "31f93b7b966256cdf18278237378854a9e02a5cf"
+                "reference": "2cf5746d56aab2a2b16f09f1875be6456363055f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/31f93b7b966256cdf18278237378854a9e02a5cf",
-                "reference": "31f93b7b966256cdf18278237378854a9e02a5cf",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/2cf5746d56aab2a2b16f09f1875be6456363055f",
+                "reference": "2cf5746d56aab2a2b16f09f1875be6456363055f",
                 "shasum": ""
             },
             "type": "drupal-console-language",
@@ -225,7 +225,7 @@
                 "drupal",
                 "symfony"
             ],
-            "time": "2016-09-17 02:43:14"
+            "time": "2016-09-23 07:54:23"
         },
         {
             "name": "stecman/symfony-console-completion",
@@ -891,11 +891,9 @@
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": {
-        "drupal/console-en": 20
-    },
-    "prefer-stable": false,
+    "minimum-stability": "dev",
+    "stability-flags": [],
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^5.5.9 || ^7.0"
