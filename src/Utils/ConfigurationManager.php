@@ -61,6 +61,11 @@ class ConfigurationManager
         foreach ($files as $key => $file) {
             if (!file_exists($file)) {
                 unset($files[$key]);
+                continue;
+            }
+            if (file_get_contents($file)==='') {
+                unset($files[$key]);
+                continue;
             }
         }
 
