@@ -178,7 +178,7 @@ class InitCommand extends Command
         }
 
         if ($copiedFiles) {
-            $this->showFile->copiedFiles($io, $copiedFiles);
+            $this->showFile->copiedFiles($io, $copiedFiles, false);
             $io->newLine();
         }
 

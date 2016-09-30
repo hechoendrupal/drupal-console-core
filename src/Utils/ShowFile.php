@@ -34,30 +34,44 @@ class ShowFile
     /**
      * @param DrupalStyle $io
      * @param string      $files
+     * @param boolean     $showPath
      */
-    public function generatedFiles($io, $files)
+    public function generatedFiles($io, $files, $showPath = true)
     {
+        $pathKey = null;
+        $path = null;
+        if ($showPath){
+            $pathKey = 'application.user.messages.path';
+            $path = $this->root;
+        }
         $this->showFiles(
             $io,
             $files,
             'application.messages.files.generated',
-            'application.site.messages.path',
-            $this->root
+            $pathKey,
+            $path
         );
     }
 
     /**
      * @param DrupalStyle $io
      * @param string      $files
+     * @param boolean     $showPath
      */
-    public function copiedFiles($io, $files)
+    public function copiedFiles($io, $files, $showPath = true)
     {
+        $pathKey = null;
+        $path = null;
+        if ($showPath){
+            $pathKey = 'application.user.messages.path';
+            $path = rtrim(getenv('HOME') ?: getenv('USERPROFILE'), '/\\').'/.console/';
+        }
         $this->showFiles(
             $io,
             $files,
             'application.messages.files.copied',
-            'application.user.messages.path',
-            rtrim(getenv('HOME') ?: getenv('USERPROFILE'), '/\\').'/.console/'
+            $pathKey,
+            $path
         );
     }
 
@@ -76,11 +90,15 @@ class ShowFile
 
         $io->writeln($this->translator->trans($headerKey));
 
-        $io->info(
-            sprintf('%s:', $this->translator->trans($pathKey)),
-            false
-        );
-        $io->comment($path, false);
+        if ($pathKey) {
+            $io->info(
+                sprintf('%s:', $this->translator->trans($pathKey)),
+                false
+            );
+        }
+        if ($path) {
+            $io->comment($path, false);
+        }
         $io->newLine();
 
         $index = 1;
