@@ -37,9 +37,9 @@ class DrupalConsoleCore
             $loader->load('services.yml');
         }
 
-        if (file_exists($this->root.DRUPAL_CONSOLE.'/services-drupal-install')) {
+        if (file_exists($this->root.DRUPAL_CONSOLE.'/services-drupal-install.yml')) {
             $loader->load(
-                $this->root . DRUPAL_CONSOLE . '/services-drupal-install'
+                $this->root . DRUPAL_CONSOLE . '/services-drupal-install.yml'
             );
         }
 

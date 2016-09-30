@@ -60,7 +60,7 @@ class ShowGeneratedFilesListener implements EventSubscriberInterface
 
         $files = $this->fileQueue->getFiles();
         if ($files) {
-            $this->showFile->generatedFiles($io, $files);
+            $this->showFile->generatedFiles($io, $files, false);
         }
     }
 
