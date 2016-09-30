@@ -50,6 +50,11 @@ class InitCommand extends Command
         'generate_chain' => false
     ];
 
+    private $webRootDirectories = [
+        'web',
+        'docroot'
+    ];
+
     /**
      * InitCommand constructor.
      * @param ShowFile             $showFile
@@ -107,7 +112,13 @@ class InitCommand extends Command
         }
 
         if ($local) {
-            $this->configParameters['root'] = $io->askEmpty(
+            $root = null;
+            foreach($this->webRootDirectories as $webRootDirectory) {
+                if (!$root && is_dir(getcwd().'/'.$webRootDirectory)) {
+                    $root = $webRootDirectory;
+                }
+            }
+            $this->configParameters['root'] = $root?:$io->askEmpty(
                 $this->trans('commands.init.questions.root')
             );
         }
