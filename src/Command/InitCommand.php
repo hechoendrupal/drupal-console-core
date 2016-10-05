@@ -178,13 +178,13 @@ class InitCommand extends Command
             );
 
             $destination = sprintf(
-                '%s/%s',
+                '%s%s',
                 $this->configurationManager->getConsoleDirectory(),
                 $configFile->getRelativePathname()
             );
 
             if ($this->copyFile($source, $destination, $override)) {
-                $copiedFiles[] = $configFile->getRelativePathname();
+                $copiedFiles[] = $destination;
             }
         }
 
