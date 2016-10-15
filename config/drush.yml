@@ -2,47 +2,47 @@
 commands:
   config:
     config-edit: ~
-    config-export: "config:export"
-    config-get: "config:debug CONFIG_NAME"
-    config-import: "config:import"
-    config-list: "config:debug"
+    config-export: 'config:export'
+    config-get: 'config:debug CONFIG_NAME'
+    config-import: 'config:import'
+    config-list: 'config:debug'
     config-pull: ~
-    config-set: "config:override"
+    config-set: 'config:override'
   core:
     archive-dump: ~
     archive-restore: ~
     browse: ~
     core-cli: ~
     core-config: ~
-    core-cron: "cron:execute"
-    core-execute: "exec"
-    core-init: "init"
-    core-quick-drupal: "chain --file=~/.console/chain/quick-start.yml"
-    core-requirements: "site:status"
+    core-cron: 'cron:execute'
+    core-execute: 'exec'
+    core-init: 'init'
+    core-quick-drupal: 'chain --file=~/.console/chain/quick-start.yml'
+    core-requirements: 'site:status'
     core-rsync: ~
-    core-status: "site:status"
+    core-status: 'site:status'
     core-topic: ~
     drupal-directory: ~
-    entity-updates: "update:entities"
+    entity-updates: 'update:entities'
     help: help
     image-derive: ~
-    image-flush: "image:styles:flush"
+    image-flush: 'image:styles:flush'
     php-eval: ~
     php-script: ~
-    queue-list: "queue:debug"
-    queue-run: "queue:run"
+    queue-list: 'queue:debug'
+    queue-run: 'queue:run'
     shell-alias: ~
     site-alias: ~
-    site-install: "site:install"
+    site-install: 'site:install'
     site-set: ~
     site-ssh: ~
     twig-compile: ~
-    updatedb: "update:execute"
-    updatedb-status: "update:debug"
+    updatedb: 'update:execute'
+    updatedb-status: 'update:debug'
     variable-delete: ~
     variable-get: ~
-    variable-set: "config:override"
-    version: "--version"
+    variable-set: 'config:override'
+    version: '--version'
   drush_extras:
     block-configure: ~
     block-disable: ~
@@ -85,17 +85,17 @@ commands:
     vimrc-install: ~
     vimrc-tag-gen: ~
   pm:
-    pm-disable: "module:uninstall, theme:uninstall"
-    pm-download: "module:download, theme:download"
-    pm-enable: "module:install, theme:install"
+    pm-disable: 'module:uninstall, theme:uninstall'
+    pm-download: 'module:download, theme:download'
+    pm-enable: 'module:install, theme:install'
     pm-info: ~
-    pm-list: "module:debug, theme:debug"
+    pm-list: 'module:debug, theme:debug'
     pm-projectinfo: ~
     pm-refresh: ~
     pm-releasenotes: ~
     pm-releases: ~
-    pm-uninstall: "module:uninstall, theme:uninstall"
-    pm-update: "module:update, theme:update"
+    pm-uninstall: 'module:uninstall, theme:uninstall'
+    pm-update: 'module:update, theme:update'
     pm-updatecode: ~
     pm-updatestatus: ~
   role:
@@ -106,11 +106,11 @@ commands:
     role-remove-perm: ~
   runserver:
     runserver: server
-    sql-cli: "database:client"
-    sql-connect: "database:connect"
+    sql-cli: 'database:client'
+    sql-connect: 'database:connect'
     sql-create: ~
-    sql-drop: "database:drop"
-    sql-dump: "database:dump"
+    sql-drop: 'database:drop'
+    sql-dump: 'database:dump'
     sql-query: ~
     sql-sanitize: ~
     sql-sync: ~
@@ -134,26 +134,26 @@ commands:
     audit_users: ~
     audit_views: ~
     audit_watchdog: ~
-    cache-clear: "cache:rebuild"
+    cache-clear: 'cache:rebuild'
     cache-get: ~
-    cache-rebuild: "cache:rebuild"
+    cache-rebuild: 'cache:rebuild'
     cache-set: ~
     site-audit-version: ~
   state:
-    state-delete: "state:delete"
-    state-get: "state:debug"
-    state-set: "state:override"
+    state-delete: 'state:delete'
+    state-get: 'state:debug'
+    state-set: 'state:override'
   user:
     user-add-role: ~
     user-block: ~
     user-cancel: ~
     user-create: ~
     user-information: ~
-    user-login: "user:login:url"
+    user-login: 'user:login:url'
     user-password: ~
     user-remove-role: ~
     user-unblock: ~
   watchdog:
-    watchdog-delete: "database:log:clear"
+    watchdog-delete: 'database:log:clear'
     watchdog-list: ~
-    watchdog-show: "database:log:debug"
+    watchdog-show: 'database:log:debug'
