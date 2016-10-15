@@ -126,7 +126,7 @@ class TwigRenderer
             'servicesAsParametersKeys', function ($services) {
                 $returnValues = [];
                 foreach ($services as $service) {
-                    $returnValues[] = sprintf('"@%s"', $service['name']);
+                    $returnValues[] = sprintf('\'@%s\'', $service['name']);
                 }
 
                 return $returnValues;
