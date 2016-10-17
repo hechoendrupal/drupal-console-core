@@ -93,7 +93,8 @@ class ConfigurationManager
         return $this->configuration;
     }
 
-    public function readSite($siteFile) {
+    public function readSite($siteFile)
+    {
         if (!file_exists($siteFile)) {
             return [];
         }

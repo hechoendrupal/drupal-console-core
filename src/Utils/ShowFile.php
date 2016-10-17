@@ -40,7 +40,7 @@ class ShowFile
     {
         $pathKey = null;
         $path = null;
-        if ($showPath){
+        if ($showPath) {
             $pathKey = 'application.user.messages.path';
             $path = $this->root;
         }
@@ -62,7 +62,7 @@ class ShowFile
     {
         $pathKey = null;
         $path = null;
-        if ($showPath){
+        if ($showPath) {
             $pathKey = 'application.user.messages.path';
             $path = rtrim(getenv('HOME') ?: getenv('USERPROFILE'), '/\\').'/.console/';
         }
