@@ -17,7 +17,6 @@ use Drupal\Console\Utils\ShowFile;
 
 class ShowGeneratedFilesListener implements EventSubscriberInterface
 {
-
     /**
      * @var FileQueue
      */
@@ -35,7 +34,8 @@ class ShowGeneratedFilesListener implements EventSubscriberInterface
      * @param FileQueue $fileQueue
      * @param ShowFile  $showFile
      */
-    public function __construct(FileQueue $fileQueue, ShowFile $showFile) {
+    public function __construct(FileQueue $fileQueue, ShowFile $showFile)
+    {
         $this->fileQueue = $fileQueue;
         $this->showFile = $showFile;
     }

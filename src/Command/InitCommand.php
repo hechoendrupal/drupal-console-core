@@ -113,7 +113,7 @@ class InitCommand extends Command
 
         if ($local) {
             $root = null;
-            foreach($this->webRootDirectories as $webRootDirectory) {
+            foreach ($this->webRootDirectories as $webRootDirectory) {
                 if (!$root && is_dir(getcwd().'/'.$webRootDirectory)) {
                     $root = $webRootDirectory;
                 }
