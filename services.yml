@@ -1,5 +1,5 @@
 services:
-  # DrupalConsoleCore Services
+  # DrupalConsoleCore SerDrupalConsoleCorevices
   console.translator_manager:
     class: Drupal\Console\Utils\TranslatorManager
   console.configuration_manager:
