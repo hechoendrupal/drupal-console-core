@@ -89,7 +89,7 @@ class ConsoleApplication extends Application
         $configurationManager = $this->container
             ->get('console.configuration_manager');
 
-        if (!$this->has($commandName)) {
+        if ($commandName && !$this->has($commandName)) {
             $io->error(
                 sprintf(
                     $this->trans('application.errors.invalid-command'),
