@@ -76,23 +76,36 @@ class ConsoleApplication extends Application
 
     public function doRun(InputInterface $input, OutputInterface $output)
     {
+        $io = new DrupalStyle($input, $output);
         if ($commandName = $this->getCommandName($input)) {
             $this->commandName = $commandName;
         }
         $this->registerEvents();
         $this->registerCommandsFromAutoWireConfiguration();
 
+        /**
+         * @var ConfigurationManager $configurationManager
+         */
+        $configurationManager = $this->container
+            ->get('console.configuration_manager');
+
+        if (!$this->has($commandName)) {
+            $io->error(
+                sprintf(
+                    $this->trans('application.errors.invalid-command'),
+                    $this->commandName
+                )
+            );
+
+            return 1;
+        }
+
         $code = parent::doRun(
             $input,
             $output
         );
 
-        /**
-         * @var ConfigurationManager $configurationManager
-         */
-        $configurationManager = $this->container->get('console.configuration_manager');
         if ($this->commandName != 'init' && $configurationManager->getMissingConfigurationFiles()) {
-            $io = new DrupalStyle($input, $output);
             $io->warning($this->trans('application.site.errors.missing-config-file'));
             $io->listing($configurationManager->getMissingConfigurationFiles());
             $io->commentBlock(
