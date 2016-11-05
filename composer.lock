@@ -175,16 +175,16 @@
         },
         {
             "name": "drupal/console-en",
-            "version": "1.0.0-rc4",
+            "version": "1.0.0-rc6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-en.git",
-                "reference": "475e19d40a498d40f5a9183e05341c8ec7d8d96d"
+                "reference": "29ed613511bb15e830b449d7a2ec1d01c4f36078"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/475e19d40a498d40f5a9183e05341c8ec7d8d96d",
-                "reference": "475e19d40a498d40f5a9183e05341c8ec7d8d96d",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/29ed613511bb15e830b449d7a2ec1d01c4f36078",
+                "reference": "29ed613511bb15e830b449d7a2ec1d01c4f36078",
                 "shasum": ""
             },
             "type": "drupal-console-language",
@@ -225,7 +225,7 @@
                 "drupal",
                 "symfony"
             ],
-            "time": "2016-11-02 19:18:53"
+            "time": "2016-11-05 05:52:10"
         },
         {
             "name": "stecman/symfony-console-completion",
