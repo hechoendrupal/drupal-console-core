@@ -54,15 +54,13 @@ class AboutCommand extends Command
             //                $this->trans('commands.common.messages.quick-start'),
             //                'drupal chain --file=~/.console/chain/quick-start.yml'
             //            ],
-            //            'site-new' => [
-            //                $this->trans('commands.site.new.description'),
-            //                'drupal site:new drupal8.dev --latest'
-            //            ],
+            'site-new' => [
+                $this->trans('commands.site.new.description'),
+                'drupal site:new drupal8.dev --latest'
+            ],
             'site-install' => [
                 $this->trans('commands.site.install.description'),
-                sprintf(
-                    'drupal site:install'
-                )
+                'drupal site:install'
             ],
             'links' => [
                 $this->trans('commands.list.description'),
