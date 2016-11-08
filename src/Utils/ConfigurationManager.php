@@ -56,15 +56,18 @@ class ConfigurationManager
 
         $configurationFiles = [];
         foreach ($configurationDirectories as $configurationDirectory) {
-            if (!is_dir($configurationDirectory)) {
+            $file =  $configurationDirectory . 'config.yml';
+
+            if (!is_file($file)) {
                 continue;
             }
-            $configurationDirectory = str_replace('//', '/', $configurationDirectory);
+
             if (stripos($configurationDirectory, '/vendor/') <= 0 &&
-                stripos($configurationDirectory, 'console/') > 0) {
-                $this->configurationDirectories[] = $configurationDirectory;
+                stripos($configurationDirectory, '/bin/') <= 0 &&
+                stripos($configurationDirectory, 'console/') > 0) {;
+                $this->configurationDirectories[] = str_replace('//', '/', $configurationDirectory);
             }
-            $file =  $configurationDirectory . 'config.yml';
+
             if (!file_exists($file)) {
                 $this->missingConfigurationFiles[] = $file;
                 continue;
@@ -258,7 +261,10 @@ class ConfigurationManager
                     Yaml::parse(file_get_contents($aliasFile)),
                     $aliases
                 );
-                $this->configuration->set('application', $aliases);
+                $this->configuration->set(
+                    'application.commands.aliases',
+                    $aliases['commands']['aliases']
+                );
             }
         }
     }
