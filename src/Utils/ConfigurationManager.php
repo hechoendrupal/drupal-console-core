@@ -250,7 +250,13 @@ class ConfigurationManager
     /**
      * @return string
      */
-    public function appendCommandAliases() {
+    public function appendCommandAliases()
+    {
+        $this->configurationDirectories = array_merge(
+            [$this->applicationDirectory . DRUPAL_CONSOLE_CORE . 'config/dist/'],
+            $this->configurationDirectories
+        );
+
         foreach ($this->configurationDirectories as $directory) {
             $aliasFile = $directory . 'aliases.yml';
             $aliases = [];
