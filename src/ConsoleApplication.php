@@ -256,11 +256,8 @@ class ConsoleApplication extends Application
         $configuration = $this->container->get('console.configuration_manager')
             ->getConfiguration();
 
-        $autoWireForcedCommands = $configuration->get(
-            sprintf(
-                'application.autowire.commands.forced'
-            )
-        );
+        $autoWireForcedCommands = $configuration
+            ->get('application.autowire.commands.forced');
 
         foreach ($autoWireForcedCommands as $autoWireForcedCommand) {
             try {
