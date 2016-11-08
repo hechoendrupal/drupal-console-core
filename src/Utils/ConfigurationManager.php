@@ -58,11 +58,8 @@ class ConfigurationManager
         foreach ($configurationDirectories as $configurationDirectory) {
             $file =  $configurationDirectory . 'config.yml';
 
-            if (!is_file($file)) {
-                continue;
-            }
-
-            if (stripos($configurationDirectory, '/vendor/') <= 0 &&
+            if ( is_dir($configurationDirectory) &&
+                stripos($configurationDirectory, '/vendor/') <= 0 &&
                 stripos($configurationDirectory, '/bin/') <= 0 &&
                 stripos($configurationDirectory, 'console/') > 0) {;
                 $this->configurationDirectories[] = str_replace('//', '/', $configurationDirectory);
@@ -76,6 +73,7 @@ class ConfigurationManager
                 $this->missingConfigurationFiles[] = $file;
                 continue;
             }
+
             $configurationFiles[] = $file;
         }
 
