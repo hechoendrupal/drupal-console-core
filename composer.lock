@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0f44a0b54c7a87adc94311c9d7a92dad",
-    "content-hash": "bc455604ee391c7fe829e02cbe9030f8",
+    "hash": "3d11ea837354072847a2d4c5d3c42b19",
+    "content-hash": "1e232c7156f5cde097ec189e22a6f51b",
     "packages": [
         {
             "name": "dflydev/dot-access-configuration",
@@ -890,17 +890,21 @@
         },
         {
             "name": "webflo/drupal-finder",
-            "version": "0.0.2",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webflo/drupal-finder.git",
-                "reference": "4d6122b2001ebdca9aa3f983eeca1fc9187faf40"
+                "reference": "4dcd3281e9be9e9b89d33c5153f80ae1a16c3275"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webflo/drupal-finder/zipball/4d6122b2001ebdca9aa3f983eeca1fc9187faf40",
-                "reference": "4d6122b2001ebdca9aa3f983eeca1fc9187faf40",
+                "url": "https://api.github.com/repos/webflo/drupal-finder/zipball/4dcd3281e9be9e9b89d33c5153f80ae1a16c3275",
+                "reference": "4dcd3281e9be9e9b89d33c5153f80ae1a16c3275",
                 "shasum": ""
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "^1.6",
+                "phpunit/phpunit": "^4.8"
             },
             "type": "library",
             "autoload": {
@@ -919,7 +923,7 @@
                 }
             ],
             "description": "Helper class to locate a Drupal installation from a given path.",
-            "time": "2016-11-05 19:49:01"
+            "time": "2016-11-12 15:50:13"
         }
     ],
     "packages-dev": [],
