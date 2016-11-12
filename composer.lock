@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "41bb54502f374d1a295855bf940e2b29",
-    "content-hash": "b30bd050275d016d21111b11535e6e31",
+    "hash": "0f44a0b54c7a87adc94311c9d7a92dad",
+    "content-hash": "bc455604ee391c7fe829e02cbe9030f8",
     "packages": [
         {
             "name": "dflydev/dot-access-configuration",
@@ -887,6 +887,39 @@
                 "templating"
             ],
             "time": "2016-10-02 16:19:13"
+        },
+        {
+            "name": "webflo/drupal-finder",
+            "version": "0.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webflo/drupal-finder.git",
+                "reference": "4d6122b2001ebdca9aa3f983eeca1fc9187faf40"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webflo/drupal-finder/zipball/4d6122b2001ebdca9aa3f983eeca1fc9187faf40",
+                "reference": "4d6122b2001ebdca9aa3f983eeca1fc9187faf40",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/DrupalFinder.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Florian Weber",
+                    "email": "florian@webflo.org"
+                }
+            ],
+            "description": "Helper class to locate a Drupal installation from a given path.",
+            "time": "2016-11-05 19:49:01"
         }
     ],
     "packages-dev": [],

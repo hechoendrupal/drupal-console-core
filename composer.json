@@ -49,7 +49,8 @@
         "symfony/translation": "~2.8",
         "symfony/yaml": "~2.8",
         "symfony/event-dispatcher": "~2.8",
-        "twig/twig": "^1.23.1"
+        "twig/twig": "^1.23.1",
+        "webflo/drupal-finder": "^0.0.2"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
