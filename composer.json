@@ -50,7 +50,7 @@
         "symfony/yaml": "~2.8",
         "symfony/event-dispatcher": "~2.8",
         "twig/twig": "^1.23.1",
-        "webflo/drupal-finder": "^0.0.2"
+        "webflo/drupal-finder": "0.*"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
