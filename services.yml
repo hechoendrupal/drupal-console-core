@@ -4,8 +4,6 @@ services:
     class: Drupal\Console\Utils\TranslatorManager
   console.configuration_manager:
     class: Drupal\Console\Utils\ConfigurationManager
-  console.drupal_checker:
-      class: Drupal\Console\Utils\DrupalChecker
   console.requirement_checker:
     class: Drupal\Console\Utils\RequirementChecker
   console.chain_queue:
