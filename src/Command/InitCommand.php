@@ -122,15 +122,19 @@ class InitCommand extends Command
         $configuration = $this->configurationManager->getConfiguration();
 
         if (!$destination) {
-            $destinationList[] = $this->configurationManager
-                ->getConsoleDirectory();
             if ($this->appRoot && $this->consoleRoot) {
+                $destinationList[] = $this->configurationManager
+                    ->getConsoleDirectory();
                 $destinationList[] = $this->consoleRoot . '/console/';
+                $destination = $io->choice(
+                    $this->trans('commands.init.questions.destination'),
+                    $destinationList
+                );
             }
-            $destination = $io->choice(
-                $this->trans('commands.init.questions.destination'),
-                $destinationList
-            );
+            else {
+                $destination = $this->configurationManager
+                    ->getConsoleDirectory();
+            }
 
             $input->setOption('destination', $destination);
         }
