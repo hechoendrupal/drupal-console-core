@@ -38,6 +38,16 @@ class InitCommand extends Command
     protected $configurationManager;
 
     /**
+     * @var string
+     */
+    protected $appRoot;
+
+    /**
+     * @var string
+     */
+    protected $consoleRoot;
+
+    /**
      * @var InitGenerator
      */
     protected $generator;
@@ -50,25 +60,26 @@ class InitCommand extends Command
         'generate_chain' => false
     ];
 
-    private $webRootDirectories = [
-        'web',
-        'docroot'
-    ];
-
     /**
      * InitCommand constructor.
      * @param ShowFile             $showFile
      * @param ConfigurationManager $configurationManager
      * @param InitGenerator        $generator
+     * @param string               $appRoot
+     * @param string               $consoleRoot
      */
     public function __construct(
         ShowFile $showFile,
         ConfigurationManager $configurationManager,
-        InitGenerator $generator
+        InitGenerator $generator,
+        $appRoot,
+        $consoleRoot = null
     ) {
         $this->showFile = $showFile;
         $this->configurationManager = $configurationManager;
         $this->generator = $generator;
+        $this->appRoot = $appRoot;
+        $this->consoleRoot = $consoleRoot;
         parent::__construct();
     }
 
@@ -81,16 +92,22 @@ class InitCommand extends Command
             ->setName('init')
             ->setDescription($this->trans('commands.init.description'))
             ->addOption(
+                'destination',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                $this->trans('commands.init.options.destination')
+            )
+            ->addOption(
                 'override',
                 null,
                 InputOption::VALUE_NONE,
                 $this->trans('commands.init.options.override')
             )
             ->addOption(
-                'local',
+                'autocomplete',
                 null,
                 InputOption::VALUE_NONE,
-                $this->trans('commands.init.options.local')
+                $this->trans('commands.init.options.autocomplete')
             );
     }
 
@@ -100,28 +117,25 @@ class InitCommand extends Command
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
-        $local = $input->getOption('local');
+        $destination = $input->getOption('destination');
+        $autocomplete = $input->getOption('autocomplete');
         $configuration = $this->configurationManager->getConfiguration();
 
-        if (!$local) {
-            $local = $io->confirm(
-                $this->trans('commands.init.questions.local'),
-                true
+        if (!$destination) {
+            $destinationList[] = $this->configurationManager
+                ->getConsoleDirectory();
+            if ($this->appRoot && $this->consoleRoot) {
+                $destinationList[] = $this->consoleRoot . '/console/';
+            }
+            $destination = $io->choice(
+                $this->trans('commands.init.questions.destination'),
+                $destinationList
             );
-            $input->setOption('local', $local);
+
+            $input->setOption('destination', $destination);
         }
 
-        if ($local) {
-            $root = null;
-            foreach ($this->webRootDirectories as $webRootDirectory) {
-                if (!$root && is_dir(getcwd().'/'.$webRootDirectory)) {
-                    $root = $webRootDirectory;
-                }
-            }
-            $this->configParameters['root'] = $root?:$io->askEmpty(
-                $this->trans('commands.init.questions.root')
-            );
-        }
+        $io->commentBlock($destination);
 
         $this->configParameters['language'] = $io->choiceNoList(
             $this->trans('commands.init.questions.language'),
@@ -147,6 +161,14 @@ class InitCommand extends Command
             $this->trans('commands.init.questions.generate-chain'),
             false
         );
+
+        if (!$autocomplete) {
+            $autocomplete = $io->confirm(
+                $this->trans('commands.init.questions.autocomplete'),
+                false
+            );
+            $input->setOption('autocomplete', $autocomplete);
+        }
     }
 
     /**
@@ -156,8 +178,12 @@ class InitCommand extends Command
     {
         $io = new DrupalStyle($input, $output);
         $copiedFiles = [];
+        $destination = $input->getOption('destination');
+        $autocomplete = $input->getOption('autocomplete');
         $override = $input->getOption('override');
-        $local = $input->getOption('local');
+        if (!$destination) {
+            $destination = $this->configurationManager->getConsoleDirectory();
+        }
 
         $finder = new Finder();
         $finder->in(
@@ -170,21 +196,21 @@ class InitCommand extends Command
         $finder->files();
 
         foreach ($finder as $configFile) {
-            $source = sprintf(
+            $sourceFile = sprintf(
                 '%s%s/config/dist/%s',
                 $this->configurationManager->getApplicationDirectory(),
                 DRUPAL_CONSOLE_CORE,
                 $configFile->getRelativePathname()
             );
 
-            $destination = sprintf(
+            $destinationFile = sprintf(
                 '%s%s',
-                $this->configurationManager->getConsoleDirectory(),
+                $destination,
                 $configFile->getRelativePathname()
             );
 
-            if ($this->copyFile($source, $destination, $override)) {
-                $copiedFiles[] = $destination;
+            if ($this->copyFile($sourceFile, $destinationFile, $override)) {
+                $copiedFiles[] = $destinationFile;
             }
         }
 
@@ -193,19 +219,22 @@ class InitCommand extends Command
             $io->newLine();
         }
 
-        $processBuilder = new ProcessBuilder(array('bash'));
-        $process = $processBuilder->getProcess();
-        $process->setCommandLine('echo $_');
-        $process->run();
-        $fullPathExecutable = explode('/', $process->getOutput());
-        $executableName = trim(end($fullPathExecutable));
-        $process->stop();
+        $executableName = null;
+        if ($autocomplete) {
+            $processBuilder = new ProcessBuilder(array('bash'));
+            $process = $processBuilder->getProcess();
+            $process->setCommandLine('echo $_');
+            $process->run();
+            $fullPathExecutable = explode('/', $process->getOutput());
+            $executableName = trim(end($fullPathExecutable));
+            $process->stop();
+        }
 
         $this->generator->generate(
             $this->configurationManager->getConsoleDirectory(),
             $executableName,
             $override,
-            $local,
+            $destination,
             $this->configParameters
         );
 

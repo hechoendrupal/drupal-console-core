@@ -58,10 +58,11 @@ class ConfigurationManager
         foreach ($configurationDirectories as $configurationDirectory) {
             $file =  $configurationDirectory . 'config.yml';
 
-            if ( is_dir($configurationDirectory) &&
-                stripos($configurationDirectory, '/vendor/') <= 0 &&
-                stripos($configurationDirectory, '/bin/') <= 0 &&
-                stripos($configurationDirectory, 'console/') > 0) {;
+            if (is_dir($configurationDirectory)
+                && stripos($configurationDirectory, '/vendor/') <= 0
+                && stripos($configurationDirectory, '/bin/') <= 0
+                && stripos($configurationDirectory, 'console/') > 0
+            ) {
                 $this->configurationDirectories[] = str_replace('//', '/', $configurationDirectory);
             }
 
@@ -226,7 +227,7 @@ class ConfigurationManager
     }
 
     /**
-     * @deprecated
+     * @return string
      */
     public function getConsoleDirectory()
     {
@@ -236,14 +237,16 @@ class ConfigurationManager
     /**
      * @return array
      */
-    public function getMissingConfigurationFiles() {
+    public function getMissingConfigurationFiles()
+    {
         return $this->missingConfigurationFiles;
     }
 
     /**
      * @return array
      */
-    public function getConfigurationDirectories() {
+    public function getConfigurationDirectories()
+    {
         return $this->configurationDirectories;
     }
 
