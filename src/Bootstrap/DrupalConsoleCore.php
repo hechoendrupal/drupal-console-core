@@ -55,6 +55,13 @@ class DrupalConsoleCore
             $this->appRoot?$this->appRoot:$this->root
         );
 
+        if (stripos($this->root, '/bin/') <= 0) {
+            $container->set(
+                'console.root',
+                $this->root
+            );
+        }
+
         $container->get('console.renderer')
             ->setSkeletonDirs(
                 [

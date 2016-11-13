@@ -16,14 +16,14 @@ class InitGenerator extends Generator
      * @param string  $userHome
      * @param string  $executableName
      * @param boolean $override
-     * @param boolean $local
+     * @param string  $destination
      * @param array   $configParameters
      */
     public function generate(
         $userHome,
         $executableName,
         $override,
-        $local,
+        $destination,
         $configParameters
     ) {
         $configParameters = array_map(
@@ -37,8 +37,8 @@ class InitGenerator extends Generator
         );
 
         $configFile = $userHome . 'config.yml';
-        if ($local) {
-            $configFile = getcwd().'/console/config.yml';
+        if ($destination) {
+            $configFile = $destination.'config.yml';
         }
 
         if (file_exists($configFile) && $override) {
@@ -54,20 +54,22 @@ class InitGenerator extends Generator
             $configParameters
         );
 
-        $parameters = [
-          'executable' => $executableName,
-        ];
+        if ($executableName) {
+            $parameters = [
+                'executable' => $executableName,
+            ];
 
-        $this->renderFile(
-            'core/autocomplete/console.rc.twig',
-            $userHome.'console.rc',
-            $parameters
-        );
+            $this->renderFile(
+                'core/autocomplete/console.rc.twig',
+                $userHome . 'console.rc',
+                $parameters
+            );
 
-        $this->renderFile(
-            'core/autocomplete/console.fish.twig',
-            $userHome.'drupal.fish',
-            $parameters
-        );
+            $this->renderFile(
+                'core/autocomplete/console.fish.twig',
+                $userHome . 'drupal.fish',
+                $parameters
+            );
+        }
     }
 }
