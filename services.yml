@@ -47,7 +47,7 @@ services:
       - { name: drupal.command }
   console.init:
     class: Drupal\Console\Command\InitCommand
-    arguments: ['@console.show_file', '@console.configuration_manager', '@console.init_generator']
+    arguments: ['@console.show_file', '@console.configuration_manager', '@console.init_generator', '@app.root', '@?console.root']
     tags:
       - { name: drupal.command }
   console.settings_debug:
