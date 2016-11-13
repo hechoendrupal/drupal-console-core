@@ -139,8 +139,6 @@ class InitCommand extends Command
             $input->setOption('destination', $destination);
         }
 
-        $io->commentBlock($destination);
-
         $this->configParameters['language'] = $io->choiceNoList(
             $this->trans('commands.init.questions.language'),
             array_keys($configuration->get('application.languages'))
