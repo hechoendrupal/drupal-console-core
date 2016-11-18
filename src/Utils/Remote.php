@@ -48,8 +48,8 @@ class Remote
         $userHomeDir
     ) {
         $remoteCommand = str_replace(
-            [sprintf('\'%s\'', $commandName), sprintf('target=\'%s\'', $target)],
-            [$commandName, sprintf('root=%s', $targetConfig['root'])],
+            [sprintf('\'%s\'', $commandName), sprintf('target=\'%s\'', $target), '--remote=1'],
+            [$commandName, sprintf('root=%s', $targetConfig['root']), ''],
             $inputCommand
         );
 
