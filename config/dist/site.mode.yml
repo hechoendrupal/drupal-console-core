@@ -30,6 +30,9 @@ configurations:
       dev: all
       prod: none
 services:
+  http.response.debug_cacheability_headers:
+    dev: true
+    prod: false
   twig.config:
     debug:
       dev: true
