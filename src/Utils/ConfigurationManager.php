@@ -259,20 +259,21 @@ class ConfigurationManager
             [$this->applicationDirectory . DRUPAL_CONSOLE_CORE . 'config/dist/'],
             $this->configurationDirectories
         );
-
+        $aliases = [];
         foreach ($configurationDirectories as $directory) {
             $aliasFile = $directory . 'aliases.yml';
-            $aliases = [];
             if (file_exists($aliasFile)) {
                 $aliases = array_merge(
-                    Yaml::parse(file_get_contents($aliasFile)),
-                    $aliases
-                );
-                $this->configuration->set(
-                    'application.commands.aliases',
-                    $aliases['commands']['aliases']
+                    $aliases,
+                    Yaml::parse(file_get_contents($aliasFile))
                 );
             }
+        }
+        if (array_key_exists('commands',$aliases) && array_key_exists('aliases',$aliases['commands'])) {
+            $this->configuration->set(
+                'application.commands.aliases',
+                $aliases['commands']['aliases']
+            );
         }
     }
 }
