@@ -18,9 +18,6 @@ services:
     arguments: ['@console.translator_manager', '@console.string_converter']
   console.file_queue:
     class: Drupal\Console\Utils\FileQueue
-  console.remote:
-      class: Drupal\Console\Utils\Remote
-      arguments: ['@console.translator_manager']
   console.shell_process:
     class: Drupal\Console\Utils\ShellProcess
     arguments: ['@app.root']
