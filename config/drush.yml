@@ -111,7 +111,7 @@ commands:
     sql-create: ~
     sql-drop: 'database:drop'
     sql-dump: 'database:dump'
-    sql-query: ~
+    sql-query: 'database:query'
     sql-sanitize: ~
     sql-sync: ~
   search:
