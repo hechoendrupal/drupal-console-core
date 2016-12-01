@@ -9,4 +9,3 @@ prod:
   root: /var/www/html/docroot
   host: live.drupal.org
   user: drupal
-  console: /var/www/html/docroot/console.phar
