@@ -11,7 +11,7 @@ use Drupal\Console\Style\DrupalStyle;
 
 /**
  * Class ShowFileHelper
- * @package Drupal\Console\Helper
+ * @package Drupal\Console\Utils
  */
 class ShowFile
 {
@@ -44,7 +44,7 @@ class ShowFile
             $pathKey = 'application.user.messages.path';
             $path = $this->root;
         }
-        $this->showFiles(
+        $this->showMMultiple(
             $io,
             $files,
             'application.messages.files.generated',
@@ -66,7 +66,7 @@ class ShowFile
             $pathKey = 'application.user.messages.path';
             $path = rtrim(getenv('HOME') ?: getenv('USERPROFILE'), '/\\').'/.console/';
         }
-        $this->showFiles(
+        $this->showMMultiple(
             $io,
             $files,
             'application.messages.files.copied',
@@ -82,7 +82,7 @@ class ShowFile
      * @param string      $pathKey
      * @param string      $path
      */
-    private function showFiles($io, $files, $headerKey, $pathKey, $path)
+    private function showMMultiple($io, $files, $headerKey, $pathKey, $path)
     {
         if (!$files) {
             return;
@@ -103,7 +103,7 @@ class ShowFile
 
         $index = 1;
         foreach ($files as $file) {
-            $this->showFile($io, $file, $index);
+            $this->showSingle($io, $file, $index);
             ++$index;
         }
     }
@@ -113,7 +113,7 @@ class ShowFile
      * @param string      $file
      * @param int         $index
      */
-    private function showFile(DrupalStyle $io, $file, $index)
+    private function showSingle(DrupalStyle $io, $file, $index)
     {
         $io->info(
             sprintf('%s -', $index),
