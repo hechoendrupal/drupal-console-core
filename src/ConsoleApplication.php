@@ -7,7 +7,6 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Application;
 use Drupal\Console\EventSubscriber\DefaultValueEventListener;
 use Drupal\Console\EventSubscriber\ShowGenerateChainListener;
@@ -19,6 +18,8 @@ use Drupal\Console\EventSubscriber\ShowGenerateInlineListener;
 use Drupal\Console\EventSubscriber\CallCommandListener;
 use Drupal\Console\Utils\ConfigurationManager;
 use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Utils\ChainDiscovery;
+use Drupal\Console\Command\Chain\ChainCustomCommand;
 
 /**
  * Class Application
@@ -83,6 +84,7 @@ class ConsoleApplication extends Application
         }
         $this->registerEvents();
         $this->registerCommandsFromAutoWireConfiguration();
+        $this->registerChainCommands();
 
         /**
          * @var ConfigurationManager $configurationManager
@@ -337,6 +339,21 @@ class ConsoleApplication extends Application
         }
     }
 
+    public function registerChainCommands() {
+        /**
+         * @var ChainDiscovery $chainDiscovery
+         */
+        $chainDiscovery = $this->container->get('console.chain_discovery');
+        $chainCommands = $chainDiscovery->getChainCommands();
+
+        foreach ($chainCommands as $name => $chainCommand) {
+            $file = $chainCommand['file'];
+            $description = $chainCommand['description'];
+            $command = new ChainCustomCommand($name, $description, $file);
+            $this->add($command);
+        }
+    }
+
     /**
      * Finds a command by name or alias.
      *
@@ -344,7 +361,7 @@ class ConsoleApplication extends Application
      *
      * @return mixed A Command instance
      *
-     * Override parent fund method to avoid name collisions with automatically
+     * Override parent find method to avoid name collisions with automatically
      * generated command abbreviations.
      * Command name validation was previously done at doRun method.
      */
