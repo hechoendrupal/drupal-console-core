@@ -23,6 +23,11 @@ services:
     arguments: ['@app.root']
   console.string_converter:
       class: Drupal\Console\Utils\StringConverter
+
+  console.chain_discovery:
+    class: Drupal\Console\Utils\ChainDiscovery
+    arguments: ['@console.root', '@console.configuration_manager']
+
   # DrupalConsoleCore Commands
   console.about:
     class: Drupal\Console\Command\AboutCommand
@@ -63,6 +68,16 @@ services:
   console.exec:
     class: Drupal\Console\Command\Exec\ExecCommand
     arguments: ['@console.shell_process']
+    tags:
+      - { name: drupal.command }
+  console.chain:
+    class: Drupal\Console\Command\Chain\ChainCommand
+    arguments: ['@console.chain_queue', '@console.chain_discovery']
+    tags:
+      - { name: drupal.command }
+  console.chain_debug:
+    class: Drupal\Console\Command\Chain\ChainDebugCommand
+    arguments: ['@console.chain_discovery']
     tags:
       - { name: drupal.command }
   # DrupalConsoleCore Generators
