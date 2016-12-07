@@ -276,4 +276,26 @@ class ConfigurationManager
             );
         }
     }
+
+    public function loadExtendLibraries()
+    {
+        $directory = $this->getHomeDirectory() . '/.console/extend/';
+        if (!is_dir($directory)) {
+            mkdir($directory, 0777, true);
+        }
+
+        $autoloadFile = $directory . 'vendor/autoload.php';
+        if (!is_file($autoloadFile)) {
+            return null;
+        }
+        include_once $autoloadFile;
+
+        $extendFile = $directory . 'extends.yml';
+        if (!is_file($extendFile)) {
+            return null;
+        }
+        $builder = new YamlFileConfigurationBuilder([$extendFile]);
+
+        $this->configuration->import($builder->build());
+    }
 }
