@@ -264,7 +264,7 @@ class InitCommand extends Command
 
         $filePath = dirname($destination);
         if (!is_dir($filePath)) {
-            mkdir($filePath);
+            mkdir($filePath, 0777, true);
         }
 
         return copy(
