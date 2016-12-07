@@ -50,17 +50,19 @@ class DrupalConsoleCore
         $container->get('console.translator_manager')
             ->loadCoreLanguage('en', $this->root);
 
+        $appRoot = $this->appRoot?$this->appRoot:$this->root;
         $container->set(
             'app.root',
-            $this->appRoot?$this->appRoot:$this->root
+            $appRoot
         );
-
+        $consoleRoot = $appRoot;
         if (stripos($this->root, '/bin/') <= 0) {
-            $container->set(
-                'console.root',
-                $this->root
-            );
+            $consoleRoot = $this->root;
         }
+        $container->set(
+            'console.root',
+            $consoleRoot
+        );
 
         $container->get('console.renderer')
             ->setSkeletonDirs(

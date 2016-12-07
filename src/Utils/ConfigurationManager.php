@@ -290,7 +290,7 @@ class ConfigurationManager
         }
         include_once $autoloadFile;
 
-        $extendFile = $directory . 'extends.yml';
+        $extendFile = $directory . 'extend.yml';
         if (!is_file($extendFile)) {
             return null;
         }

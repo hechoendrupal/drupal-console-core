@@ -23,11 +23,9 @@ services:
     arguments: ['@app.root']
   console.string_converter:
       class: Drupal\Console\Utils\StringConverter
-
   console.chain_discovery:
     class: Drupal\Console\Utils\ChainDiscovery
     arguments: ['@console.root', '@console.configuration_manager']
-
   # DrupalConsoleCore Commands
   console.about:
     class: Drupal\Console\Command\AboutCommand
