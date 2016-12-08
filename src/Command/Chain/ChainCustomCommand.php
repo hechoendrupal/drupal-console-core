@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Command\Shared\CommandTrait;
+use Drupal\Console\Command\Shared\InputTrait;
 
 /**
  * Class ChainCustomCommand
@@ -22,6 +23,7 @@ use Drupal\Console\Command\Shared\CommandTrait;
 class ChainCustomCommand extends Command
 {
     use CommandTrait;
+    use InputTrait;
 
     /**
      * @var string
@@ -39,12 +41,12 @@ class ChainCustomCommand extends Command
     protected $file;
 
     /**
-   * ChainRegister constructor.
-   *
-   * @param $name
-   * @param $description
-   * @param $file
-   */
+     * ChainRegister constructor.
+     *
+     * @param $name
+     * @param $description
+     * @param $file
+     */
     public function __construct($name, $description, $file)
     {
         $this->name = $name;
@@ -55,8 +57,8 @@ class ChainCustomCommand extends Command
     }
 
     /**
-   * {@inheritdoc}
-   */
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
@@ -71,8 +73,8 @@ class ChainCustomCommand extends Command
     }
 
     /**
-   * {@inheritdoc}
-   */
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $command = $this->getApplication()->find('chain');
@@ -80,14 +82,25 @@ class ChainCustomCommand extends Command
         $arguments = [
             'command' => 'chain',
             '--file'  => $this->file,
-            '--placeholder'  => $input->getOption('placeholder'),
-            '--generate-inline'  => $input->hasOption('generate-inline'),
-            '--generate-chain'  => $input->hasOption('generate-chain'),
-            '--learning'  => $input->hasOption('learning'),
-            '--no-interaction'  => $input->hasOption('no-interaction')
         ];
 
+        if ($placeholder = $input->getOption('placeholder')) {
+            $arguments['--placeholder'] = $this->inlineValueAsArray($placeholder);
+        }
+
+        foreach($input->getOptions() as $option => $value) {
+            if ($option != 'placeholder' && $value) {
+                if (is_bool($value)) {
+                    $value = true;
+                }
+                $arguments['--'.$option] = $value;
+            }
+        }
+
         $commandInput = new ArrayInput($arguments);
+        if (array_key_exists('--no-interaction', $arguments)) {
+            $commandInput->setInteractive(false);
+        }
 
         return $command->run($commandInput, $output);
     }
