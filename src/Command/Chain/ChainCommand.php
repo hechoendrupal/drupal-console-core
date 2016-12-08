@@ -84,7 +84,6 @@ class ChainCommand extends Command
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
-        // Check if the constructor passed a value for file.
         $file = $input->getOption('file');
 
         if (!$file) {
@@ -169,8 +168,31 @@ class ChainCommand extends Command
         }
 
         $chainContent = $this->getFileContents($file);
-        $environmentPlaceHolders = $this->extractEnvironmentPlaceHolders($chainContent);
+        $inlinePlaceHolders = $this->extractInlinePlaceHolders($chainContent);
 
+        if ($inlinePlaceHolders) {
+            foreach ($inlinePlaceHolders as $key => $inlinePlaceHolder) {
+                if (!strpos($inlinePlaceHolder, '|')) {
+                    continue;
+                }
+
+                $placeholderParts = explode('|', $inlinePlaceHolder);
+                $inlinePlaceHolder = $placeholderParts[0];
+                $inlinePlaceHolderDefault = $placeholderParts[1];
+
+                if (!$inlinePlaceHolderDefault) {
+                    continue;
+                }
+
+                if ($placeholder && array_key_exists($inlinePlaceHolder, $placeholder[0])) {
+                    continue;
+                }
+
+                $placeholder[0][$inlinePlaceHolder] = $inlinePlaceHolderDefault;
+            }
+        }
+
+        $environmentPlaceHolders = $this->extractEnvironmentPlaceHolders($chainContent);
         $envPlaceHolderMap = [];
         $missingEnvironmentPlaceHolders = [];
         foreach ($environmentPlaceHolders as $envPlaceHolder) {
@@ -230,6 +252,7 @@ class ChainCommand extends Command
         }
 
         $missingInlinePlaceHolders = [];
+
         foreach ($inlinePlaceHolders as $inlinePlaceHolder) {
             if (!array_key_exists($inlinePlaceHolder, $inlinePlaceHolderMap)) {
                 $missingInlinePlaceHolders[$inlinePlaceHolder] = sprintf(
