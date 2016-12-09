@@ -101,6 +101,7 @@ class ChainCommand extends Command
         $chainContent = $this->getFileContents($file);
 
         $placeholder = $input->getOption('placeholder');
+
         $inlinePlaceHolders = $this->extractInlinePlaceHolders($chainContent);
 
         if (!$placeholder && $inlinePlaceHolders) {
@@ -140,7 +141,6 @@ class ChainCommand extends Command
         $learning = $input->hasOption('learning')?$input->getOption('learning'):false;
 
         $file = $input->getOption('file');
-
         if (!$file) {
             $io->error($this->trans('commands.chain.messages.missing_file'));
 
@@ -148,7 +148,6 @@ class ChainCommand extends Command
         }
 
         $fileSystem = new Filesystem();
-
         $file = calculateRealPath($file);
 
         if (!$fileSystem->exists($file)) {
@@ -165,6 +164,10 @@ class ChainCommand extends Command
         $placeholder = $input->getOption('placeholder');
         if ($placeholder) {
             $placeholder = $this->inlineValueAsArray($placeholder);
+        }
+        $placeHolderOptions = [];
+        foreach ($placeholder as $placeholderItem) {
+            $placeHolderOptions[] = key($placeholderItem);
         }
 
         $chainContent = $this->getFileContents($file);
@@ -184,11 +187,11 @@ class ChainCommand extends Command
                     continue;
                 }
 
-                if ($placeholder && array_key_exists($inlinePlaceHolder, $placeholder[0])) {
+                if (in_array($inlinePlaceHolder, $placeHolderOptions)) {
                     continue;
                 }
 
-                $placeholder[0][$inlinePlaceHolder] = $inlinePlaceHolderDefault;
+                $placeholder[] = [$inlinePlaceHolder => $inlinePlaceHolderDefault];
             }
         }
 
