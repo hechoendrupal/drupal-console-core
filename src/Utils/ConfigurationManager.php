@@ -38,6 +38,11 @@ class ConfigurationManager
      */
     public function loadConfiguration($applicationDirectory)
     {
+        $homeConfig = $this->getHomeDirectory() . '/.console/';
+        if (!is_dir($homeConfig)) {
+            mkdir($homeConfig, 0777);
+        }
+
         $this->applicationDirectory = $applicationDirectory;
         $input = new ArgvInput();
         $root = $input->getParameterOption(['--root'], null);
@@ -281,7 +286,7 @@ class ConfigurationManager
     {
         $directory = $this->getHomeDirectory() . '/.console/extend/';
         if (!is_dir($directory)) {
-            mkdir($directory, 0777, true);
+            return null;
         }
 
         $autoloadFile = $directory . 'vendor/autoload.php';
