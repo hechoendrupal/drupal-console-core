@@ -2,7 +2,7 @@
 # site:new --placeholder="directory:/path/to/drupal-project/" --placeholder="profile:minimal"
 command:
   name: site:new
-  description: 'Create, install and launch a new Drupal project'
+  description: 'Download, install and serve new Drupal project'
 commands:
   # Create Drupal project using DrupalComposer
   - command: exec
