@@ -1,18 +1,10 @@
 # How to use
-# site:new --placeholder="directory:/path/to/drupal-project/" --placeholder="profile:minimal"
+# site:new --placeholder="directory:/path/to/drupal-project/" --placeholder="repository:acquia/lightning-project"
 command:
   name: site:new
-  description: 'Download, install and serve new Drupal project'
+  description: 'Download a new Drupal project'
 commands:
   # Create Drupal project using DrupalComposer
   - command: exec
     arguments:
       bin: composer create-project %{{repository|drupal-composer/drupal-project:8.x-dev}} %{{directory}} --prefer-dist --no-progress --no-interaction
-  # Install Drupal
-  - command: exec
-    arguments:
-      bin: drupal site:install %{{profile|standard}} --root=%{{directory}} --no-interaction
-  # Start PHP bult-in server
-  - command: exec
-    arguments:
-      bin: drupal server --root=%{{directory}}
