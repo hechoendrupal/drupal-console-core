@@ -50,7 +50,8 @@
         "symfony/yaml": "~2.7|~3.1",
         "symfony/event-dispatcher": "~2.7|~3.1",
         "twig/twig": "^1.23.1",
-        "webflo/drupal-finder": "0.*"
+        "webflo/drupal-finder": "0.*",
+        "cweagans/composer-patches": "~1.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -60,5 +61,12 @@
             "src/functions.php"
         ],
         "psr-4": {"Drupal\\Console\\": "src"}
+    },
+    "extra": {
+        "patches": {
+            "dflydev/dot-access-configuration": {
+                "Make compatible with Symfony v3": "https://patch-diff.githubusercontent.com/raw/dflydev/dflydev-dot-access-configuration/pull/8.patch"
+            }
+        }
     }
 }
