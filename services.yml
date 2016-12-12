@@ -78,6 +78,11 @@ services:
     arguments: ['@console.chain_discovery']
     tags:
       - { name: drupal.command }
+  console.site_debug:
+    class: Drupal\Console\Command\Site\DebugCommand
+    arguments: ['@console.configuration_manager']
+    tags:
+      - { name: drupal.command }
   # DrupalConsoleCore Generators
   console.init_generator:
     class: Drupal\Console\Generator\InitGenerator
