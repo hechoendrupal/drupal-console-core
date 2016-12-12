@@ -347,10 +347,15 @@ class ConsoleApplication extends Application
         $chainCommands = $chainDiscovery->getChainCommands();
 
         foreach ($chainCommands as $name => $chainCommand) {
-            $file = $chainCommand['file'];
-            $description = $chainCommand['description'];
-            $command = new ChainCustomCommand($name, $description, $file);
-            $this->add($command);
+            try {
+                $file = $chainCommand['file'];
+                $description = $chainCommand['description'];
+                $command = new ChainCustomCommand($name, $description, $file);
+                $this->add($command);
+            }
+            catch (\Exception $e) {
+                echo $e->getMessage();
+            }
         }
     }
 
