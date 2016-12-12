@@ -21,12 +21,13 @@ trait InputTrait
         $inputArrayValue = [];
         foreach ($inputValue as $key => $value) {
             if (!is_array($value)) {
-                $inputValueItems = [];
-                foreach (explode(" ", $value) as $inputKeyValueItem) {
-                    list($inputKeyItem, $inputValueItem) = explode(":", $inputKeyValueItem);
-                    $inputValueItems[$inputKeyItem] = $inputValueItem;
+                $separatorIndex = strpos($value, ':');
+                if (!$separatorIndex) {
+                    continue;
                 }
-                $inputArrayValue[$key] = $inputValueItems;
+                $inputKeyItem = substr($value, 0, $separatorIndex);
+                $inputValueItem = substr($value, $separatorIndex+1);
+                $inputArrayValue[$key] = [$inputKeyItem => $inputValueItem];
             }
         }
 
