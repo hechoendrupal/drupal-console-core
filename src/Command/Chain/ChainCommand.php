@@ -119,7 +119,7 @@ class ChainCommand extends Command
                     $inlinePlaceHolder,
                     $io->ask(
                         sprintf(
-                            'Enter placeholder value for <comment>%s</comment>',
+                            'Enter value for %s placeholder',
                             $inlinePlaceHolder
                         ),
                         $inlinePlaceHolderDefault
