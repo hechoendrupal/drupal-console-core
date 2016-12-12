@@ -1,0 +1,18 @@
+# How to use
+# quick:start --placeholder="directory:/path/to/drupal-project/" --placeholder="repository:acquia/lightning-project" --placeholder="profile:minimal"
+command:
+  name: quick:start
+  description: 'Download, install and serve a new Drupal project'
+commands:
+  # Create Drupal project using DrupalComposer
+  - command: exec
+    arguments:
+      bin: composer create-project %{{repository|drupal-composer/drupal-project:8.x-dev}} %{{directory}} --prefer-dist --no-progress --no-interaction
+  # Install Drupal
+  - command: exec
+    arguments:
+      bin: drupal site:install %{{profile|standard}} --root=%{{directory}} --no-interaction
+  # Start PHP bult-in server
+  - command: exec
+    arguments:
+      bin: drupal server --root=%{{directory}}
