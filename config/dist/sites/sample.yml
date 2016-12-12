@@ -9,3 +9,7 @@ prod:
   root: /var/www/html/docroot
   host: live.drupal.org
   user: drupal
+  keys:
+    public: ~/.ssh/id_rsa.pub
+    private: ~/.ssh/id_rsa
+    passphrase: ~/.ssh/passphrase.txt
