@@ -4,65 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fdf56e09b2cfdf39414b9fe7c4f33bd1",
-    "content-hash": "23fe1431dce071330a4b158ab462586f",
+    "hash": "feb631c844e9c65853ce3a68403f919c",
+    "content-hash": "2b9e947891380adfc3ac508b3a77a4dc",
     "packages": [
         {
-            "name": "cweagans/composer-patches",
-            "version": "1.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cweagans/composer-patches.git",
-                "reference": "7cd5c6eb7e68b8f7436ce1a7b9fffa4418bf59c6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cweagans/composer-patches/zipball/7cd5c6eb7e68b8f7436ce1a7b9fffa4418bf59c6",
-                "reference": "7cd5c6eb7e68b8f7436ce1a7b9fffa4418bf59c6",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0",
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "composer/composer": "~1.0",
-                "phpunit/phpunit": "~4.6"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "cweagans\\Composer\\Patches"
-            },
-            "autoload": {
-                "psr-4": {
-                    "cweagans\\Composer\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-2-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Cameron Eagans",
-                    "email": "me@cweagans.net"
-                }
-            ],
-            "description": "Provides a way to patch Composer packages.",
-            "time": "2016-12-01 01:19:32"
-        },
-        {
             "name": "dflydev/dot-access-configuration",
-            "version": "v1.0.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dflydev/dflydev-dot-access-configuration.git",
-                "reference": "9b65c83159c9003e00284ea1144ad96b69d9c8b9"
+                "reference": "9dc52aeeab5ae99afcbb0d67bb5c1af8c87d03dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dflydev/dflydev-dot-access-configuration/zipball/9b65c83159c9003e00284ea1144ad96b69d9c8b9",
-                "reference": "9b65c83159c9003e00284ea1144ad96b69d9c8b9",
+                "url": "https://api.github.com/repos/dflydev/dflydev-dot-access-configuration/zipball/9dc52aeeab5ae99afcbb0d67bb5c1af8c87d03dc",
+                "reference": "9dc52aeeab5ae99afcbb0d67bb5c1af8c87d03dc",
                 "shasum": ""
             },
             "require": {
@@ -109,7 +65,7 @@
                 "config",
                 "configuration"
             ],
-            "time": "2014-11-14 03:26:12"
+            "time": "2016-12-12 16:23:46"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -219,16 +175,16 @@
         },
         {
             "name": "drupal/console-en",
-            "version": "1.0.0-rc10",
+            "version": "1.0.0-rc11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-en.git",
-                "reference": "6482b4e7102d91c6a3650ed3ed1f0081ceca5e99"
+                "reference": "694f46c5dfa69efc3f8a0bdc6eab4d63c306b1b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/6482b4e7102d91c6a3650ed3ed1f0081ceca5e99",
-                "reference": "6482b4e7102d91c6a3650ed3ed1f0081ceca5e99",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/694f46c5dfa69efc3f8a0bdc6eab4d63c306b1b6",
+                "reference": "694f46c5dfa69efc3f8a0bdc6eab4d63c306b1b6",
                 "shasum": ""
             },
             "type": "drupal-console-language",
@@ -269,7 +225,7 @@
                 "drupal",
                 "symfony"
             ],
-            "time": "2016-12-12 00:56:06"
+            "time": "2016-12-12 17:16:39"
         },
         {
             "name": "psr/log",
@@ -1089,7 +1045,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "dflydev/dot-access-configuration": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
