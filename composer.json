@@ -41,6 +41,7 @@
         "drupal/console-en" : "~1.0",
         "stecman/symfony-console-completion": "~0.7",
         "symfony/console": ">=2.7 <3.2",
+        "symfony/debug": ">=2.6 <3.2",
         "symfony/dependency-injection": ">=2.7 <3.2",
         "symfony/config": ">=2.7 <3.2",
         "symfony/filesystem": ">=2.7 <3.2",
