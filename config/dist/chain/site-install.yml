@@ -1,10 +1,4 @@
 commands:
-# Download Drupal
-  - command: site:new
-    arguments:
-      directory: 'drupal8.dev'
-    options:
-      latest: 'true'
 # Install Drupal
   - command: site:install
     options:
@@ -18,5 +12,3 @@ commands:
       account-pass: admin
     arguments:
       profile: standard
-# Start php built-in server
-  - command: server
