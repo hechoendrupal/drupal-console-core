@@ -10,6 +10,7 @@ namespace Drupal\Console\Command\Exec;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\Console\Command\Shared\CommandTrait;
 use Drupal\Console\Utils\ShellProcess;
@@ -50,7 +51,13 @@ class ExecCommand extends Command
                 'bin',
                 InputArgument::REQUIRED,
                 $this->trans('commands.exec.arguments.bin')
-            );
+            )->addOption(
+                'working-directory',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                $this->trans('commands.exec.options.working-directory')
+            )
+        ;
     }
 
     /**
@@ -60,6 +67,7 @@ class ExecCommand extends Command
     {
         $io = new DrupalStyle($input, $output);
         $bin = $input->getArgument('bin');
+        $workingDirectory = $input->getOption('working-directory');
 
         if (!$bin) {
             $io->error(
@@ -69,7 +77,7 @@ class ExecCommand extends Command
             return 1;
         }
 
-        if (!$this->shellProcess->exec($bin)) {
+        if (!$this->shellProcess->exec($bin, $workingDirectory)) {
             $io->error(
                 sprintf(
                     $this->trans('commands.exec.messages.invalid-bin')
