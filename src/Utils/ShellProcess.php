@@ -50,7 +50,7 @@ class ShellProcess
      */
     public function exec($command, $workingDirectory=null)
     {
-        if (!$workingDirectory) {
+        if (!$workingDirectory || $workingDirectory==='') {
             $workingDirectory = $this->appRoot;
         }
         $this->process = new Process($command);
