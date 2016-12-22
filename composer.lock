@@ -178,12 +178,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-en.git",
-                "reference": "e32e54aa97905b31389155337b61ccfdd91b7cc6"
+                "reference": "810cc4d3e45d47ff444be57c8d25f50ebfcfae28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/e32e54aa97905b31389155337b61ccfdd91b7cc6",
-                "reference": "e32e54aa97905b31389155337b61ccfdd91b7cc6",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/810cc4d3e45d47ff444be57c8d25f50ebfcfae28",
+                "reference": "810cc4d3e45d47ff444be57c8d25f50ebfcfae28",
                 "shasum": ""
             },
             "type": "drupal-console-language",
