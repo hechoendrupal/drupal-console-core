@@ -2,21 +2,21 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Command\Chain\ChainDebugCommand.
+ * Contains \Drupal\Console\Core\Command\Chain\ChainDebugCommand.
  */
 
-namespace Drupal\Console\Command\Chain;
+namespace Drupal\Console\Core\Command\Chain;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Utils\ChainDiscovery;
-use Drupal\Console\Style\DrupalStyle;
-use Drupal\Console\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Utils\ChainDiscovery;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
 
 /**
  * Class ChainDebugCommand
- * @package Drupal\Console\Command\Chain
+ * @package Drupal\Console\Core\Command\Chain
  */
 class ChainDebugCommand extends Command
 {

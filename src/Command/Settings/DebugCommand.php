@@ -2,22 +2,22 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Command\Settings\DebugCommand.
+ * Contains \Drupal\Console\Core\Command\Settings\DebugCommand.
  */
 
-namespace Drupal\Console\Command\Settings;
+namespace Drupal\Console\Core\Command\Settings;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Command\Shared\CommandTrait;
-use Drupal\Console\Utils\ConfigurationManager;
-use Drupal\Console\Utils\NestedArray;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Utils\ConfigurationManager;
+use Drupal\Console\Core\Utils\NestedArray;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class DebugCommand
- * @package Drupal\Console\Command\Settings
+ * @package Drupal\Console\Core\Command\Settings
  */
 class DebugCommand extends Command
 {

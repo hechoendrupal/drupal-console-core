@@ -7,13 +7,13 @@ application:
           class: '\Stecman\Component\Symfony\Console\BashCompletion\CompletionCommand'
       name:
         drush:
-          class: '\Drupal\Console\Command\Exclude\DrushCommand'
+          class: '\Drupal\Console\Core\Command\Exclude\DrushCommand'
           arguments: ['@console.configuration_manager', '@console.chain_queue']
         elephpant:
-          class: '\Drupal\Console\Command\Exclude\ElephpantCommand'
+          class: '\Drupal\Console\Core\Command\Exclude\ElephpantCommand'
           arguments: ['@app.root', '@console.renderer']
         druplicon:
-          class: '\Drupal\Console\Command\Exclude\DrupliconCommand'
+          class: '\Drupal\Console\Core\Command\Exclude\DrupliconCommand'
           arguments: ['@app.root', '@console.renderer']
   languages:
     en: 'English'

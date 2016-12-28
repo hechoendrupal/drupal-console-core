@@ -2,14 +2,14 @@
 
 /**
  * @file
- * Contains Drupal\Console\Utils\ChainQueue.
+ * Contains Drupal\Console\Core\Utils\ChainQueue.
  */
 
-namespace Drupal\Console\Utils;
+namespace Drupal\Console\Core\Utils;
 
 /**
  * Class ChainQueue
- * @package Drupal\Console\Helper
+ * @package Drupal\Console\Core\Helper
  */
 class ChainQueue
 {

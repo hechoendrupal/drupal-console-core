@@ -2,13 +2,13 @@
 /*
  * This file is part of the Drupal Console.
  */
-namespace Drupal\Console\Helper;
+namespace Drupal\Console\Core\Helper;
 
 use Symfony\Component\Console\Helper\Helper as BaseHelper;
 use Symfony\Component\Console\Descriptor\DescriptorInterface;
 use Symfony\Component\Console\Descriptor\JsonDescriptor;
 use Symfony\Component\Console\Descriptor\MarkdownDescriptor;
-use Drupal\Console\Descriptor\TextDescriptor;
+use Drupal\Console\Core\Descriptor\TextDescriptor;
 use Symfony\Component\Console\Descriptor\XmlDescriptor;
 use Symfony\Component\Console\Output\OutputInterface;
 

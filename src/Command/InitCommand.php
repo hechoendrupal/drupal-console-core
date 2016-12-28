@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Command\InitCommand.
+ * Contains \Drupal\Console\Core\Command\InitCommand.
  */
 
-namespace Drupal\Console\Command;
+namespace Drupal\Console\Core\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -13,15 +13,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\ProcessBuilder;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Command\Shared\CommandTrait;
-use Drupal\Console\Utils\ConfigurationManager;
-use Drupal\Console\Generator\InitGenerator;
-use Drupal\Console\Utils\ShowFile;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Utils\ConfigurationManager;
+use Drupal\Console\Core\Generator\InitGenerator;
+use Drupal\Console\Core\Utils\ShowFile;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class InitCommand
- * @package Drupal\Console\Command
+ * @package Drupal\Console\Core\Command
  */
 class InitCommand extends Command
 {

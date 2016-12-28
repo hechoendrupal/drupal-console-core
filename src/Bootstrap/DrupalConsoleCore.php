@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Console\Bootstrap;
+namespace Drupal\Console\Core\Bootstrap;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

@@ -2,15 +2,15 @@
 
 /**
  * @file
- * Contains \Drupal\Console\CompleteCommand.
+ * Contains \Drupal\Console\Core\CompleteCommand.
  */
 
-namespace Drupal\Console\Command;
+namespace Drupal\Console\Core\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
 
 class CompleteCommand extends Command
 {

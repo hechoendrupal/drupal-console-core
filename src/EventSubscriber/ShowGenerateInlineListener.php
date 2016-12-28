@@ -2,17 +2,17 @@
 
 /**
  * @file
- * Contains \Drupal\Console\EventSubscriber\ShowGenerateInlineListener.
+ * Contains \Drupal\Console\Core\EventSubscriber\ShowGenerateInlineListener.
  */
 
-namespace Drupal\Console\EventSubscriber;
+namespace Drupal\Console\Core\EventSubscriber;
 
 use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Utils\TranslatorManager;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Utils\TranslatorManager;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 class ShowGenerateInlineListener implements EventSubscriberInterface
 {

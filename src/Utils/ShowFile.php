@@ -2,16 +2,16 @@
 
 /**
  * @file
- * Contains Drupal\Console\Command\ShowFileHelper.
+ * Contains Drupal\Console\Core\Command\ShowFileHelper.
  */
 
-namespace Drupal\Console\Utils;
+namespace Drupal\Console\Core\Utils;
 
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ShowFileHelper
- * @package Drupal\Console\Utils
+ * @package Drupal\Console\Core\Utils
  */
 class ShowFile
 {

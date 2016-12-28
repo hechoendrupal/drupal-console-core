@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Utils\Translator.
+ * Contains \Drupal\Console\Core\Utils\Translator.
  */
 
-namespace Drupal\Console\Utils;
+namespace Drupal\Console\Core\Utils;
 
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
@@ -17,7 +17,7 @@ use Symfony\Component\Yaml\Exception\ParseException;
 
 /**
  * Class TranslatorManager
- * @package Drupal\Console\Utils
+ * @package Drupal\Console\Core\Utils
  */
 class TranslatorManager
 {

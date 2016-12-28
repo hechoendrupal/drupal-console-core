@@ -2,14 +2,14 @@
 
 /**
  * @file
- * Contains Drupal\Console\Command\Shared\ContainerAwareCommandTrait.
+ * Contains Drupal\Console\Core\Command\Shared\ContainerAwareCommandTrait.
  */
 
-namespace Drupal\Console\Command\Shared;
+namespace Drupal\Console\Core\Command\Shared;
 
 /**
  * Class CommandTrait
- * @package Drupal\Console\Command
+ * @package Drupal\Console\Core\Command
  */
 trait ContainerAwareCommandTrait
 {
