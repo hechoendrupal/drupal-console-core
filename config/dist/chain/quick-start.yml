@@ -1,5 +1,5 @@
 # How to use
-# quick:start --placeholder="directory:/path/to/drupal-project/" --placeholder="repository:acquia/lightning-project" --placeholder="profile:minimal"
+# quick:start --placeholder="directory:/path/to/drupal-project/" --placeholder="repository:acquia/lightning-project:^8.1" --placeholder="profile:minimal"
 command:
   name: quick:start
   description: 'Download, install and serve a new Drupal project'

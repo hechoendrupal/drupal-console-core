@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Utils\StringConverter
+ * Contains \Drupal\Console\Core\Utils\StringConverter
  */
 
-namespace Drupal\Console\Utils;
+namespace Drupal\Console\Core\Utils;
 
 class StringConverter
 {

@@ -2,12 +2,12 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Utils\TwigRenderer.
+ * Contains \Drupal\Console\Core\Utils\TwigRenderer.
  */
 
-namespace Drupal\Console\Utils;
+namespace Drupal\Console\Core\Utils;
 
-use Drupal\Console\Utils\StringConverter;
+use Drupal\Console\Core\Utils\StringConverter;
 
 class TwigRenderer
 {

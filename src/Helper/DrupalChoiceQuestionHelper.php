@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Console\Helper;
+namespace Drupal\Console\Core\Helper;
 
 use Symfony\Component\Console\Helper\SymfonyQuestionHelper;
 use Symfony\Component\Console\Output\OutputInterface;

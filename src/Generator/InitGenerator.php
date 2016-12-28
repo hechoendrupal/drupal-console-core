@@ -2,13 +2,13 @@
 
 /**
  * @file
- * Contains Drupal\Console\Generator\InitGenerator.
+ * Contains Drupal\Console\Core\Generator\InitGenerator.
  */
-namespace Drupal\Console\Generator;
+namespace Drupal\Console\Core\Generator;
 
 /**
  * Class InitGenerator
- * @package Drupal\Console\Generator
+ * @package Drupal\Console\Core\Generator
  */
 class InitGenerator extends Generator
 {

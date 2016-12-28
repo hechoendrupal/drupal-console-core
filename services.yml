@@ -1,90 +1,90 @@
 services:
   # DrupalConsoleCore Services
   console.translator_manager:
-    class: Drupal\Console\Utils\TranslatorManager
+    class: Drupal\Console\Core\Utils\TranslatorManager
   console.configuration_manager:
-    class: Drupal\Console\Utils\ConfigurationManager
+    class: Drupal\Console\Core\Utils\ConfigurationManager
   console.requirement_checker:
-    class: Drupal\Console\Utils\RequirementChecker
+    class: Drupal\Console\Core\Utils\RequirementChecker
   console.chain_queue:
-    class: Drupal\Console\Utils\ChainQueue
+    class: Drupal\Console\Core\Utils\ChainQueue
   console.nested_array:
-    class: Drupal\Console\Utils\NestedArray
+    class: Drupal\Console\Core\Utils\NestedArray
   console.show_file:
-    class: Drupal\Console\Utils\ShowFile
+    class: Drupal\Console\Core\Utils\ShowFile
     arguments: ['@app.root', '@console.translator_manager']
   console.renderer:
-    class: Drupal\Console\Utils\TwigRenderer
+    class: Drupal\Console\Core\Utils\TwigRenderer
     arguments: ['@console.translator_manager', '@console.string_converter']
   console.file_queue:
-    class: Drupal\Console\Utils\FileQueue
+    class: Drupal\Console\Core\Utils\FileQueue
   console.shell_process:
-    class: Drupal\Console\Utils\ShellProcess
+    class: Drupal\Console\Core\Utils\ShellProcess
     arguments: ['@app.root']
   console.string_converter:
-      class: Drupal\Console\Utils\StringConverter
+      class: Drupal\Console\Core\Utils\StringConverter
   console.chain_discovery:
-    class: Drupal\Console\Utils\ChainDiscovery
+    class: Drupal\Console\Core\Utils\ChainDiscovery
     arguments: ['@console.root', '@console.configuration_manager']
   # DrupalConsoleCore Commands
   console.about:
-    class: Drupal\Console\Command\AboutCommand
+    class: Drupal\Console\Core\Command\AboutCommand
     tags:
       - { name: drupal.command }
   console.list:
-    class: Drupal\Console\Command\ListCommand
+    class: Drupal\Console\Core\Command\ListCommand
     tags:
       - { name: drupal.command }
   console.help:
-    class: Drupal\Console\Command\HelpCommand
+    class: Drupal\Console\Core\Command\HelpCommand
     tags:
       - { name: drupal.command }
   console.complete:
-    class: Drupal\Console\Command\CompleteCommand
+    class: Drupal\Console\Core\Command\CompleteCommand
     tags:
       - { name: drupal.command }
   console.check:
-    class: Drupal\Console\Command\CheckCommand
+    class: Drupal\Console\Core\Command\CheckCommand
     arguments: ['@console.requirement_checker', '@console.chain_queue', '@console.configuration_manager']
     tags:
       - { name: drupal.command }
   console.init:
-    class: Drupal\Console\Command\InitCommand
+    class: Drupal\Console\Core\Command\InitCommand
     arguments: ['@console.show_file', '@console.configuration_manager', '@console.init_generator', '@app.root', '@?console.root']
     tags:
       - { name: drupal.command }
   console.settings_debug:
-    class: Drupal\Console\Command\Settings\DebugCommand
+    class: Drupal\Console\Core\Command\Settings\DebugCommand
     arguments: ['@console.configuration_manager', '@console.nested_array']
     tags:
       - { name: drupal.command }
   console.settings_set:
-    class: Drupal\Console\Command\Settings\SetCommand
+    class: Drupal\Console\Core\Command\Settings\SetCommand
     arguments: ['@console.configuration_manager', '@console.nested_array']
     tags:
       - { name: drupal.command }
   console.exec:
-    class: Drupal\Console\Command\Exec\ExecCommand
+    class: Drupal\Console\Core\Command\Exec\ExecCommand
     arguments: ['@console.shell_process']
     tags:
       - { name: drupal.command }
   console.chain:
-    class: Drupal\Console\Command\Chain\ChainCommand
+    class: Drupal\Console\Core\Command\Chain\ChainCommand
     arguments: ['@console.chain_queue', '@console.chain_discovery']
     tags:
       - { name: drupal.command }
   console.chain_debug:
-    class: Drupal\Console\Command\Chain\ChainDebugCommand
+    class: Drupal\Console\Core\Command\Chain\ChainDebugCommand
     arguments: ['@console.chain_discovery']
     tags:
       - { name: drupal.command }
   console.site_debug:
-    class: Drupal\Console\Command\Site\DebugCommand
+    class: Drupal\Console\Core\Command\Site\DebugCommand
     arguments: ['@console.configuration_manager']
     tags:
       - { name: drupal.command }
   # DrupalConsoleCore Generators
   console.init_generator:
-    class: Drupal\Console\Generator\InitGenerator
+    class: Drupal\Console\Core\Generator\InitGenerator
     tags:
       - { name: drupal.generator }

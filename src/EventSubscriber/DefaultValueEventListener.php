@@ -2,16 +2,16 @@
 
 /**
  * @file
- * Contains \Drupal\Console\EventSubscriber\DefaultValueEventListener.
+ * Contains \Drupal\Console\Core\EventSubscriber\DefaultValueEventListener.
  */
 
-namespace Drupal\Console\EventSubscriber;
+namespace Drupal\Console\Core\EventSubscriber;
 
 use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Utils\ConfigurationManager;
+use Drupal\Console\Core\Utils\ConfigurationManager;
 
 class DefaultValueEventListener implements EventSubscriberInterface
 {

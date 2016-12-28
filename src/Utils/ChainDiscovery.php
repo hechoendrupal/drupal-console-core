@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Contains Drupal\Console\Utils\Site.
+ * Contains Drupal\Console\Core\Utils\Site.
  */
 
-namespace Drupal\Console\Utils;
+namespace Drupal\Console\Core\Utils;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;

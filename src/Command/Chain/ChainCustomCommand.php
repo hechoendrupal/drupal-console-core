@@ -2,23 +2,23 @@
 
 /**
  * @file
- * Contains Drupal\Console\Command\ChainCustomCommand.
+ * Contains Drupal\Console\Core\Command\ChainCustomCommand.
  */
 
-namespace Drupal\Console\Command\Chain;
+namespace Drupal\Console\Core\Command\Chain;
 
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Command\Shared\CommandTrait;
-use Drupal\Console\Command\Shared\InputTrait;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Command\Shared\InputTrait;
 
 /**
  * Class ChainCustomCommand
  *
- * @package Drupal\Console\Command\ChainRegister
+ * @package Drupal\Console\Core\Command\ChainRegister
  */
 class ChainCustomCommand extends Command
 {

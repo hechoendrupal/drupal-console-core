@@ -1,31 +1,31 @@
 <?php
 
-namespace Drupal\Console;
+namespace Drupal\Console\Core;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Application;
-use Drupal\Console\EventSubscriber\DefaultValueEventListener;
-use Drupal\Console\EventSubscriber\ShowGenerateChainListener;
-use Drupal\Console\EventSubscriber\ShowTipsListener;
-use Drupal\Console\EventSubscriber\ShowWelcomeMessageListener;
-use Drupal\Console\EventSubscriber\ValidateExecutionListener;
-use Drupal\Console\EventSubscriber\ShowGeneratedFilesListener;
-use Drupal\Console\EventSubscriber\ShowGenerateInlineListener;
-use Drupal\Console\EventSubscriber\CallCommandListener;
-use Drupal\Console\Utils\ConfigurationManager;
-use Drupal\Console\Style\DrupalStyle;
-use Drupal\Console\Utils\ChainDiscovery;
-use Drupal\Console\Command\Chain\ChainCustomCommand;
+use Symfony\Component\Console\Application as BaseApplication;
+use Drupal\Console\Core\EventSubscriber\DefaultValueEventListener;
+use Drupal\Console\Core\EventSubscriber\ShowGenerateChainListener;
+use Drupal\Console\Core\EventSubscriber\ShowTipsListener;
+use Drupal\Console\Core\EventSubscriber\ShowWelcomeMessageListener;
+use Drupal\Console\Core\EventSubscriber\ValidateExecutionListener;
+use Drupal\Console\Core\EventSubscriber\ShowGeneratedFilesListener;
+use Drupal\Console\Core\EventSubscriber\ShowGenerateInlineListener;
+use Drupal\Console\Core\EventSubscriber\CallCommandListener;
+use Drupal\Console\Core\Utils\ConfigurationManager;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Core\Utils\ChainDiscovery;
+use Drupal\Console\Core\Command\Chain\ChainCustomCommand;
 
 /**
  * Class Application
  * @package Drupal\Console
  */
-class ConsoleApplication extends Application
+class Application extends BaseApplication
 {
     /**
      * @var ContainerInterface

@@ -2,21 +2,21 @@
 
 /**
  * @file
- * Contains \Drupal\Console\EventSubscriber\ShowTipsListener.
+ * Contains \Drupal\Console\Core\EventSubscriber\ShowTipsListener.
  */
 
-namespace Drupal\Console\EventSubscriber;
+namespace Drupal\Console\Core\EventSubscriber;
 
 use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Utils\TranslatorManager;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Utils\TranslatorManager;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ShowTipsListener
- * @package Drupal\Console\EventSubscriber
+ * @package Drupal\Console\Core\EventSubscriber
  */
 class ShowTipsListener implements EventSubscriberInterface
 {

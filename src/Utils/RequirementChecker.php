@@ -1,12 +1,12 @@
 <?php
 
-namespace Drupal\Console\Utils;
+namespace Drupal\Console\Core\Utils;
 
 use Symfony\Component\Yaml\Parser;
 
 /**
  * Class RequirementChecker
- * @package Drupal\Console\Utils
+ * @package Drupal\Console\Core\Utils
  */
 class RequirementChecker
 {

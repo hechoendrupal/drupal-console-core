@@ -2,16 +2,16 @@
 
 /**
  * @file
- * Contains Drupal\Console\Command\Shared\CommandTrait.
+ * Contains Drupal\Console\Core\Command\Shared\CommandTrait.
  */
 
-namespace Drupal\Console\Command\Shared;
+namespace Drupal\Console\Core\Command\Shared;
 
-use Drupal\Console\Utils\TranslatorManager;
+use Drupal\Console\Core\Utils\TranslatorManager;
 
 /**
  * Class CommandTrait
- * @package Drupal\Console\Command
+ * @package Drupal\Console\Core\Command
  */
 trait CommandTrait
 {

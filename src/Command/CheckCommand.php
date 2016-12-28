@@ -2,23 +2,23 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Command\CheckCommand.
+ * Contains \Drupal\Console\Core\Command\CheckCommand.
  */
 
-namespace Drupal\Console\Command;
+namespace Drupal\Console\Core\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command as BaseCommand;
-use Drupal\Console\Command\Shared\CommandTrait;
-use Drupal\Console\Utils\ConfigurationManager;
-use Drupal\Console\Utils\RequirementChecker;
-use Drupal\Console\Utils\ChainQueue;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Utils\ConfigurationManager;
+use Drupal\Console\Core\Utils\RequirementChecker;
+use Drupal\Console\Core\Utils\ChainQueue;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class CheckCommand
- * @package Drupal\Console\Command
+ * @package Drupal\Console\Core\Command
  */
 class CheckCommand extends BaseCommand
 {

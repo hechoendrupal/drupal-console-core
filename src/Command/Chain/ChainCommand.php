@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Command\Chain\ChainCommand.
+ * Contains \Drupal\Console\Core\Command\Chain\ChainCommand.
  */
 
-namespace Drupal\Console\Command\Chain;
+namespace Drupal\Console\Core\Command\Chain;
 
 use Dflydev\PlaceholderResolver\DataSource\ArrayDataSource;
 use Dflydev\PlaceholderResolver\RegexPlaceholderResolver;
@@ -15,15 +15,15 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Parser;
-use Drupal\Console\Utils\ChainQueue;
-use Drupal\Console\Utils\ChainDiscovery;
-use Drupal\Console\Command\Shared\InputTrait;
-use Drupal\Console\Style\DrupalStyle;
-use Drupal\Console\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Utils\ChainQueue;
+use Drupal\Console\Core\Utils\ChainDiscovery;
+use Drupal\Console\Core\Command\Shared\InputTrait;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
 
 /**
  * Class ChainCommand
- * @package Drupal\Console\Command\Chain
+ * @package Drupal\Console\Core\Command\Chain
  */
 class ChainCommand extends Command
 {
