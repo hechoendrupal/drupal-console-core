@@ -27,8 +27,8 @@ class UnsetKeyCommand extends Command
     protected $nestedArray;
 
     /**
-   * RebuildCommand constructor.
-   * @param NestedArray $nestedArray
+     * UnsetKeyCommand constructor.
+     * @param NestedArray $nestedArray
    */
     public function __construct(NestedArray $nestedArray)
     {

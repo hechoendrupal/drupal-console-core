@@ -27,7 +27,7 @@ class UpdateKeyCommand extends Command
     protected $nestedArray;
 
     /**
-     * RebuildCommand constructor.
+     * UpdateKeyCommand constructor.
      * @param NestedArray $nestedArray
      */
     public function __construct(NestedArray $nestedArray)
@@ -35,7 +35,6 @@ class UpdateKeyCommand extends Command
         $this->nestedArray = $nestedArray;
         parent::__construct();
     }
-
 
     protected function configure()
     {
@@ -69,7 +68,6 @@ class UpdateKeyCommand extends Command
         $yaml_file = $input->getArgument('yaml-file');
         $yaml_key = $input->getArgument('yaml-key');
         $yaml_new_key = $input->getArgument('yaml-new-key');
-
 
         try {
             $yaml_parsed = $yaml->parse(file_get_contents($yaml_file));

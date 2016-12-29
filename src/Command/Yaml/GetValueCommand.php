@@ -26,7 +26,7 @@ class GetValueCommand extends Command
     protected $nestedArray;
 
     /**
-     * RebuildCommand constructor.
+     * GetValueCommand constructor.
      * @param NestedArray $nestedArray
      */
     public function __construct(NestedArray $nestedArray)
@@ -90,7 +90,7 @@ class GetValueCommand extends Command
                 );
             }
 
-            $output->writeln($yaml_value);
+            $io->writeln($yaml_value);
         }
     }
 }
