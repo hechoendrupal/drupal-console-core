@@ -84,36 +84,36 @@ services:
     tags:
       - { name: drupal.command }
   console.yaml_diff:
-    class: Drupal\Console\Command\Yaml\DiffCommand
+    class: Drupal\Console\Core\Command\Yaml\DiffCommand
     arguments: ['@console.nested_array']
     tags:
       - { name: drupal.command }
   console.yaml_get_value:
-      class: Drupal\Console\Command\Yaml\GetValueCommand
+      class: Drupal\Console\Core\Command\Yaml\GetValueCommand
       arguments: ['@console.nested_array']
       tags:
         - { name: drupal.command }
   console.yaml_merge:
-    class: Drupal\Console\Command\Yaml\MergeCommand
+    class: Drupal\Console\Core\Command\Yaml\MergeCommand
     tags:
       - { name: drupal.command }
   console.yaml_split:
-    class: Drupal\Console\Command\Yaml\SplitCommand
+    class: Drupal\Console\Core\Command\Yaml\SplitCommand
     arguments: ['@console.nested_array']
     tags:
       - { name: drupal.command }
   console.yaml_update_key:
-    class: Drupal\Console\Command\Yaml\UpdateKeyCommand
+    class: Drupal\Console\Core\Command\Yaml\UpdateKeyCommand
     arguments: ['@console.nested_array']
     tags:
       - { name: drupal.command }
   console.yaml_update_value:
-    class: Drupal\Console\Command\Yaml\UpdateValueCommand
+    class: Drupal\Console\Core\Command\Yaml\UpdateValueCommand
     arguments: ['@console.nested_array']
     tags:
       - { name: drupal.command }
   console.yaml_unset_key:
-    class: Drupal\Console\Command\Yaml\UnsetKeyCommand
+    class: Drupal\Console\Core\Command\Yaml\UnsetKeyCommand
     arguments: ['@console.nested_array']
     tags:
       - { name: drupal.command }
