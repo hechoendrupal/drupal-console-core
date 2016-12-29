@@ -27,7 +27,7 @@ class UpdateValueCommand extends Command
     protected $nestedArray;
 
     /**
-     * RebuildCommand constructor.
+     * UpdateValueCommand constructor.
      * @param NestedArray $nestedArray
      */
     public function __construct(NestedArray $nestedArray)
@@ -88,7 +88,6 @@ class UpdateValueCommand extends Command
 
         $parents = explode(".", $yaml_key);
         $this->nestedArray->setValue($yaml_parsed, $parents, $yaml_value, true);
-
 
         try {
             $yaml = $dumper->dump($yaml_parsed, 10);
