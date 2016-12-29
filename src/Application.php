@@ -339,7 +339,8 @@ class Application extends BaseApplication
         }
     }
 
-    public function registerChainCommands() {
+    public function registerChainCommands()
+    {
         /**
          * @var ChainDiscovery $chainDiscovery
          */
@@ -352,9 +353,8 @@ class Application extends BaseApplication
                 $description = $chainCommand['description'];
                 $command = new ChainCustomCommand($name, $description, $file);
                 $this->add($command);
-            }
-            catch (\Exception $e) {
-                echo $e->getMessage();
+            } catch (\Exception $e) {
+                echo $e->getMessage() . PHP_EOL;
             }
         }
     }
