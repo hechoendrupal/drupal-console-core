@@ -15,6 +15,10 @@ use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Utils\TranslatorManager;
 use Drupal\Console\Core\Style\DrupalStyle;
 
+/**
+ * Class ValidateExecutionListener
+ * @package Drupal\Console\Core\EventSubscriber
+ */
 class ValidateExecutionListener implements EventSubscriberInterface
 {
     /**

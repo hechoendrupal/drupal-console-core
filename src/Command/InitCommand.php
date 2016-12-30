@@ -127,8 +127,7 @@ class InitCommand extends Command
                     $this->trans('commands.init.questions.destination'),
                     $this->configurationManager->getConfigurationDirectories()
                 );
-            }
-            else {
+            } else {
                 $destination = $this->configurationManager
                     ->getConsoleDirectory();
             }
@@ -238,6 +237,8 @@ class InitCommand extends Command
         );
 
         $io->writeln($this->trans('application.messages.autocomplete'));
+
+        return 0;
     }
 
     /**

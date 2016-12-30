@@ -14,6 +14,10 @@ use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Core\Utils\TranslatorManager;
 use Drupal\Console\Core\Style\DrupalStyle;
 
+/**
+ * Class ShowGenerateInlineListener
+ * @package Drupal\Console\Core\EventSubscriber
+ */
 class ShowGenerateInlineListener implements EventSubscriberInterface
 {
     /**
@@ -21,6 +25,9 @@ class ShowGenerateInlineListener implements EventSubscriberInterface
      */
     protected $translator;
 
+    /**
+     * @var array
+     */
     private $skipCommands = [
         'self-update',
         'list',
@@ -28,12 +35,18 @@ class ShowGenerateInlineListener implements EventSubscriberInterface
         'drush'
     ];
 
+    /**
+     * @var array
+     */
     private $skipOptions = [
         'env',
         'generate-inline',
         'generate-chain'
     ];
 
+    /**
+     * @var array
+     */
     private $skipArguments = [
         'command',
         'command_name'

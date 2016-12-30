@@ -80,6 +80,12 @@ class TranslatorManager
         );
     }
 
+    /**
+     * @param $language
+     * @param $directoryRoot
+     *
+     * @return array
+     */
     private function buildCoreLanguageDirectory(
         $language,
         $directoryRoot

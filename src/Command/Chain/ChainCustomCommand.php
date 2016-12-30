@@ -88,7 +88,7 @@ class ChainCustomCommand extends Command
             $arguments['--placeholder'] = $this->inlineValueAsArray($placeholder);
         }
 
-        foreach($input->getOptions() as $option => $value) {
+        foreach ($input->getOptions() as $option => $value) {
             if ($option != 'placeholder' && $value) {
                 if (is_bool($value)) {
                     $value = true;

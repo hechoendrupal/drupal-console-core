@@ -26,6 +26,9 @@ class ShowGenerateChainListener implements EventSubscriberInterface
      */
     protected $translator;
 
+    /**
+     * @var array
+     */
     private $skipCommands = [
         'self-update',
         'list',
@@ -33,12 +36,18 @@ class ShowGenerateChainListener implements EventSubscriberInterface
         'drush'
     ];
 
+    /**
+     * @var array
+     */
     private $skipOptions = [
         'env',
         'generate-inline',
         'generate-chain'
     ];
 
+    /**
+     * @var array
+     */
     private $skipArguments = [
         'command',
         'command_name'
@@ -110,7 +119,7 @@ class ShowGenerateChainListener implements EventSubscriberInterface
             ];
 
             $io->writeln('commands:');
-            $io->table([],[$tableRows], 'compact');
+            $io->table([], [$tableRows], 'compact');
         }
     }
 

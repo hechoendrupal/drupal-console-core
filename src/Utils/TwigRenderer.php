@@ -7,14 +7,27 @@
 
 namespace Drupal\Console\Core\Utils;
 
-use Drupal\Console\Core\Utils\StringConverter;
+use MongoDB\Driver\Manager;
 
+/**
+ * Class TwigRenderer
+ * @package Drupal\Console\Core\Utils
+ */
 class TwigRenderer
 {
+    /**
+     * @var Manager
+     */
     protected $translator;
 
+    /**
+     * @var \Twig_Environment
+     */
     protected $engine;
 
+    /**
+     * @var array
+     */
     protected $skeletonDirs;
 
     /**
@@ -24,11 +37,11 @@ class TwigRenderer
 
     /**
      * TwigRenderer constructor.
-     * @param $translator
+     * @param Manager         $translator
      * @param StringConverter $stringConverter
      */
     public function __construct(
-        $translator,
+        Manager $translator,
         StringConverter $stringConverter
     ) {
         $this->translator = $translator;

@@ -56,6 +56,10 @@ class ShowTipsListener implements EventSubscriberInterface
         }
     }
 
+    /**
+     * @param $commandName
+     * @return bool|string
+     */
     private function getTip($commandName)
     {
         $get_tip = $this->translator

@@ -117,7 +117,7 @@ class DebugCommand extends Command
     }
 
     /**
-     * @param string      $sitesDirectory
+     * @param string $sitesDirectory
      * @return array
      */
     private function siteList($sitesDirectory)

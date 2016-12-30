@@ -1,4 +1,8 @@
 <?php
+/**
+ * @file
+ * Contains \Drupal\Console\Core\Style\DrupalStyle.
+ */
 
 namespace Drupal\Console\Core\Style;
 
@@ -10,6 +14,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Helper\Table;
 use Drupal\Console\Core\Helper\DrupalChoiceQuestionHelper;
 
+/**
+ * Class DrupalStyle
+ * @package Drupal\Console\Core\Style
+ */
 class DrupalStyle extends SymfonyStyle
 {
     /**
@@ -57,6 +65,14 @@ class DrupalStyle extends SymfonyStyle
         return trim($this->askChoiceQuestion(new ChoiceQuestion($question, $choices, $default)));
     }
 
+    /**
+     * @param string $question
+     * @param array  $choices
+     * @param null   $default
+     * @param bool   $multiple
+     *
+     * @return string
+     */
     public function choice($question, array $choices, $default = null, $multiple = false)
     {
         if (null !== $default) {
@@ -84,7 +100,7 @@ class DrupalStyle extends SymfonyStyle
     }
 
     /**
-     * {@inheritdoc}
+     * @param $question
      *
      * @return string
      */
@@ -111,7 +127,8 @@ class DrupalStyle extends SymfonyStyle
     }
 
     /**
-     * {@inheritdoc}
+     * @param $message
+     * @param bool    $newLine
      */
     public function info($message, $newLine = true)
     {
@@ -124,7 +141,8 @@ class DrupalStyle extends SymfonyStyle
     }
 
     /**
-     * {@inheritdoc}
+     * @param array|string $message
+     * @param bool         $newLine
      */
     public function comment($message, $newLine = true)
     {
@@ -136,6 +154,9 @@ class DrupalStyle extends SymfonyStyle
         }
     }
 
+    /**
+     * @param $message
+     */
     public function commentBlock($message)
     {
         $this->block(
@@ -147,7 +168,9 @@ class DrupalStyle extends SymfonyStyle
     }
 
     /**
-     * {@inheritdoc}
+     * @param array  $headers
+     * @param array  $rows
+     * @param string $style
      */
     public function table(array $headers, array $rows, $style = 'symfony-style-guide')
     {
@@ -176,7 +199,8 @@ class DrupalStyle extends SymfonyStyle
     }
 
     /**
-     * {@inheritdoc}
+     * @param $message
+     * @param bool    $newLine
      */
     public function simple($message, $newLine = true)
     {
@@ -188,6 +212,9 @@ class DrupalStyle extends SymfonyStyle
         }
     }
 
+    /**
+     * @param array|string $message
+     */
     public function text($message)
     {
         $message = sprintf('// %s', $message);

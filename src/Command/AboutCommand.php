@@ -48,15 +48,15 @@ class AboutCommand extends Command
         $commands = [
             'init' => [
                 $this->trans('commands.init.description'),
-                'drupal init --override --no-interaction'
+                'drupal init'
             ],
             //            'quick-start' => [
             //                $this->trans('commands.common.messages.quick-start'),
-            //                'drupal chain --file=~/.console/chain/quick-start.yml'
+            //                'drupal quick:start'
             //            ],
             //            'site-new' => [
             //                $this->trans('commands.site.new.description'),
-            //                'drupal site:new drupal8.dev --latest'
+            //                'drupal site:new'
             //            ],
             'site-install' => [
                 $this->trans('commands.site.install.description'),
@@ -64,7 +64,7 @@ class AboutCommand extends Command
                     'drupal site:install'
                 )
             ],
-            'links' => [
+            'list' => [
                 $this->trans('commands.list.description'),
                 'drupal list',
             ]

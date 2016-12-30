@@ -7,6 +7,10 @@
 
 namespace Drupal\Console\Core\Utils;
 
+/**
+ * Class NestedArray
+ * @package Drupal\Console\Core\Utils
+ */
 class NestedArray
 {
     /**

@@ -42,9 +42,8 @@ class ChainCommand extends Command
 
     /**
      * ChainCommand constructor.
-     * @param ChainQueue           $chainQueue
-     * @param ChainDiscovery       $chainDiscovery
-
+     * @param ChainQueue     $chainQueue
+     * @param ChainDiscovery $chainDiscovery
      */
     public function __construct(
         ChainQueue $chainQueue,

@@ -10,6 +10,10 @@ namespace Drupal\Console\Core\Generator;
 use Drupal\Console\Core\Utils\TwigRenderer;
 use Drupal\Console\Core\Utils\FileQueue;
 
+/**
+ * Class Generator
+ * @package Drupal\Console\Core\Generator
+ */
 abstract class Generator
 {
     /**
