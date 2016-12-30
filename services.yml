@@ -20,7 +20,7 @@ services:
     class: Drupal\Console\Core\Utils\FileQueue
   console.shell_process:
     class: Drupal\Console\Core\Utils\ShellProcess
-    arguments: ['@app.root']
+    arguments: ['@app.root', '@console.translator_manager']
   console.string_converter:
       class: Drupal\Console\Core\Utils\StringConverter
   console.chain_discovery:

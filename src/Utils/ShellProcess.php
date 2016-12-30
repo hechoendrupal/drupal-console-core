@@ -19,6 +19,11 @@ class ShellProcess
     protected $appRoot;
 
     /**
+     * @var TranslatorManager
+     */
+    protected $translator;
+
+    /**
      * @var ShellProcess
      */
     private $process;
@@ -30,11 +35,13 @@ class ShellProcess
 
     /**
      * Process constructor.
-     * @param string $appRoot
+     * @param string            $appRoot
+     * @param TranslatorManager $translator
      */
-    public function __construct($appRoot)
+    public function __construct($appRoot, $translator)
     {
         $this->appRoot = $appRoot;
+        $this->translator = $translator;
 
         $output = new ConsoleOutput();
         $input = new ArrayInput([]);
@@ -54,6 +61,19 @@ class ShellProcess
         if (!$workingDirectory || $workingDirectory==='') {
             $workingDirectory = $this->appRoot;
         }
+
+        $this->io->newLine();
+        $this->io->comment(
+            $this->translator->trans('commands.exec.messages.working-directory') .': ',
+            false
+        );
+        $this->io->writeln($workingDirectory);
+        $this->io->comment(
+            $this->translator->trans('commands.exec.messages.executing-command') .': ',
+            false
+        );
+        $this->io->writeln($command);
+
         $this->process = new Process($command);
         $this->process->setWorkingDirectory($workingDirectory);
         $this->process->enableOutput();

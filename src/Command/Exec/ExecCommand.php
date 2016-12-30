@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\ExecutableFinder;
 use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Utils\ShellProcess;
 use Drupal\Console\Core\Style\DrupalStyle;
@@ -71,6 +72,23 @@ class ExecCommand extends Command
         if (!$bin) {
             $io->error(
                 $this->trans('commands.exec.messages.missing-bin')
+            );
+
+            return 1;
+        }
+
+        $name = $bin;
+        if ($index = stripos($name, " ")) {
+            $name = substr($name, 0, $index);
+        }
+
+        $finder = new ExecutableFinder();
+        if (!$finder->find($name)) {
+            $io->error(
+                sprintf(
+                    $this->trans('commands.exec.messages.binary-not-found'),
+                    $name
+                )
             );
 
             return 1;

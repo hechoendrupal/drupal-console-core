@@ -7,7 +7,7 @@
 
 namespace Drupal\Console\Core\Utils;
 
-use MongoDB\Driver\Manager;
+use Drupal\Console\Core\Utils\TranslatorManager;;
 
 /**
  * Class TwigRenderer
@@ -16,7 +16,7 @@ use MongoDB\Driver\Manager;
 class TwigRenderer
 {
     /**
-     * @var Manager
+     * @var TranslatorManager
      */
     protected $translator;
 
@@ -37,11 +37,11 @@ class TwigRenderer
 
     /**
      * TwigRenderer constructor.
-     * @param Manager         $translator
-     * @param StringConverter $stringConverter
+     * @param TranslatorManager $translator
+     * @param StringConverter   $stringConverter
      */
     public function __construct(
-        Manager $translator,
+        TranslatorManager $translator,
         StringConverter $stringConverter
     ) {
         $this->translator = $translator;
