@@ -39,6 +39,10 @@ services:
     class: Drupal\Console\Core\Command\HelpCommand
     tags:
       - { name: drupal.command }
+  console.shell:
+    class: Drupal\Console\Core\Command\ShellCommand
+    tags:
+      - { name: drupal.command }
   console.complete:
     class: Drupal\Console\Core\Command\CompleteCommand
     tags:
