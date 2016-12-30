@@ -15,6 +15,10 @@ use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 
+/**
+ * Class ListCommand
+ * @package Drupal\Console\Core\Command
+ */
 class ListCommand extends Command
 {
     use CommandTrait;

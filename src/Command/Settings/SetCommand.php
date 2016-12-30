@@ -36,7 +36,6 @@ class SetCommand extends Command
      */
     protected $nestedArray;
 
-
     /**
      * CheckCommand constructor.
      * @param ConfigurationManager $configurationManager

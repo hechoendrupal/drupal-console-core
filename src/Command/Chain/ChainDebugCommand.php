@@ -39,6 +39,7 @@ class ChainDebugCommand extends Command
 
         parent::__construct();
     }
+
     /**
      * {@inheritdoc}
      */

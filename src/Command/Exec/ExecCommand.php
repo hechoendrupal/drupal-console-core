@@ -56,8 +56,7 @@ class ExecCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.exec.options.working-directory')
-            )
-        ;
+            );
     }
 
     /**

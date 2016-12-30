@@ -7,6 +7,10 @@
 
 namespace Drupal\Console\Core\Utils;
 
+/**
+ * Class StringConverter
+ * @package Drupal\Console\Core\Utils
+ */
 class StringConverter
 {
     // This REGEX captures all uppercase letters after the first character
@@ -17,7 +21,7 @@ class StringConverter
     const REGEX_CAMEL_CASE_UNDER = '/([a-z])([A-Z])/';
     // This REGEX captures spaces around words
     const REGEX_SPACES = '/\s\s+/';
-
+    // This REGEX forces max length to 32
     const MAX_MACHINE_NAME = 32;
 
     /**
@@ -79,6 +83,10 @@ class StringConverter
         return ucfirst(strtolower(preg_replace(self::REGEX_CAMEL_CASE_UNDER, '$1 $2', $camel_case)));
     }
 
+    /**
+     * @param $human
+     * @return mixed
+     */
     public function humanToCamelCase($human)
     {
         return str_replace(' ', '', ucwords($human));
@@ -108,6 +116,10 @@ class StringConverter
         return ucfirst(preg_replace(self::REGEX_SPACES, ' ', $permission_title));
     }
 
+    /**
+     * @param $className
+     * @return string
+     */
     public function removeSuffix($className)
     {
         $suffixes = [
@@ -135,6 +147,10 @@ class StringConverter
         return $className;
     }
 
+    /**
+     * @param $input
+     * @return string
+     */
     public function underscoreToCamelCase($input)
     {
         return lcfirst(str_replace('_', '', ucwords($input, '_')));

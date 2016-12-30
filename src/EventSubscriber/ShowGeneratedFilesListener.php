@@ -15,6 +15,10 @@ use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Utils\FileQueue;
 use Drupal\Console\Core\Utils\ShowFile;
 
+/**
+ * Class ShowGeneratedFilesListener
+ * @package Drupal\Console\Core\EventSubscriber
+ */
 class ShowGeneratedFilesListener implements EventSubscriberInterface
 {
     /**
@@ -26,8 +30,6 @@ class ShowGeneratedFilesListener implements EventSubscriberInterface
      * @var ShowFile
      */
     protected $showFile;
-
-
 
     /**
      * ShowGeneratedFilesListener constructor.

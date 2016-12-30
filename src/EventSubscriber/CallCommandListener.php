@@ -15,6 +15,10 @@ use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Core\Utils\ChainQueue;
 use Drupal\Console\Core\Style\DrupalStyle;
 
+/**
+ * Class CallCommandListener
+ * @package Drupal\Console\Core\EventSubscriber
+ */
 class CallCommandListener implements EventSubscriberInterface
 {
     /**

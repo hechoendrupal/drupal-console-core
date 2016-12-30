@@ -15,10 +15,17 @@ use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Utils\TwigRenderer;
 use Drupal\Console\Core\Style\DrupalStyle;
 
+/**
+ * Class DrupliconCommand
+ * @package Drupal\Console\Core\Command\Exclude
+ */
 class DrupliconCommand extends Command
 {
     use CommandTrait;
 
+    /**
+     * @var string
+     */
     protected $appRoot;
     /**
      * @var TwigRenderer
@@ -39,6 +46,9 @@ class DrupliconCommand extends Command
         parent::__construct();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
@@ -46,6 +56,9 @@ class DrupliconCommand extends Command
             ->setDescription($this->trans('application.commands.druplicon.description'));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
@@ -61,7 +74,6 @@ class DrupliconCommand extends Command
             ->in($directory);
 
         $templates = [];
-
         foreach ($finder as $template) {
             $templates[] = $template->getRelativePathname();
         }
@@ -74,5 +86,6 @@ class DrupliconCommand extends Command
         );
 
         $io->writeln($druplicon);
+        return 0;
     }
 }

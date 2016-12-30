@@ -274,7 +274,7 @@ class ConfigurationManager
                 );
             }
         }
-        if (array_key_exists('commands',$aliases) && array_key_exists('aliases',$aliases['commands'])) {
+        if (array_key_exists('commands', $aliases) && array_key_exists('aliases', $aliases['commands'])) {
             $this->configuration->set(
                 'application.commands.aliases',
                 $aliases['commands']['aliases']

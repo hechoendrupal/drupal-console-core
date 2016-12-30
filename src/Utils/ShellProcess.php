@@ -17,6 +17,7 @@ class ShellProcess
      * @var string
      */
     protected $appRoot;
+
     /**
      * @var ShellProcess
      */

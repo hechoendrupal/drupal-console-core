@@ -1,11 +1,20 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\Console\Core\Bootstrap.
+ */
+
 namespace Drupal\Console\Core\Bootstrap;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
+/**
+ * Class DrupalConsoleCore
+ * @package Drupal\Console\Core\Bootstrap
+ */
 class DrupalConsoleCore
 {
     /**
@@ -17,6 +26,7 @@ class DrupalConsoleCore
      * @var string
      */
     protected $appRoot;
+
     /**
      * DrupalConsole constructor.
      * @param $root
@@ -28,6 +38,9 @@ class DrupalConsoleCore
         $this->appRoot = $appRoot;
     }
 
+    /**
+     * @return ContainerBuilder
+     */
     public function boot()
     {
         $container = new ContainerBuilder();

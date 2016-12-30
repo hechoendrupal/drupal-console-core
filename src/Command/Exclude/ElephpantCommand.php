@@ -15,11 +15,19 @@ use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Utils\TwigRenderer;
 use Drupal\Console\Core\Style\DrupalStyle;
 
+/**
+ * Class ElephpantCommand
+ * @package Drupal\Console\Core\Command\Exclude
+ */
 class ElephpantCommand extends Command
 {
     use CommandTrait;
 
+    /**
+     * @var string
+     */
     protected $appRoot;
+
     /**
      * @var TwigRenderer
      */
@@ -39,6 +47,9 @@ class ElephpantCommand extends Command
         parent::__construct();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
@@ -46,6 +57,9 @@ class ElephpantCommand extends Command
             ->setDescription($this->trans('application.commands.elephpant.description'));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
@@ -74,5 +88,6 @@ class ElephpantCommand extends Command
         );
 
         $io->writeln($elephpant);
+        return 0;
     }
 }

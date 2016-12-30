@@ -13,6 +13,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Core\Utils\ConfigurationManager;
 
+/**
+ * Class DefaultValueEventListener
+ * @package Drupal\Console\Core\EventSubscriber
+ */
 class DefaultValueEventListener implements EventSubscriberInterface
 {
     /**
@@ -20,6 +24,9 @@ class DefaultValueEventListener implements EventSubscriberInterface
      */
     protected $configurationManager;
 
+    /**
+     * @var array
+     */
     private $skipCommands = [
         'self-update',
         'list',

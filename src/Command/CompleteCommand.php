@@ -34,5 +34,7 @@ class CompleteCommand extends Command
         $commands = array_keys($this->getApplication()->all());
         asort($commands);
         $output->writeln($commands);
+
+        return 0;
     }
 }

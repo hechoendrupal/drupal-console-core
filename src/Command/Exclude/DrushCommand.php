@@ -16,6 +16,10 @@ use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Utils\ChainQueue;
 use Drupal\Console\Core\Style\DrupalStyle;
 
+/**
+ * Class DrushCommand
+ * @package Drupal\Console\Core\Command\Exclude
+ */
 class DrushCommand extends Command
 {
     use CommandTrait;
@@ -44,6 +48,9 @@ class DrushCommand extends Command
         parent::__construct();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
@@ -57,6 +64,9 @@ class DrushCommand extends Command
             );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);

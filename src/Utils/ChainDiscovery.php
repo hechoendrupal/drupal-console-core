@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * Contains Drupal\Console\Core\Utils\Site.
@@ -10,8 +9,12 @@ namespace Drupal\Console\Core\Utils;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
 
-class ChainDiscovery {
-
+/**
+ * Class ChainDiscovery
+ * @package Drupal\Console\Core\Utils
+ */
+class ChainDiscovery
+{
     /**
      * @var ConfigurationManager
      */
@@ -30,7 +33,7 @@ class ChainDiscovery {
     /**
      * ChainDiscovery constructor.
      *
-     * @param string $appRoot
+     * @param string               $appRoot
      * @param ConfigurationManager $configurationManager
      */
     public function __construct(
@@ -40,17 +43,27 @@ class ChainDiscovery {
         $this->appRoot = $appRoot;
         $this->configurationManager = $configurationManager;
 
-        $this->addDirectories([
+        $this->addDirectories(
+            [
             $this->configurationManager->getHomeDirectory() . DIRECTORY_SEPARATOR . '.console'. DIRECTORY_SEPARATOR .'chain',
             $this->appRoot . DIRECTORY_SEPARATOR . 'console'. DIRECTORY_SEPARATOR .'chain',
             $this->appRoot . DIRECTORY_SEPARATOR . '.console'. DIRECTORY_SEPARATOR .'chain',
-        ]);
+            ]
+        );
     }
 
-    public function addDirectories($directories) {
+    /**
+     * @param array $directories
+     */
+    public function addDirectories(array $directories)
+    {
         $this->directories = array_merge($this->directories, $directories);
     }
 
+    /**
+     * @param bool $onlyFiles
+     * @return array
+     */
     public function getChainFiles($onlyFiles = false)
     {
         $chainFiles = [];
@@ -82,7 +95,11 @@ class ChainDiscovery {
         return $chainFiles;
     }
 
-    public function getChainCommands() {
+    /**
+     * @return array
+     */
+    public function getChainCommands()
+    {
         $chainCommands = [];
         $files = $this->getChainFiles(true);
         foreach ($files as $file) {
@@ -90,12 +107,12 @@ class ChainDiscovery {
             if (!array_key_exists('command', $chain)) {
                 continue;
             }
-            if (!array_key_exists('name',$chain['command'])) {
+            if (!array_key_exists('name', $chain['command'])) {
                 continue;
             }
             $name = $chain['command']['name'];
             $description = '';
-            if (array_key_exists('description',$chain['command'])) {
+            if (array_key_exists('description', $chain['command'])) {
                 $description = $chain['command']['description'];
             }
             $chainCommands[$name] = [

@@ -9,8 +9,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Core\Command\Shared\CommandTrait;
 
-class ShellCommand extends Command {
-
+/**
+ * Class ShellCommand
+ * @package Drupal\Console\Core\Command
+ */
+class ShellCommand extends Command
+{
     use CommandTrait;
 
     /**
@@ -27,7 +31,8 @@ class ShellCommand extends Command {
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         $config = new Configuration;
         $shell = new Shell($config);
         $shell->run();

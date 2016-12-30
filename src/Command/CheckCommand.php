@@ -106,6 +106,8 @@ class CheckCommand extends BaseCommand
                     $checks['php']['required']
                 )
             );
+
+            return 1;
         }
 
         if ($extensions = $checks['extensions']['required']['missing']) {

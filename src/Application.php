@@ -2,6 +2,7 @@
 
 namespace Drupal\Console\Core;
 
+use Drupal\Console\Core\Utils\TranslatorManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -53,6 +54,9 @@ class Application extends BaseApplication
         $this->addOptions();
     }
 
+    /**
+     * @return TranslatorManager
+     */
     public function getTranslator()
     {
         if ($this->container) {
@@ -76,6 +80,9 @@ class Application extends BaseApplication
         return null;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
@@ -119,6 +126,9 @@ class Application extends BaseApplication
         return $code;
     }
 
+    /**
+     * registerEvents
+     */
     private function registerEvents()
     {
         $dispatcher = new EventDispatcher();
@@ -169,6 +179,9 @@ class Application extends BaseApplication
         $this->setDispatcher($dispatcher);
     }
 
+    /**
+     * addOptions
+     */
     private function addOptions()
     {
         $this->getDefinition()->addOption(
@@ -253,6 +266,9 @@ class Application extends BaseApplication
         );
     }
 
+    /**
+     * registerCommandsFromAutoWireConfiguration
+     */
     private function registerCommandsFromAutoWireConfiguration()
     {
         $configuration = $this->container->get('console.configuration_manager')
@@ -339,6 +355,9 @@ class Application extends BaseApplication
         }
     }
 
+    /**
+     * registerChainCommands
+     */
     public function registerChainCommands()
     {
         /**
