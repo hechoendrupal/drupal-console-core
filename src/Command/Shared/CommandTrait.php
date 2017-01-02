@@ -7,16 +7,17 @@
 
 namespace Drupal\Console\Core\Command\Shared;
 
-use Drupal\Console\Core\Utils\TranslatorManager;
+use Drupal\Console\Core\Utils\TranslatorManagerInterface;
 
 /**
  * Class CommandTrait
+ *
  * @package Drupal\Console\Core\Command
  */
 trait CommandTrait
 {
     /**
-     * @var  TranslatorManager
+     * @var TranslatorManagerInterface
      */
     protected $translator;
 

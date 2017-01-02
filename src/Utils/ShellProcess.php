@@ -9,6 +9,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ShellProcess
+ *
  * @package Drupal\Console\Core\Utils
  */
 class ShellProcess
@@ -19,7 +20,7 @@ class ShellProcess
     protected $appRoot;
 
     /**
-     * @var TranslatorManager
+     * @var TranslatorManagerInterface
      */
     protected $translator;
 
@@ -35,8 +36,9 @@ class ShellProcess
 
     /**
      * Process constructor.
-     * @param string            $appRoot
-     * @param TranslatorManager $translator
+     *
+     * @param string                     $appRoot
+     * @param TranslatorManagerInterface $translator
      */
     public function __construct($appRoot, $translator)
     {

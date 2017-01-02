@@ -11,17 +11,18 @@ use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Core\Utils\TranslatorManager;
+use Drupal\Console\Core\Utils\TranslatorManagerInterface;
 use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ShowGenerateInlineListener
+ *
  * @package Drupal\Console\Core\EventSubscriber
  */
 class ShowGenerateInlineListener implements EventSubscriberInterface
 {
     /**
-     * @var TranslatorManager
+     * @var TranslatorManagerInterface
      */
     protected $translator;
 
@@ -54,10 +55,11 @@ class ShowGenerateInlineListener implements EventSubscriberInterface
 
     /**
      * ShowGenerateInlineListener constructor.
-     * @param TranslatorManager $translator
+     *
+     * @param TranslatorManagerInterface $translator
      */
     public function __construct(
-        TranslatorManager $translator
+        TranslatorManagerInterface $translator
     ) {
         $this->translator = $translator;
     }

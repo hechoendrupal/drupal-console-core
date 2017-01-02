@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Core\Utils\Translator.
+ * Contains \Drupal\Console\Core\Utils\TranslatorManager.
  */
 
 namespace Drupal\Console\Core\Utils;
@@ -17,9 +17,10 @@ use Symfony\Component\Yaml\Exception\ParseException;
 
 /**
  * Class TranslatorManager
+ *
  * @package Drupal\Console\Core\Utils
  */
-class TranslatorManager
+class TranslatorManager implements TranslatorManagerInterface
 {
     /**
      * @var string
@@ -109,9 +110,7 @@ class TranslatorManager
     }
 
     /**
-     * @param $language
-     * @param $directoryRoot
-     * @return $this
+     * {@inheritdoc}
      */
     public function loadCoreLanguage($language, $directoryRoot)
     {
@@ -129,8 +128,7 @@ class TranslatorManager
     }
 
     /**
-     * @param $language
-     * @return $this
+     * {@inheritdoc}
      */
     public function changeCoreLanguage($language)
     {
@@ -138,10 +136,7 @@ class TranslatorManager
     }
 
     /**
-     * @param $language
-     * @param $directoryRoot
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
     public function loadResource($language, $directoryRoot)
     {
@@ -225,7 +220,7 @@ class TranslatorManager
     }
 
     /**
-     * @return Translator
+     * {@inheritdoc}
      */
     public function getTranslator()
     {
@@ -233,7 +228,7 @@ class TranslatorManager
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getLanguage()
     {
@@ -241,9 +236,7 @@ class TranslatorManager
     }
 
     /**
-     * @param $key
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function trans($key)
     {
