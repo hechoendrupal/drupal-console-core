@@ -110,9 +110,7 @@ class TranslatorManager implements TranslatorManagerInterface
     }
 
     /**
-     * @param $language
-     * @param $directoryRoot
-     * @return $this
+     * {@inheritdoc}
      */
     public function loadCoreLanguage($language, $directoryRoot)
     {
@@ -130,8 +128,7 @@ class TranslatorManager implements TranslatorManagerInterface
     }
 
     /**
-     * @param $language
-     * @return $this
+     * {@inheritdoc}
      */
     public function changeCoreLanguage($language)
     {
@@ -139,10 +136,7 @@ class TranslatorManager implements TranslatorManagerInterface
     }
 
     /**
-     * @param $language
-     * @param $directoryRoot
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
     public function loadResource($language, $directoryRoot)
     {
@@ -226,7 +220,7 @@ class TranslatorManager implements TranslatorManagerInterface
     }
 
     /**
-     * @return Translator
+     * {@inheritdoc}
      */
     public function getTranslator()
     {
@@ -234,7 +228,7 @@ class TranslatorManager implements TranslatorManagerInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getLanguage()
     {
@@ -242,9 +236,7 @@ class TranslatorManager implements TranslatorManagerInterface
     }
 
     /**
-     * @param $key
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function trans($key)
     {
