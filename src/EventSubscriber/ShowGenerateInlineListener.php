@@ -16,6 +16,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ShowGenerateInlineListener
+ *
  * @package Drupal\Console\Core\EventSubscriber
  */
 class ShowGenerateInlineListener implements EventSubscriberInterface
@@ -54,6 +55,7 @@ class ShowGenerateInlineListener implements EventSubscriberInterface
 
     /**
      * ShowGenerateInlineListener constructor.
+     *
      * @param TranslatorManagerInterface $translator
      */
     public function __construct(

@@ -9,6 +9,7 @@ namespace Drupal\Console\Core\Utils;
 
 /**
  * Class TwigRenderer
+ *
  * @package Drupal\Console\Core\Utils
  */
 class TwigRenderer
@@ -35,8 +36,9 @@ class TwigRenderer
 
     /**
      * TwigRenderer constructor.
+     *
      * @param TranslatorManagerInterface $translator
-     * @param StringConverter   $stringConverter
+     * @param StringConverter            $stringConverter
      */
     public function __construct(
         TranslatorManagerInterface $translator,

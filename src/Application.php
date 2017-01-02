@@ -24,6 +24,7 @@ use Drupal\Console\Core\Command\Chain\ChainCustomCommand;
 
 /**
  * Class Application
+ *
  * @package Drupal\Console
  */
 class Application extends BaseApplication
@@ -40,6 +41,7 @@ class Application extends BaseApplication
 
     /**
      * ConsoleApplication constructor.
+     *
      * @param ContainerInterface $container
      * @param string             $name
      * @param string             $version

@@ -16,6 +16,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ShowWelcomeMessageListener
+ *
  * @package Drupal\Console\Core\EventSubscriber
  */
 class ShowWelcomeMessageListener implements EventSubscriberInterface
@@ -27,6 +28,7 @@ class ShowWelcomeMessageListener implements EventSubscriberInterface
 
     /**
      * ShowWelcomeMessageListener constructor.
+     *
      * @param TranslatorManagerInterface $translator
      */
     public function __construct(

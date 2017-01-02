@@ -9,7 +9,8 @@ namespace Drupal\Console\Core\Utils;
 
 use Symfony\Component\Translation\Translator;
 
-interface TranslatorManagerInterface {
+interface TranslatorManagerInterface
+{
 
     /**
      * @param $language

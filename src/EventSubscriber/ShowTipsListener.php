@@ -16,6 +16,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ShowTipsListener
+ *
  * @package Drupal\Console\Core\EventSubscriber
  */
 class ShowTipsListener implements EventSubscriberInterface
@@ -27,6 +28,7 @@ class ShowTipsListener implements EventSubscriberInterface
 
     /**
      * ShowGenerateChainListener constructor.
+     *
      * @param TranslatorManagerInterface $translator
      */
     public function __construct(

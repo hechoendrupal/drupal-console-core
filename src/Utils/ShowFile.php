@@ -11,6 +11,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ShowFileHelper
+ *
  * @package Drupal\Console\Core\Utils
  */
 class ShowFile
@@ -27,7 +28,8 @@ class ShowFile
 
     /**
      * ShowFile constructor.
-     * @param string            $root
+     *
+     * @param string                     $root
      * @param TranslatorManagerInterface $translator
      */
     public function __construct(

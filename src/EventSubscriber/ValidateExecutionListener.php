@@ -17,6 +17,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ValidateExecutionListener
+ *
  * @package Drupal\Console\Core\EventSubscriber
  */
 class ValidateExecutionListener implements EventSubscriberInterface
@@ -33,8 +34,9 @@ class ValidateExecutionListener implements EventSubscriberInterface
 
     /**
      * ValidateExecutionListener constructor.
-     * @param TranslatorManagerInterface    $translator
-     * @param ConfigurationManager          $configurationManager
+     *
+     * @param TranslatorManagerInterface $translator
+     * @param ConfigurationManager       $configurationManager
      */
     public function __construct(
         TranslatorManagerInterface $translator,
