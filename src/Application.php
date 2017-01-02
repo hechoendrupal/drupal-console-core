@@ -2,7 +2,7 @@
 
 namespace Drupal\Console\Core;
 
-use Drupal\Console\Core\Utils\TranslatorManager;
+use Drupal\Console\Core\Utils\TranslatorManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -55,7 +55,7 @@ class Application extends BaseApplication
     }
 
     /**
-     * @return TranslatorManager
+     * @return TranslatorManagerInterface
      */
     public function getTranslator()
     {

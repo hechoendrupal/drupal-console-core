@@ -12,7 +12,7 @@ use Symfony\Component\Console\Event\ConsoleCommandEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Core\Utils\ConfigurationManager;
-use Drupal\Console\Core\Utils\TranslatorManager;
+use Drupal\Console\Core\Utils\TranslatorManagerInterface;
 use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
@@ -22,7 +22,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 class ValidateExecutionListener implements EventSubscriberInterface
 {
     /**
-     * @var TranslatorManager
+     * @var TranslatorManagerInterface
      */
     protected $translator;
 
@@ -33,11 +33,11 @@ class ValidateExecutionListener implements EventSubscriberInterface
 
     /**
      * ValidateExecutionListener constructor.
-     * @param TranslatorManager    $translator
-     * @param ConfigurationManager $configurationManager
+     * @param TranslatorManagerInterface    $translator
+     * @param ConfigurationManager          $configurationManager
      */
     public function __construct(
-        TranslatorManager $translator,
+        TranslatorManagerInterface $translator,
         ConfigurationManager $configurationManager
     ) {
         $this->translator = $translator;

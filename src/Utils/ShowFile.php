@@ -8,7 +8,6 @@
 namespace Drupal\Console\Core\Utils;
 
 use Drupal\Console\Core\Style\DrupalStyle;
-use Drupal\Console\Core\Utils\TranslatorManager;
 
 /**
  * Class ShowFileHelper
@@ -22,18 +21,18 @@ class ShowFile
     protected $root;
 
     /**
-     * @var TranslatorManager
+     * @var TranslatorManagerInterface
      */
     protected $translator;
 
     /**
      * ShowFile constructor.
      * @param string            $root
-     * @param TranslatorManager $translator
+     * @param TranslatorManagerInterface $translator
      */
     public function __construct(
         $root,
-        TranslatorManager $translator
+        TranslatorManagerInterface $translator
     ) {
         $this->root = $root;
         $this->translator = $translator;

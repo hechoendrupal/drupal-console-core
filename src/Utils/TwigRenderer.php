@@ -7,8 +7,6 @@
 
 namespace Drupal\Console\Core\Utils;
 
-use Drupal\Console\Core\Utils\TranslatorManager;;
-
 /**
  * Class TwigRenderer
  * @package Drupal\Console\Core\Utils
@@ -16,7 +14,7 @@ use Drupal\Console\Core\Utils\TranslatorManager;;
 class TwigRenderer
 {
     /**
-     * @var TranslatorManager
+     * @var TranslatorManagerInterface
      */
     protected $translator;
 
@@ -37,11 +35,11 @@ class TwigRenderer
 
     /**
      * TwigRenderer constructor.
-     * @param TranslatorManager $translator
+     * @param TranslatorManagerInterface $translator
      * @param StringConverter   $stringConverter
      */
     public function __construct(
-        TranslatorManager $translator,
+        TranslatorManagerInterface $translator,
         StringConverter $stringConverter
     ) {
         $this->translator = $translator;

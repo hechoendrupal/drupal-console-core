@@ -19,7 +19,7 @@ use Symfony\Component\Yaml\Exception\ParseException;
  * Class TranslatorManager
  * @package Drupal\Console\Core\Utils
  */
-class TranslatorManager
+class TranslatorManager implements TranslatorManagerInterface
 {
     /**
      * @var string

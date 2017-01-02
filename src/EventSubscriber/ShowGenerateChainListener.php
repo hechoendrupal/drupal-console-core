@@ -12,7 +12,7 @@ use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Core\Utils\TranslatorManager;
+use Drupal\Console\Core\Utils\TranslatorManagerInterface;
 use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
@@ -22,7 +22,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 class ShowGenerateChainListener implements EventSubscriberInterface
 {
     /**
-     * @var TranslatorManager
+     * @var TranslatorManagerInterface
      */
     protected $translator;
 
@@ -55,10 +55,10 @@ class ShowGenerateChainListener implements EventSubscriberInterface
 
     /**
      * ShowGenerateChainListener constructor.
-     * @param TranslatorManager $translator
+     * @param TranslatorManagerInterface $translator
      */
     public function __construct(
-        TranslatorManager $translator
+        TranslatorManagerInterface $translator
     ) {
         $this->translator = $translator;
     }

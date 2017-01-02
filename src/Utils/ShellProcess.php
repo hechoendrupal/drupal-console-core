@@ -19,7 +19,7 @@ class ShellProcess
     protected $appRoot;
 
     /**
-     * @var TranslatorManager
+     * @var TranslatorManagerInterface
      */
     protected $translator;
 
@@ -36,7 +36,7 @@ class ShellProcess
     /**
      * Process constructor.
      * @param string            $appRoot
-     * @param TranslatorManager $translator
+     * @param TranslatorManagerInterface $translator
      */
     public function __construct($appRoot, $translator)
     {
