@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b51350791ac5863056228a360f8ee066",
+    "content-hash": "ea1c322a327e962597b3d763870d9036",
     "packages": [
         {
             "name": "dflydev/dot-access-configuration",
@@ -174,16 +174,16 @@
         },
         {
             "name": "drupal/console-en",
-            "version": "dev-master",
+            "version": "1.0.0-rc13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-en.git",
-                "reference": "815bd92f8984bb3a8ad8fceabdba60b1a50fe345"
+                "reference": "f9f6b87c76e1b66df8121d5ae2b2240b899f86fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/815bd92f8984bb3a8ad8fceabdba60b1a50fe345",
-                "reference": "815bd92f8984bb3a8ad8fceabdba60b1a50fe345",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/f9f6b87c76e1b66df8121d5ae2b2240b899f86fb",
+                "reference": "f9f6b87c76e1b66df8121d5ae2b2240b899f86fb",
                 "shasum": ""
             },
             "type": "drupal-console-language",
@@ -224,7 +224,7 @@
                 "drupal",
                 "symfony"
             ],
-            "time": "2016-12-27 01:51:22"
+            "time": "2017-01-03T17:10:01+00:00"
         },
         {
             "name": "psr/log",
@@ -1034,7 +1034,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "drupal/console-en": 20,
         "dflydev/dot-access-configuration": 20
     },
     "prefer-stable": true,
