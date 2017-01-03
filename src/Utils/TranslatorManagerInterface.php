@@ -29,7 +29,7 @@ interface TranslatorManagerInterface
      * @param $language
      * @param $directoryRoot
      *
-     * @return mixed
+     * @return void
      */
     public function loadResource($language, $directoryRoot);
 

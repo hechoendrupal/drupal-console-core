@@ -25,27 +25,27 @@ class TranslatorManager implements TranslatorManagerInterface
     /**
      * @var string
      */
-    private $language;
+    protected $language;
 
     /**
      * @var Translator
      */
-    private $translator;
+    protected $translator;
 
     /**
      * @var Parser
      */
-    private $parser;
+    protected $parser;
 
     /**
      * @var Filesystem
      */
-    private $filesystem;
+    protected $filesystem;
 
     /**
      * @var string
      */
-    private $coreLanguageRoot;
+    protected $coreLanguageRoot;
 
     /**
      * Translator constructor.
@@ -141,7 +141,7 @@ class TranslatorManager implements TranslatorManagerInterface
     public function loadResource($language, $directoryRoot)
     {
         if (!is_dir($directoryRoot)) {
-            return false;
+            return;
         }
 
         $this->language = $language;
@@ -176,6 +176,8 @@ class TranslatorManager implements TranslatorManagerInterface
                 echo $key.'.yml '.$e->getMessage();
             }
         }
+
+        return;
     }
 
     /**
@@ -184,7 +186,7 @@ class TranslatorManager implements TranslatorManagerInterface
      * @param $resource
      * @param $resourceKey
      */
-    private function loadTranslationByFile($resource, $resourceKey = null)
+    protected function loadTranslationByFile($resource, $resourceKey = null)
     {
         $resourceParsed = $this->parser->parse(file_get_contents($resource));
 
