@@ -125,6 +125,12 @@ class Application extends BaseApplication
             );
         }
 
+        if ($this->getCommandName($input) == 'list' && $this->container->hasParameter('console.warning')) {
+            $io->warning(
+                $this->trans($this->container->getParameter('console.warning'))
+            );
+        }
+
         return $code;
     }
 
@@ -204,10 +210,10 @@ class Application extends BaseApplication
         );
         $this->getDefinition()->addOption(
             new InputOption(
-                '--no-debug',
+                '--debug',
                 null,
                 InputOption::VALUE_NONE,
-                $this->trans('application.options.no-debug')
+                $this->trans('application.options.debug')
             )
         );
         $this->getDefinition()->addOption(
