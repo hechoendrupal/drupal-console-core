@@ -53,7 +53,6 @@ class ConfigurationManager
         $configurationDirectories[] = '/etc/console/';
         $configurationDirectories[] = $this->getHomeDirectory() . '/.console/';
         $configurationDirectories[] = $applicationDirectory .'/console/';
-        $configurationDirectories[] = getcwd().'/console/';
         if ($root) {
             $configurationDirectories[] = $root . '/console/';
         }
@@ -63,8 +62,7 @@ class ConfigurationManager
         foreach ($configurationDirectories as $configurationDirectory) {
             $file =  $configurationDirectory . 'config.yml';
 
-            if (is_dir($configurationDirectory)
-                && stripos($configurationDirectory, '/vendor/') <= 0
+            if (stripos($configurationDirectory, '/vendor/') <= 0
                 && stripos($configurationDirectory, '/bin/') <= 0
                 && stripos($configurationDirectory, 'console/') > 0
             ) {
@@ -82,6 +80,9 @@ class ConfigurationManager
 
             $configurationFiles[] = $file;
         }
+
+        $this->configurationDirectories =
+            array_unique($this->configurationDirectories);
 
         $builder = new YamlFileConfigurationBuilder($configurationFiles);
         $this->configuration = $builder->build();
