@@ -220,4 +220,50 @@ class DrupalStyle extends SymfonyStyle
         $message = sprintf('// %s', $message);
         parent::text($message);
     }
+
+    public function successLite($message, $newLine = false) {
+        $message = sprintf('<info>✔</info> %s', $message);
+        parent::text($message);
+        if ($newLine){
+            parent::newLine();
+        }
+    }
+
+    public function errorLite($message, $newLine = false) {
+        $message = sprintf('<fg=red>✘</> %s', $message);
+        parent::text($message);
+        if ($newLine){
+            parent::newLine();
+        }
+    }
+
+    public function warningLite($message, $newLine = false) {
+        $message = sprintf('<comment>!</comment> %s', $message);
+        parent::text($message);
+        if ($newLine){
+            parent::newLine();
+        }
+    }
+
+    public function customLite($message, $prefix = '*', $style = '', $newLine = false) {
+        if ($style) {
+            $message = sprintf(
+                '<%s>%s</%s> %s',
+                $style,
+                $prefix,
+                $style,
+                $message
+            );
+        } else {
+            $message = sprintf(
+                '%s %s',
+                $prefix,
+                $message
+            );
+        }
+        parent::text($message);
+        if ($newLine){
+            parent::newLine();
+        }
+    }
 }
