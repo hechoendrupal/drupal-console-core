@@ -3,9 +3,10 @@
 namespace Drupal\Console\Core\Utils;
 
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Finder\Finder;
 use Dflydev\DotAccessConfiguration\YamlFileConfigurationBuilder;
 use Dflydev\DotAccessConfiguration\ConfigurationInterface;
-use Symfony\Component\Console\Input\ArgvInput;
 
 /**
  * Class ConfigurationManager.
@@ -31,6 +32,11 @@ class ConfigurationManager
      * @var array
      */
     private $configurationDirectories = [];
+
+    /**
+     * @var array
+     */
+    private $sites = [];
 
     /**
      * @param $applicationDirectory
@@ -126,31 +132,11 @@ class ConfigurationManager
      */
     public function readTarget($target)
     {
-        if (!$target || !strpos($target, '.')) {
+        if (!array_key_exists($target, $this->sites)) {
             return [];
         }
 
-        $site = explode('.', $target)[0];
-        $env = explode('.', $target)[1];
-
-        $siteFile = sprintf(
-            '%s%s%s.yml',
-            $this->getSitesDirectory(),
-            DIRECTORY_SEPARATOR,
-            $site
-        );
-
-        if (!file_exists($siteFile)) {
-            return [];
-        }
-
-        $targetInformation = Yaml::parse(file_get_contents($siteFile));
-
-        if (!array_key_exists($env, $targetInformation)) {
-            return [];
-        }
-
-        $targetInformation = $targetInformation[$env];
+        $targetInformation = $this->sites[$target];
 
         if (array_key_exists('host', $targetInformation) && $targetInformation['host'] != 'local') {
             $targetInformation['remote'] = true;
@@ -185,16 +171,31 @@ class ConfigurationManager
     }
 
     /**
-     * Return the site config directory.
+     * Return the sites config directory.
      *
-     * @return string
+     * @return array
      */
-    public function getSitesDirectory()
+    private function getSitesDirectories()
     {
-        return sprintf(
-            '%s/sites',
-            $this->getConsoleDirectory()
+        $configurationDirectories = $this->getConfigurationDirectories();
+        $configurationDirectories = array_map(
+            function ($directory) {
+                return sprintf(
+                    '%s/sites',
+                    $directory
+                );
+            },
+            $configurationDirectories
         );
+
+        $configurationDirectories = array_filter(
+            $configurationDirectories,
+            function ($directory) {
+                return is_dir($directory);
+            }
+        );
+
+        return $configurationDirectories;
     }
 
     /**
@@ -303,5 +304,36 @@ class ConfigurationManager
         $builder = new YamlFileConfigurationBuilder([$extendFile]);
 
         $this->configuration->import($builder->build());
+    }
+
+    /**
+     * @return array
+     */
+    public function getSites()
+    {
+        if ($this->sites) {
+            return $this->sites;
+        }
+
+        $sitesDirectories = $this->getSitesDirectories();
+        $finder = new Finder();
+        $finder->in($sitesDirectories);
+        $finder->name("*.yml");
+
+        foreach ($finder as $site) {
+            $siteName = $site->getBasename('.yml');
+            $environments = $this->readSite($site->getRealPath());
+
+            if (!$environments || !is_array($environments)) {
+                continue;
+            }
+
+            foreach ($environments as $environment => $config) {
+                $site = $siteName . '.' . $environment;
+                $this->sites[$site] = $config;
+            }
+        }
+
+        return $this->sites;
     }
 }
