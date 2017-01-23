@@ -284,7 +284,7 @@ class ConfigurationManager
         }
     }
 
-    public function loadExtendLibraries()
+    public function loadExtendConfiguration()
     {
         $directory = $this->getHomeDirectory() . '/.console/extend/';
         if (!is_dir($directory)) {
@@ -296,14 +296,11 @@ class ConfigurationManager
             return null;
         }
         include_once $autoloadFile;
-
-        $extendFile = $directory . 'extend.yml';
-        if (!is_file($extendFile)) {
-            return null;
+        $extendFile = $directory . 'extend.console.config.yml';
+        if (is_file($extendFile)) {
+            $builder = new YamlFileConfigurationBuilder([$extendFile]);
+            $this->configuration->import($builder->build());
         }
-        $builder = new YamlFileConfigurationBuilder([$extendFile]);
-
-        $this->configuration->import($builder->build());
     }
 
     /**
@@ -336,4 +333,5 @@ class ConfigurationManager
 
         return $this->sites;
     }
+
 }
