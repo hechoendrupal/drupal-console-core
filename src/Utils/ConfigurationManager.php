@@ -297,7 +297,8 @@ class ConfigurationManager
         }
         include_once $autoloadFile;
         $extendFile = $directory . 'extend.console.config.yml';
-        if (is_file($extendFile)) {
+
+        if (is_file($extendFile) && file_get_contents($extendFile)!='') {
             $builder = new YamlFileConfigurationBuilder([$extendFile]);
             $this->configuration->import($builder->build());
         }
