@@ -285,6 +285,10 @@ class Application extends BaseApplication
         $autoWireForcedCommands = $configuration
             ->get('application.autowire.commands.forced');
 
+        if(!is_array($autoWireForcedCommands)){
+            return;
+        }
+
         foreach ($autoWireForcedCommands as $autoWireForcedCommand) {
             try {
                 if (!$autoWireForcedCommand['class']) {
