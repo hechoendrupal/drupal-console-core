@@ -188,16 +188,33 @@ class TextDescriptor extends Descriptor
             else {
                 $this->writeText($application->trans('commands.list.messages.available-commands'), $options);
             }
+
+            $singleCommands = [
+                'about',
+                'chain',
+                'check',
+                'exec',
+                'help',
+                'init',
+                'list',
+                'shell',
+                'server'
+            ];
+
             // add commands by namespace
             foreach ($description->getNamespaces() as $namespace) {
-                if (ApplicationDescription::GLOBAL_NAMESPACE == $namespace['id']){
-                    continue;
-                }
                 if (!$describedNamespace && ApplicationDescription::GLOBAL_NAMESPACE !== $namespace['id']) {
                     $this->writeText("\n");
                     $this->writeText(' <comment>'.$namespace['id'].'</comment>', $options);
                 }
                 foreach ($namespace['commands'] as $name) {
+
+                    if (ApplicationDescription::GLOBAL_NAMESPACE == $namespace['id']){
+                        if (!in_array($name, $singleCommands)) {
+                            continue;
+                        }
+                    }
+
                     $this->writeText("\n");
                     $alias = '';
                     if ($description->getCommand($name)->getAliases()){
