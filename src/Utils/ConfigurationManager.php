@@ -296,10 +296,14 @@ class ConfigurationManager
             return null;
         }
         include_once $autoloadFile;
-        $extendFile = $directory . 'extend.console.config.yml';
+        $extendFile= $directory . 'extend.console.config.yml';
 
-        if (is_file($extendFile) && file_get_contents($extendFile)!='') {
-            $builder = new YamlFileConfigurationBuilder([$extendFile]);
+        $this->importConfigurationFile($extendFile);
+    }
+
+    public function  importConfigurationFile($configFile) {
+        if (is_file($configFile) && file_get_contents($configFile)!='') {
+            $builder = new YamlFileConfigurationBuilder([$configFile]);
             $this->configuration->import($builder->build());
         }
     }
