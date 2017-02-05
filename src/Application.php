@@ -92,6 +92,7 @@ class Application extends BaseApplication
             $this->commandName = $commandName;
         }
         $this->registerEvents();
+        $this->registerExtendCommands();
         $this->registerCommandsFromAutoWireConfiguration();
         $this->registerChainCommands();
 
@@ -272,6 +273,15 @@ class Application extends BaseApplication
                 $this->trans('application.options.yes')
             )
         );
+    }
+
+    /**
+     * registerExtendCommands
+     */
+    private function registerExtendCommands()
+    {
+        $this->container->get('console.configuration_manager')
+            ->loadExtendConfiguration();
     }
 
     /**
