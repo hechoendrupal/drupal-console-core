@@ -11,6 +11,7 @@ use Dflydev\PlaceholderResolver\DataSource\ArrayDataSource;
 use Dflydev\PlaceholderResolver\RegexPlaceholderResolver;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Filesystem\Filesystem;
@@ -23,6 +24,7 @@ use Drupal\Console\Core\Command\Shared\CommandTrait;
 
 /**
  * Class ChainCommand
+ *
  * @package Drupal\Console\Core\Command\Chain
  */
 class ChainCommand extends Command
@@ -42,6 +44,7 @@ class ChainCommand extends Command
 
     /**
      * ChainCommand constructor.
+     *
      * @param ChainQueue     $chainQueue
      * @param ChainDiscovery $chainDiscovery
      */
@@ -291,6 +294,9 @@ class ChainCommand extends Command
             $commands = $configData['commands'];
         }
 
+        $parameterOptions = $input->getOptions();
+        unset($parameterOptions['file']);
+
         foreach ($commands as $command) {
             $moduleInputs = [];
             $arguments = !empty($command['arguments']) ? $command['arguments'] : [];
@@ -304,20 +310,40 @@ class ChainCommand extends Command
                 $moduleInputs['--'.$key] = is_null($value) ? '' : $value;
             }
 
-            $parameterOptions = $input->getOptions();
-            unset($parameterOptions['file']);
-            foreach ($parameterOptions as $key => $value) {
-                if ($value===true) {
-                    $moduleInputs['--' . $key] = true;
+            foreach ($this->getApplication()->getDefinition()->getOptions() as $option) {
+                $optionName = $option->getName();
+                if (array_key_exists($optionName, $parameterOptions)) {
+                    $optionValue = $parameterOptions[$optionName];
+                    if ($optionValue) {
+                        $moduleInputs['--' . $optionName] = $optionValue;
+                    }
                 }
             }
 
-            $this->chainQueue->addCommand(
-                $command['command'],
-                $moduleInputs,
-                $interactive,
-                $learning
-            );
+            $application = $this->getApplication();
+            $callCommand = $application->find($command['command']);
+
+            if (!$callCommand) {
+                continue;
+            }
+
+            $io->text($command['command']);
+            $io->newLine();
+
+            $input = new ArrayInput($moduleInputs);
+            if (!is_null($interactive)) {
+                $input->setInteractive($interactive);
+            }
+
+            $allowFailure = array_key_exists('allow_failure', $command)?$command['allow_failure']:false;
+            try {
+                $callCommand->run($input, $io);
+            } catch (\Exception $e) {
+                if (!$allowFailure) {
+                    $io->error($e->getMessage());
+                    return 1;
+                }
+            }
         }
 
         return 0;
