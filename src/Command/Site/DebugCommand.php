@@ -56,6 +56,12 @@ class DebugCommand extends Command
                 $this->trans('commands.site.debug.options.target'),
                 null
             )
+            ->addArgument(
+                'property',
+                InputArgument::OPTIONAL,
+                $this->trans('commands.site.debug.options.property'),
+                null
+            )
             ->setHelp($this->trans('commands.site.debug.help'));
     }
 
@@ -74,6 +80,7 @@ class DebugCommand extends Command
             return 1;
         }
 
+
         // --target argument
         $target = $input->getArgument('target');
         if (!$target) {
@@ -91,6 +98,20 @@ class DebugCommand extends Command
             $io->error($this->trans('commands.site.debug.messages.invalid-site'));
 
             return 1;
+        }
+
+        // --property argument, allows the user to fetch specific properties of the selected site
+        $property = $input->getArgument('property');
+        if ($property) {
+          $property_keys = explode('.', $property);
+
+          $val = $targetConfig;
+          foreach ($property_keys as $property_key) {
+            $val = &$val[$property_key];
+          }
+
+          $io->writeln($val);
+          return 0;
         }
 
         $io->info($target);
