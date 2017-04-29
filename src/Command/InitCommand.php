@@ -148,12 +148,12 @@ class InitCommand extends Command
         );
 
         $this->configParameters['learning'] = $io->confirm(
-            $this->trans('commands.init.questions.chain-examples'),
+            $this->trans('commands.init.questions.chain'),
             false
         );
 
         $this->configParameters['sites'] = $io->confirm(
-            $this->trans('commands.init.questions.sites-examples'),
+            $this->trans('commands.init.questions.sites'),
             false
         );
 
