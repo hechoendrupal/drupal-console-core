@@ -77,23 +77,17 @@ class CheckCommand extends BaseCommand
         $checks = $this->requirementChecker->getCheckResult();
         if (!$checks) {
             $phpCheckFile = $this->configurationManager->getHomeDirectory().'/.console/phpcheck.yml';
-            $phpCheckFileDisplay = realpath($this->configurationManager->getHomeDirectory()).'/.console/phpcheck.yml';
 
             if (!file_exists($phpCheckFile)) {
                 $phpCheckFile =
                     $this->configurationManager->getApplicationDirectory().
                     DRUPAL_CONSOLE_CORE.
                     'config/dist/phpcheck.yml';
-
-                $phpCheckFileDisplay =
-                    realpath($this->configurationManager->getApplicationDirectory()).
-                    DRUPAL_CONSOLE_CORE.
-                    'config/dist/phpcheck.yml';
             }
 
             $io->newLine();
             $io->info($this->trans('commands.check.messages.file'));
-            $io->comment($phpCheckFileDisplay);
+            $io->comment($phpCheckFile);
 
             $checks = $this->requirementChecker->validate($phpCheckFile);
         }

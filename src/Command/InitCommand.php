@@ -55,6 +55,8 @@ class InitCommand extends Command
     private $configParameters = [
         'language' => 'en',
         'temp' => '/tmp',
+        'chain' => false,
+        'sites' => false,
         'learning' => false,
         'generate_inline' => false,
         'generate_chain' => false
@@ -146,8 +148,18 @@ class InitCommand extends Command
         );
 
         $this->configParameters['learning'] = $io->confirm(
+            $this->trans('commands.init.questions.chain'),
+            false
+        );
+
+        $this->configParameters['sites'] = $io->confirm(
+            $this->trans('commands.init.questions.sites'),
+            false
+        );
+
+        $this->configParameters['chain'] = $io->confirm(
             $this->trans('commands.init.questions.learning'),
-            true
+            false
         );
 
         $this->configParameters['generate_inline'] = $io->confirm(
@@ -191,6 +203,12 @@ class InitCommand extends Command
                 DRUPAL_CONSOLE_CORE
             )
         );
+        if (!$this->configParameters['chain']){
+            $finder->exclude('chain');
+        }
+        if (!$this->configParameters['sites']){
+            $finder->exclude('sites');
+        }
         $finder->files();
 
         foreach ($finder as $configFile) {
