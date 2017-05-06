@@ -135,14 +135,41 @@ class TextDescriptor extends Descriptor
      */
     protected function describeCommand(Command $command, array $options = array())
     {
+        $namespace = substr(
+            $command->getName(),
+            0,
+            (strpos($command->getName(), ':')?:0)
+        );
+        $commandData = $command->getApplication()->getData();
+        $commands = $commandData['commands'][$namespace];
+        $examples = [];
+        foreach ($commands as $item) {
+            if ($item['name'] ==  $command->getName()) {
+                $examples = $item['examples'];
+                break;
+            }
+        }
+
         $command->getSynopsis(true);
         $command->getSynopsis(false);
         $command->mergeApplicationDefinition(false);
         $this->writeText($command->trans('commands.list.messages.usage'), $options);
         foreach (array_merge(array($command->getSynopsis(true)), $command->getAliases(), $command->getUsages()) as $usage) {
-            $this->writeText("\n");
             $this->writeText('  '.$usage, $options);
+            $this->writeText("\n");
         }
+        if ($examples) {
+            $this->writeText("\n");
+            $this->writeText("<comment>Examples:</comment>", $options);
+            foreach ($examples as $example) {
+                $this->writeText("\n");
+                $this->writeText('  '.$example['description']);
+                $this->writeText("\n");
+                $this->writeText('  '.$example['execution']);
+                $this->writeText("\n");
+            }
+        }
+
         $this->writeText("\n");
         $definition = $command->getNativeDefinition();
         if ($definition->getOptions() || $definition->getArguments()) {
