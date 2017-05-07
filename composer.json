@@ -57,7 +57,6 @@
     "prefer-stable": true,
     "autoload": {
         "files": [
-            "src/constants.php",
             "src/functions.php"
         ],
         "psr-4": {"Drupal\\Console\\Core\\": "src"}
