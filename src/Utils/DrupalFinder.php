@@ -10,7 +10,7 @@ namespace Drupal\Console\Core\Utils;
 use DrupalFinder\DrupalFinder as DrupalFinderBase;
 
 /**
- * Class FileQueue
+ * Class DrupalFinder
  *
  * @package Drupal\Console\Core\Utils
  */
