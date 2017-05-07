@@ -15,6 +15,7 @@ use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
+use Symfony\Component\Filesystem\Filesystem;
 
 class MergeCommand extends Command
 {
@@ -47,6 +48,24 @@ class MergeCommand extends Command
         $final_yaml = array();
         $yaml_destination = realpath($input->getArgument('yaml-destination'));
         $yaml_files = $input->getArgument('yaml-files');
+
+        if(!$yaml_destination) {
+          $fs = new Filesystem();
+          try {
+            $fs->touch($input->getArgument('yaml-destination'));
+            $yaml_destination = realpath($input->getArgument('yaml-destination'));
+          } catch (\Exception $e) {
+            $io->error(
+              sprintf(
+                '%s: %s',
+                $this->trans('commands.yaml.merge.messages.error-writing'),
+                $e->getMessage()
+              )
+            );
+
+            return;
+          }
+        }
 
         if (count($yaml_files) < 2) {
             $io->error($this->trans('commands.yaml.merge.messages.two-files-required'));
