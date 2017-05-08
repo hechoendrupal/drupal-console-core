@@ -151,6 +151,7 @@ class ArgvInputReader
         $source = $input->getParameterOption(['--source', '-s'], null);
         $target = $input->getParameterOption(['--target', '-t'], null);
         $root = $input->getParameterOption(['--root'], null);
+        $debug = $input->getParameterOption(['--debug'], false);
         $uri = $input->getParameterOption(['--uri', '-l']) ?: 'default';
         if ($uri && !preg_match('/^(http|https):\/\//', $uri)) {
             $uri = sprintf('http://%s', $uri);
@@ -159,6 +160,7 @@ class ArgvInputReader
         $this->set('command', $input->getFirstArgument());
         $this->set('root', $root);
         $this->set('uri', $uri);
+        $this->set('debug', $debug);
         $this->set('source', $source);
         $this->set('target', $target);
     }
