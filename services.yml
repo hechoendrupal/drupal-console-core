@@ -7,7 +7,7 @@ services:
   console.requirement_checker:
     class: Drupal\Console\Core\Utils\RequirementChecker
   console.chain_queue:
-    class: Drupal\Console\Core\Uconsole.init_generatortils\ChainQueue
+    class: Drupal\Console\Core\Utils\ChainQueue
   console.nested_array:
     class: Drupal\Console\Core\Utils\NestedArray
   console.show_file:
