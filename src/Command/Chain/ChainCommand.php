@@ -294,8 +294,8 @@ class ChainCommand extends Command
             $commands = $configData['commands'];
         }
 
-        $parameterOptions = $input->getOptions();
-        unset($parameterOptions['file']);
+        $chainInlineOptions = $input->getOptions();
+        unset($chainInlineOptions['file']);
 
         foreach ($commands as $command) {
             $moduleInputs = [];
@@ -310,11 +310,13 @@ class ChainCommand extends Command
                 $moduleInputs['--'.$key] = is_null($value) ? '' : $value;
             }
 
+            // Get application global options
             foreach ($this->getApplication()->getDefinition()->getOptions() as $option) {
                 $optionName = $option->getName();
-                if (array_key_exists($optionName, $parameterOptions)) {
-                    $optionValue = $parameterOptions[$optionName];
-                    if ($optionValue) {
+                if (array_key_exists($optionName, $chainInlineOptions)) {
+                    $optionValue = $chainInlineOptions[$optionName];
+                    // Set global option only if is not available in command options
+                    if (!isset($moduleInputs['--' . $optionName]) && $optionValue) {
                         $moduleInputs['--' . $optionName] = $optionValue;
                     }
                 }
