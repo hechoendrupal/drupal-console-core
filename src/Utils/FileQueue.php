@@ -9,6 +9,7 @@ namespace Drupal\Console\Core\Utils;
 
 /**
  * Class FileQueue
+ *
  * @package Drupal\Console\Core\Utils
  */
 class FileQueue

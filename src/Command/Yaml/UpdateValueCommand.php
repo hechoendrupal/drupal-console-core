@@ -28,6 +28,7 @@ class UpdateValueCommand extends Command
 
     /**
      * UpdateValueCommand constructor.
+     *
      * @param NestedArray $nestedArray
      */
     public function __construct(NestedArray $nestedArray)

@@ -12,6 +12,7 @@ use Symfony\Component\Console\Question\Question;
 
 /**
  * Class DrupalChoiceQuestionHelper
+ *
  * @package Drupal\Console\Core\Helper
  */
 class DrupalChoiceQuestionHelper extends SymfonyQuestionHelper

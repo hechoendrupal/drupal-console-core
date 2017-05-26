@@ -19,6 +19,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ExecCommand
+ *
  * @package Drupal\Console\Core\Command\Exec
  */
 class ExecCommand extends Command
@@ -32,6 +33,7 @@ class ExecCommand extends Command
 
     /**
      * ExecCommand constructor.
+     *
      * @param ShellProcess $shellProcess
      */
     public function __construct(ShellProcess $shellProcess)

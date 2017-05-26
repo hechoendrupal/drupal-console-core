@@ -13,6 +13,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
  * Class DrupalConsoleCore
+ *
  * @package Drupal\Console\Core\Bootstrap
  */
 class DrupalConsoleCore
@@ -29,6 +30,7 @@ class DrupalConsoleCore
 
     /**
      * DrupalConsole constructor.
+     *
      * @param $root
      * @param $appRoot
      */

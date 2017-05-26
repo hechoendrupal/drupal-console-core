@@ -8,6 +8,7 @@ namespace Drupal\Console\Core\Generator;
 
 /**
  * Class InitGenerator
+ *
  * @package Drupal\Console\Core\Generator
  */
 class InitGenerator extends Generator

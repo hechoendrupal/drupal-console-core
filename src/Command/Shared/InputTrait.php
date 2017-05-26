@@ -9,6 +9,7 @@ namespace Drupal\Console\Core\Command\Shared;
 
 /**
  * Class InputTrait
+ *
  * @package Drupal\Console\Core\Command
  */
 trait InputTrait

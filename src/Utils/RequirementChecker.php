@@ -6,6 +6,7 @@ use Symfony\Component\Yaml\Parser;
 
 /**
  * Class RequirementChecker
+ *
  * @package Drupal\Console\Core\Utils
  */
 class RequirementChecker
