@@ -20,6 +20,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class SetCommand
+ *
  * @package Drupal\Console\Core\Command\Settings
  */
 class SetCommand extends Command
@@ -38,6 +39,7 @@ class SetCommand extends Command
 
     /**
      * CheckCommand constructor.
+     *
      * @param ConfigurationManager $configurationManager
      * @param NestedArray          $nestedArray
      */

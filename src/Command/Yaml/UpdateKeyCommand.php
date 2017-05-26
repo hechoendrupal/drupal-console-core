@@ -28,6 +28,7 @@ class UpdateKeyCommand extends Command
 
     /**
      * UpdateKeyCommand constructor.
+     *
      * @param NestedArray $nestedArray
      */
     public function __construct(NestedArray $nestedArray)

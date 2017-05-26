@@ -29,6 +29,7 @@ class SplitCommand extends Command
 
     /**
      * SplitCommand constructor.
+     *
      * @param NestedArray $nestedArray
      */
     public function __construct(NestedArray $nestedArray)
@@ -138,7 +139,7 @@ class SplitCommand extends Command
             // Set minimum level to split
             $indent_level = empty($indent_level) ? 1 : $indent_level;
 
-            $yaml_split = array();
+            $yaml_split = [];
             $key_flatten = '';
             $initial_level = 1;
 

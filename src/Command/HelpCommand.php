@@ -90,12 +90,12 @@ class HelpCommand extends Command
     private function createDefinition()
     {
         return new InputDefinition(
-            array(
+            [
             new InputArgument('command_name', InputArgument::OPTIONAL, $this->trans('commands.help.arguments.command_name'), 'help'),
             new InputOption('xml', null, InputOption::VALUE_NONE, $this->trans('commands.help.options.xml')),
             new InputOption('raw', null, InputOption::VALUE_NONE, $this->trans('commands.help.options.raw')),
             new InputOption('format', null, InputOption::VALUE_REQUIRED, $this->trans('commands.help.options.format'), 'txt'),
-            )
+            ]
         );
     }
 }

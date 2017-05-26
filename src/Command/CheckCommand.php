@@ -18,6 +18,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class CheckCommand
+ *
  * @package Drupal\Console\Core\Command
  */
 class CheckCommand extends BaseCommand
@@ -41,6 +42,7 @@ class CheckCommand extends BaseCommand
 
     /**
      * CheckCommand constructor.
+     *
      * @param RequirementChecker   $requirementChecker
      * @param ChainQueue           $chainQueue
      * @param ConfigurationManager $configurationManager

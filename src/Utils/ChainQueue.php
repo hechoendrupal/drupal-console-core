@@ -9,6 +9,7 @@ namespace Drupal\Console\Core\Utils;
 
 /**
  * Class ChainQueue
+ *
  * @package Drupal\Console\Core\Helper
  */
 class ChainQueue

@@ -17,6 +17,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class DebugCommand
+ *
  * @package Drupal\Console\Core\Command\Settings
  */
 class DebugCommand extends Command
@@ -35,6 +36,7 @@ class DebugCommand extends Command
 
     /**
      * CheckCommand constructor.
+     *
      * @param ConfigurationManager $configurationManager
      * @param NestedArray          $nestedArray
      */

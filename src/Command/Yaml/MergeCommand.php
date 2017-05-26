@@ -45,26 +45,26 @@ class MergeCommand extends Command
         $yaml = new Parser();
         $dumper = new Dumper();
 
-        $final_yaml = array();
+        $final_yaml = [];
         $yaml_destination = realpath($input->getArgument('yaml-destination'));
         $yaml_files = $input->getArgument('yaml-files');
 
-        if(!$yaml_destination) {
-          $fs = new Filesystem();
-          try {
-            $fs->touch($input->getArgument('yaml-destination'));
-            $yaml_destination = realpath($input->getArgument('yaml-destination'));
-          } catch (\Exception $e) {
-            $io->error(
-              sprintf(
-                '%s: %s',
-                $this->trans('commands.yaml.merge.messages.error-writing'),
-                $e->getMessage()
-              )
-            );
+        if (!$yaml_destination) {
+            $fs = new Filesystem();
+            try {
+                $fs->touch($input->getArgument('yaml-destination'));
+                $yaml_destination = realpath($input->getArgument('yaml-destination'));
+            } catch (\Exception $e) {
+                $io->error(
+                    sprintf(
+                        '%s: %s',
+                        $this->trans('commands.yaml.merge.messages.error-writing'),
+                        $e->getMessage()
+                    )
+                );
 
-            return;
-          }
+                return;
+            }
         }
 
         if (count($yaml_files) < 2) {
@@ -174,7 +174,7 @@ class MergeCommand extends Command
 
         $yaml_files = $input->getArgument('yaml-files');
         if (!$yaml_files) {
-            $yaml_files = array();
+            $yaml_files = [];
 
             while (true) {
                 // Set the string key based on among files provided

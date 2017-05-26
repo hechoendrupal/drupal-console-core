@@ -17,6 +17,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ElephpantCommand
+ *
  * @package Drupal\Console\Core\Command\Exclude
  */
 class ElephpantCommand extends Command
@@ -35,6 +36,7 @@ class ElephpantCommand extends Command
 
     /**
      * DrupliconCommand constructor.
+     *
      * @param string       $appRoot
      * @param TwigRenderer $renderer
      */

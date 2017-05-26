@@ -103,15 +103,15 @@ class DebugCommand extends Command
         // --property argument, allows the user to fetch specific properties of the selected site
         $property = $input->getArgument('property');
         if ($property) {
-          $property_keys = explode('.', $property);
+            $property_keys = explode('.', $property);
 
-          $val = $targetConfig;
-          foreach ($property_keys as $property_key) {
-            $val = &$val[$property_key];
-          }
+            $val = $targetConfig;
+            foreach ($property_keys as $property_key) {
+                $val = &$val[$property_key];
+            }
 
-          $io->writeln($val);
-          return 0;
+            $io->writeln($val);
+            return 0;
         }
 
         $io->info($target);

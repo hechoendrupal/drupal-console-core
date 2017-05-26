@@ -22,7 +22,7 @@ class DescriptorHelper extends BaseHelper
     /**
      * @var DescriptorInterface[]
      */
-    private $descriptors = array();
+    private $descriptors = [];
     /**
      * Constructor.
      */
@@ -47,13 +47,13 @@ class DescriptorHelper extends BaseHelper
      *
      * @throws \InvalidArgumentException when the given format is not supported
      */
-    public function describe(OutputInterface $output, $object, array $options = array())
+    public function describe(OutputInterface $output, $object, array $options = [])
     {
         $options = array_merge(
-            array(
+            [
             'raw_text' => false,
             'format' => 'txt',
-            ), $options
+            ], $options
         );
         if (!isset($this->descriptors[$options['format']])) {
             throw new \InvalidArgumentException(sprintf('Unsupported format "%s".', $options['format']));

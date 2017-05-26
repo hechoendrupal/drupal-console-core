@@ -17,6 +17,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class DrupliconCommand
+ *
  * @package Drupal\Console\Core\Command\Exclude
  */
 class DrupliconCommand extends Command
@@ -34,6 +35,7 @@ class DrupliconCommand extends Command
 
     /**
      * DrupliconCommand constructor.
+     *
      * @param string       $appRoot
      * @param TwigRenderer $renderer
      */

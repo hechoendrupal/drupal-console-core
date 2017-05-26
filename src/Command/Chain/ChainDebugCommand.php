@@ -16,6 +16,7 @@ use Drupal\Console\Core\Command\Shared\CommandTrait;
 
 /**
  * Class ChainDebugCommand
+ *
  * @package Drupal\Console\Core\Command\Chain
  */
 class ChainDebugCommand extends Command

@@ -15,6 +15,7 @@ use Drupal\Console\Core\Utils\ConfigurationManager;
 
 /**
  * Class DefaultValueEventListener
+ *
  * @package Drupal\Console\Core\EventSubscriber
  */
 class DefaultValueEventListener implements EventSubscriberInterface
@@ -36,6 +37,7 @@ class DefaultValueEventListener implements EventSubscriberInterface
 
     /**
      * DefaultValueEventListener constructor.
+     *
      * @param ConfigurationManager $configurationManager
      */
     public function __construct(

@@ -301,7 +301,8 @@ class ConfigurationManager
         $this->importConfigurationFile($extendFile);
     }
 
-    public function  importConfigurationFile($configFile) {
+    public function importConfigurationFile($configFile)
+    {
         if (is_file($configFile) && file_get_contents($configFile)!='') {
             $builder = new YamlFileConfigurationBuilder([$configFile]);
             $this->configuration->import($builder->build());
@@ -338,5 +339,4 @@ class ConfigurationManager
 
         return $this->sites;
     }
-
 }
