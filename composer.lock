@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e9b2d5b5367ee2d3d323a4d94305997",
+    "content-hash": "5378635239d17fe962f215288baee221",
     "packages": [
         {
             "name": "dflydev/dot-access-configuration",
@@ -179,7 +179,7 @@
         },
         {
             "name": "drupal/console-en",
-            "version": "1.0.0-rc20",
+            "version": "1.0.0-rc21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-en.git",
