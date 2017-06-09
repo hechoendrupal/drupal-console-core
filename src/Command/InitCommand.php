@@ -21,6 +21,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class InitCommand
+ *
  * @package Drupal\Console\Core\Command
  */
 class InitCommand extends Command
@@ -64,6 +65,7 @@ class InitCommand extends Command
 
     /**
      * InitCommand constructor.
+     *
      * @param ShowFile             $showFile
      * @param ConfigurationManager $configurationManager
      * @param InitGenerator        $generator
@@ -203,10 +205,10 @@ class InitCommand extends Command
                 DRUPAL_CONSOLE_CORE
             )
         );
-        if (!$this->configParameters['chain']){
+        if (!$this->configParameters['chain']) {
             $finder->exclude('chain');
         }
-        if (!$this->configParameters['sites']){
+        if (!$this->configParameters['sites']) {
             $finder->exclude('sites');
         }
         $finder->files();
@@ -237,7 +239,7 @@ class InitCommand extends Command
 
         $executableName = null;
         if ($autocomplete) {
-            $processBuilder = new ProcessBuilder(array('bash'));
+            $processBuilder = new ProcessBuilder(['bash']);
             $process = $processBuilder->getProcess();
             $process->setCommandLine('echo $_');
             $process->run();

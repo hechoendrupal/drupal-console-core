@@ -18,6 +18,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class DrushCommand
+ *
  * @package Drupal\Console\Core\Command\Exclude
  */
 class DrushCommand extends Command
@@ -36,6 +37,7 @@ class DrushCommand extends Command
 
     /**
      * DrushCommand constructor.
+     *
      * @param ConfigurationManager $configurationManager
      * @param ChainQueue           $chainQueue
      */

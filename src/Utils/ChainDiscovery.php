@@ -11,6 +11,7 @@ use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class ChainDiscovery
+ *
  * @package Drupal\Console\Core\Utils
  */
 class ChainDiscovery

@@ -9,6 +9,7 @@ namespace Drupal\Console\Core\Utils;
 
 /**
  * Class NestedArray
+ *
  * @package Drupal\Console\Core\Utils
  */
 class NestedArray
@@ -159,7 +160,7 @@ class NestedArray
             // PHP auto-creates container arrays and NULL entries without error if $ref
             // is NULL, but throws an error if $ref is set, but not an array.
             if ($force && isset($ref) && !is_array($ref)) {
-                $ref = array();
+                $ref = [];
             }
             $ref = &$ref[$parent];
         }
@@ -168,6 +169,7 @@ class NestedArray
 
     /**
      * Replace a YAML key maintaining values
+     *
      * @param array   $array
      * @param array   $parents
      * @param $new_key
@@ -194,7 +196,7 @@ class NestedArray
      */
     public function arrayDiff($array1, $array2, $negate = false, &$statistics)
     {
-        $result = array();
+        $result = [];
         foreach ($array1 as $key => $val) {
             if (isset($array2[$key])) {
                 if (is_array($val) && $array2[$key]) {
@@ -233,6 +235,7 @@ class NestedArray
 
     /**
      * Flat a yaml file
+     *
      * @param array  $array
      * @param array  $flatten_array
      * @param string $key_flatten
@@ -477,7 +480,7 @@ class NestedArray
      */
     public static function mergeDeepArray(array $arrays, $preserve_integer_keys = false)
     {
-        $result = array();
+        $result = [];
         foreach ($arrays as $array) {
             foreach ($array as $key => $value) {
                 // Renumber integer keys as array_merge_recursive() does unless
@@ -488,7 +491,7 @@ class NestedArray
                 }
                 // Recurse when both values are arrays.
                 elseif (isset($result[$key]) && is_array($result[$key]) && is_array($value)) {
-                    $result[$key] = self::mergeDeepArray(array($result[$key], $value), $preserve_integer_keys);
+                    $result[$key] = self::mergeDeepArray([$result[$key], $value], $preserve_integer_keys);
                 }
                 // Otherwise, use the latter value, overriding any previous value.
                 else {

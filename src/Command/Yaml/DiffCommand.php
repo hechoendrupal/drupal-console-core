@@ -28,6 +28,7 @@ class DiffCommand extends Command
 
     /**
      * DiffCommand constructor.
+     *
      * @param NestedArray $nestedArray
      */
     public function __construct(NestedArray $nestedArray)
@@ -156,7 +157,7 @@ class DiffCommand extends Command
             return;
         }
         // FLAT YAML file to display full yaml to be used with command yaml:update:key or yaml:update:value
-        $diffFlatten = array();
+        $diffFlatten = [];
         $keyFlatten = '';
         $this->nestedArray->yamlFlattenArray($diff, $diffFlatten, $keyFlatten);
 

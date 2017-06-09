@@ -9,6 +9,7 @@ namespace Drupal\Console\Core\Utils;
 
 /**
  * Class StringConverter
+ *
  * @package Drupal\Console\Core\Utils
  */
 class StringConverter

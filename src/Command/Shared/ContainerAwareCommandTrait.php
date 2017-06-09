@@ -9,6 +9,7 @@ namespace Drupal\Console\Core\Command\Shared;
 
 /**
  * Class CommandTrait
+ *
  * @package Drupal\Console\Core\Command
  */
 trait ContainerAwareCommandTrait
