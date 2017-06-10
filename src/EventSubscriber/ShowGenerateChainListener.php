@@ -43,7 +43,8 @@ class ShowGenerateChainListener implements EventSubscriberInterface
     private $skipOptions = [
         'env',
         'generate-inline',
-        'generate-chain'
+        'generate-chain',
+        'no-interaction'
     ];
 
     /**
