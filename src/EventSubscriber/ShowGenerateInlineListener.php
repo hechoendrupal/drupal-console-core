@@ -42,7 +42,8 @@ class ShowGenerateInlineListener implements EventSubscriberInterface
     private $skipOptions = [
         'env',
         'generate-inline',
-        'generate-chain'
+        'generate-chain',
+        'no-interaction'
     ];
 
     /**
@@ -115,9 +116,9 @@ class ShowGenerateInlineListener implements EventSubscriberInterface
                     foreach ($optionValue as $optionItem) {
                         if (is_array($optionItem)) {
                             $inlineValue = implode(
-                                ' ', array_map(
+                                ', ', array_map(
                                     function ($v, $k) {
-                                        return $k . ':' . $v;
+                                        return '"'.$k . '":"' . $v . '"';
                                     },
                                     $optionItem,
                                     array_keys($optionItem)
@@ -126,7 +127,7 @@ class ShowGenerateInlineListener implements EventSubscriberInterface
                         } else {
                             $inlineValue = $optionItem;
                         }
-                        $inline .= ' --' . $optionName . '="' . $inlineValue . '"';
+                        $inline .= ' --' . $optionName . '=\'' . $inlineValue . '\'';
                     }
                 } else {
                     if (is_bool($optionValue)) {
@@ -144,7 +145,7 @@ class ShowGenerateInlineListener implements EventSubscriberInterface
 
             $io->writeln(
                 sprintf(
-                    '$ drupal %s %s',
+                    '$ drupal %s %s --no-interaction',
                     $command_name,
                     $inline
                 )
