@@ -156,13 +156,3 @@ commands:
       - vdi
     views:enable:
       - ve
-    yaml:diff:
-      - yd
-    yaml:merge:
-      - ym
-    yaml:split:
-      - ys
-    yaml:update:key:
-      - yu
-    yaml:update:value:
-      - yuv
