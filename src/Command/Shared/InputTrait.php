@@ -10,7 +10,7 @@ namespace Drupal\Console\Core\Command\Shared;
 /**
  * Class InputTrait
  *
- * @package Drupal\Console\Core\Command
+ * @package Drupal\Console\Core\Command\Shared
  */
 trait InputTrait
 {
@@ -19,19 +19,17 @@ trait InputTrait
      */
     private function inlineValueAsArray($inputValue)
     {
-        $inputArrayValue = [];
+        $inputAsArray = [];
         foreach ($inputValue as $key => $value) {
             if (!is_array($value)) {
-                $separatorIndex = strpos($value, ':');
-                if (!$separatorIndex) {
+                try {
+                    $inputAsArray[] = json_decode('[{'.$value.'}]', true)[0];
+                } catch (\Exception $e) {
                     continue;
                 }
-                $inputKeyItem = substr($value, 0, $separatorIndex);
-                $inputValueItem = substr($value, $separatorIndex+1);
-                $inputArrayValue[$key] = [$inputKeyItem => $inputValueItem];
             }
         }
 
-        return $inputArrayValue?$inputArrayValue:$inputValue;
+        return $inputAsArray?$inputAsArray:$inputValue;
     }
 }
