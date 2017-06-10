@@ -10,7 +10,7 @@ namespace Drupal\Console\Core\Command\Shared;
 /**
  * Class InputTrait
  *
- * @package Drupal\Console\Core\Command
+ * @package Drupal\Console\Core\Command\Shared
  */
 trait InputTrait
 {
