@@ -1,5 +1,5 @@
 # How to use
-# site:new --placeholder="repository:acquia/lightning-project" --placeholder="directory:/path/to/drupal-project/"
+# site:new --directory=/path/to/drupal-project/
 # site:new --repository=acquia/lightning-project --directory=/path/to/drupal-project/
 command:
   name: site:new
