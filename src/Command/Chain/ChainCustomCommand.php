@@ -36,6 +36,11 @@ class ChainCustomCommand extends Command
     protected $description;
 
     /**
+     * @var array
+     */
+    protected $placeHolders;
+
+    /**
      * @var string
      */
     protected $file;
@@ -45,15 +50,30 @@ class ChainCustomCommand extends Command
      *
      * @param $name
      * @param $description
+     * @param $placeHolders
      * @param $file
      */
-    public function __construct($name, $description, $file)
+    public function __construct(
+        $name,
+        $description,
+        $placeHolders,
+        $file)
     {
         $this->name = $name;
         $this->description = $description;
         $this->file = $file;
+        $this->placeHolders = $placeHolders;
 
         parent::__construct();
+        foreach ($placeHolders['inline'] as $placeHolderName => $placeHolderValue) {
+            $this->addOption(
+                $placeHolderName,
+                null,
+                InputOption::VALUE_OPTIONAL,
+                $placeHolderName,
+                null
+            );
+        }
     }
 
     /**
@@ -63,13 +83,7 @@ class ChainCustomCommand extends Command
     {
         $this
             ->setName($this->name)
-            ->setDescription($this->description)
-            ->addOption(
-                'placeholder',
-                null,
-                InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.chain.options.placeholder')
-            );
+            ->setDescription($this->description);
     }
 
     /**
@@ -84,17 +98,22 @@ class ChainCustomCommand extends Command
             '--file'  => $this->file,
         ];
 
-        if ($placeholder = $input->getOption('placeholder')) {
-            $arguments['--placeholder'] = $this->inlineValueAsArray($placeholder);
-        }
-
+        $placeholder = [];
         foreach ($input->getOptions() as $option => $value) {
-            if ($option != 'placeholder' && $value) {
+            if ($value) {
                 if (is_bool($value)) {
                     $value = true;
                 }
-                $arguments['--'.$option] = $value;
+                if (array_key_exists($option, $this->placeHolders['inline'])) {
+                    $placeholder[] = $option.':'.$value;
+                } else {
+                    $arguments['--' . $option] = $value;
+                }
             }
+        }
+
+        if ($placeholder) {
+            $arguments['--placeholder'] = $placeholder;
         }
 
         $commandInput = new ArrayInput($arguments);

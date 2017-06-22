@@ -32,4 +32,25 @@ trait InputTrait
 
         return $inputAsArray?$inputAsArray:$inputValue;
     }
+
+    /**
+     * @return array
+     */
+    private function placeHolderInlineValueAsArray($inputValue)
+    {
+        $inputArrayValue = [];
+        foreach ($inputValue as $key => $value) {
+            if (!is_array($value)) {
+                $separatorIndex = strpos($value, ':');
+                if (!$separatorIndex) {
+                    continue;
+                }
+                $inputKeyItem = substr($value, 0, $separatorIndex);
+                $inputValueItem = substr($value, $separatorIndex+1);
+                $inputArrayValue[$inputKeyItem] = $inputValueItem;
+            }
+        }
+
+        return $inputArrayValue?$inputArrayValue:$inputValue;
+    }
 }

@@ -392,7 +392,13 @@ class Application extends BaseApplication
             try {
                 $file = $chainCommand['file'];
                 $description = $chainCommand['description'];
-                $command = new ChainCustomCommand($name, $description, $file);
+                $placeHolders = $chainCommand['placeholders'];
+                $command = new ChainCustomCommand(
+                    $name,
+                    $description,
+                    $placeHolders,
+                    $file
+                );
                 $this->add($command);
             } catch (\Exception $e) {
                 echo $e->getMessage() . PHP_EOL;
