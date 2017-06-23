@@ -326,4 +326,8 @@ class ConfigurationManager
 
         return $this->sites;
     }
+
+    public function getHomeDirectory() {
+        Path::getHomeDirectory();
+    }
 }
