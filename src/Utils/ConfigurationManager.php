@@ -328,6 +328,6 @@ class ConfigurationManager
     }
 
     public function getHomeDirectory() {
-        Path::getHomeDirectory();
+        return Path::getHomeDirectory();
     }
 }
