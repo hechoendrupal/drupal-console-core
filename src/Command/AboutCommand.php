@@ -50,14 +50,14 @@ class AboutCommand extends Command
                 $this->trans('commands.init.description'),
                 'drupal init'
             ],
-            //            'quick-start' => [
-            //                $this->trans('commands.common.messages.quick-start'),
-            //                'drupal quick:start'
-            //            ],
-            //            'site-new' => [
-            //                $this->trans('commands.site.new.description'),
-            //                'drupal site:new'
-            //            ],
+            'quick-start' => [
+                $this->trans('commands.common.messages.quick-start'),
+                'drupal quick:start'
+            ],
+            'site-new' => [
+                $this->trans('commands.site.new.description'),
+                'drupal site:new'
+            ],
             'site-install' => [
                 $this->trans('commands.site.install.description'),
                 sprintf(
@@ -72,14 +72,11 @@ class AboutCommand extends Command
 
         foreach ($commands as $command => $commandInfo) {
             $io->writeln($commandInfo[0]);
-            $io->newLine();
-            $io->comment(sprintf('  %s', $commandInfo[1]));
+            $io->comment(sprintf(' %s', $commandInfo[1]));
             $io->newLine();
         }
 
-        $io->setDecorated(false);
-        $io->section($this->trans('commands.self-update.description'));
-        $io->setDecorated(true);
+        $io->writeln($this->trans('commands.self-update.description'));
         $io->comment('  drupal self-update');
         $io->newLine();
     }
