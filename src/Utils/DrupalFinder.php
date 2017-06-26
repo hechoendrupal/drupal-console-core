@@ -37,11 +37,6 @@ class DrupalFinder extends DrupalFinderBase
     {
         $vendorDir = 'vendor';
         if (parent::locateRoot($start_path)) {
-//            $composerRoot = $this->getComposerRoot();
-//            $vendorDir = str_replace(
-//                $composerRoot .'/', '', $this->getVendorDir()
-//            );
-
             $vendorDir = Path::makeRelative(
                 $this->getVendorDir(),
                 $this->getComposerRoot()
