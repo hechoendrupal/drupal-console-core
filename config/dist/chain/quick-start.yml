@@ -16,7 +16,7 @@ commands:
   # Install Drupal
   - command: exec
     arguments:
-      bin: drupal site:install %{{profile}} --root=%{{directory}} --no-interaction
+      bin: drupal site:install %{{profile}} --root=%{{directory}} --db-type="sqlite" --no-interaction
   # Start PHP bult-in server
   - command: exec
     arguments:
