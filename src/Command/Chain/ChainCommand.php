@@ -130,17 +130,32 @@ class ChainCommand extends Command
 
         if ($missingInlinePlaceHolders) {
             foreach ($inlinePlaceHolders as $inlinePlaceHolder => $inlinePlaceHolderValue) {
-                $placeholder[] = sprintf(
-                    '%s:%s',
-                    $inlinePlaceHolder,
-                    $io->ask(
-                        sprintf(
-                            'Enter value for %s placeholder',
-                            $inlinePlaceHolder
-                        ),
-                        $inlinePlaceHolderValue
-                    )
-                );
+                if (is_array($inlinePlaceHolderValue)) {
+                    $placeholder[] = sprintf(
+                        '%s:%s',
+                        $inlinePlaceHolder,
+                        $io->choice(
+                            sprintf(
+                                'Select value for %s placeholder',
+                                $inlinePlaceHolder
+                            ),
+                            $inlinePlaceHolderValue,
+                            current($inlinePlaceHolderValue)
+                        )
+                    );
+                } else {
+                    $placeholder[] = sprintf(
+                        '%s:%s',
+                        $inlinePlaceHolder,
+                        $io->ask(
+                            sprintf(
+                                'Enter value for %s placeholder',
+                                $inlinePlaceHolder
+                            ),
+                            $inlinePlaceHolderValue
+                        )
+                    );
+                }
             }
             $input->setOption('placeholder', $placeholder);
         }
@@ -180,6 +195,12 @@ class ChainCommand extends Command
         // Resolve inlinePlaceHolders
         $chainContent = $this->chainDiscovery->getFileContents($file);
         $inlinePlaceHolders = $this->chainDiscovery->extractInlinePlaceHolders($chainContent);
+
+        foreach ($inlinePlaceHolders as $inlinePlaceHolder => $inlinePlaceHolderValue) {
+            if (is_array($inlinePlaceHolderValue)) {
+                $inlinePlaceHolders[$inlinePlaceHolder] = current($inlinePlaceHolderValue);
+            }
+        }
 
         $placeholder = $input->getOption('placeholder');
         if ($placeholder) {
