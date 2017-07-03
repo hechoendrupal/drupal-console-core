@@ -64,7 +64,7 @@ class ChainDebugCommand extends Command
             $io->comment($directory);
 
             $tableHeader = [
-              $this->trans('commands.chain.debug.messages.file')
+                $this->trans('commands.chain.debug.messages.file')
             ];
 
             $tableRows = [];

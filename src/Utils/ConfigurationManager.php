@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Finder\Finder;
 use Dflydev\DotAccessConfiguration\YamlFileConfigurationBuilder;
 use Dflydev\DotAccessConfiguration\ConfigurationInterface;
+use Webmozart\PathUtil\Path;
 
 /**
  * Class ConfigurationManager.
@@ -44,7 +45,7 @@ class ConfigurationManager
      */
     public function loadConfiguration($applicationDirectory)
     {
-        $homeConfig = $this->getHomeDirectory() . '/.console/';
+        $homeConfig = Path::getHomeDirectory() . '/.console/';
         if (!is_dir($homeConfig)) {
             mkdir($homeConfig, 0777);
         }
@@ -57,7 +58,7 @@ class ConfigurationManager
         $configurationDirectories[] = $applicationDirectory.DRUPAL_CONSOLE_CORE;
         $configurationDirectories[] = $applicationDirectory.DRUPAL_CONSOLE;
         $configurationDirectories[] = '/etc/console/';
-        $configurationDirectories[] = $this->getHomeDirectory() . '/.console/';
+        $configurationDirectories[] = Path::getHomeDirectory() . '/.console/';
         $configurationDirectories[] = $applicationDirectory .'/console/';
         if ($root) {
             $configurationDirectories[] = $root . '/console/';
@@ -149,20 +150,6 @@ class ConfigurationManager
     }
 
     /**
-     * Return the user home directory.
-     *
-     * @return string
-     */
-    public function getHomeDirectory()
-    {
-        if (function_exists('posix_getuid')) {
-            return posix_getpwuid(posix_getuid())['dir'];
-        }
-
-        return realpath(rtrim(getenv('HOME') ?: getenv('USERPROFILE'), '/\\'));
-    }
-
-    /**
      * @return string
      */
     public function getApplicationDirectory()
@@ -238,7 +225,7 @@ class ConfigurationManager
      */
     public function getConsoleDirectory()
     {
-        return sprintf('%s/.console/', $this->getHomeDirectory());
+        return sprintf('%s/.console/', Path::getHomeDirectory());
     }
 
     /**
@@ -286,7 +273,7 @@ class ConfigurationManager
 
     public function loadExtendConfiguration()
     {
-        $directory = $this->getHomeDirectory() . '/.console/extend/';
+        $directory = Path::getHomeDirectory() . '/.console/extend/';
         if (!is_dir($directory)) {
             return null;
         }
@@ -338,5 +325,9 @@ class ConfigurationManager
         }
 
         return $this->sites;
+    }
+
+    public function getHomeDirectory() {
+        return Path::getHomeDirectory();
     }
 }

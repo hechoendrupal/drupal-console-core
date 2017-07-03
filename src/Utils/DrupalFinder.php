@@ -8,6 +8,7 @@
 namespace Drupal\Console\Core\Utils;
 
 use DrupalFinder\DrupalFinder as DrupalFinderBase;
+use Webmozart\PathUtil\Path;
 
 /**
  * Class DrupalFinder
@@ -16,32 +17,90 @@ use DrupalFinder\DrupalFinder as DrupalFinderBase;
  */
 class DrupalFinder extends DrupalFinderBase
 {
+
+    /**
+     * @var string
+     */
+    protected $consoleCorePath;
+
+    /**
+     * @var string
+     */
+    protected $consolePath;
+
+    /**
+     * @var string
+     */
+    protected $consoleLanguagePath;
+
     public function locateRoot($start_path)
     {
+        $vendorDir = 'vendor';
         if (parent::locateRoot($start_path)) {
-            $composerRoot = $this->getComposerRoot();
-            $vendorDir = str_replace(
-                $composerRoot .'/', '', $this->getVendorDir()
+            $vendorDir = Path::makeRelative(
+                $this->getVendorDir(),
+                $this->getComposerRoot()
             );
-            if (!defined("DRUPAL_CONSOLE_CORE")) {
-                define(
-                    "DRUPAL_CONSOLE_CORE",
-                    "/{$vendorDir}/drupal/console-core/"
-                );
-            }
-            if (!defined("DRUPAL_CONSOLE")) {
-                define("DRUPAL_CONSOLE", "/{$vendorDir}/drupal/console/");
-            }
-            if (!defined("DRUPAL_CONSOLE_LANGUAGE")) {
-                define(
-                    "DRUPAL_CONSOLE_LANGUAGE",
-                    "/{$vendorDir}/drupal/console-%s/translations/"
-                );
-            }
+
+            $this->definePaths($vendorDir);
+            $this->defineConstants($vendorDir);
 
             return true;
         }
 
+        $this->definePaths($vendorDir);
+        $this->defineConstants($vendorDir);
+
         return false;
+    }
+
+    protected function definePaths($vendorDir)
+    {
+        $this->consoleCorePath = "/{$vendorDir}/drupal/console-core/";
+        $this->consolePath = "/{$vendorDir}/drupal/console/";
+        $this->consoleLanguagePath = "/{$vendorDir}/drupal/console-%s/translations/";
+    }
+
+    protected function defineConstants($vendorDir)
+    {
+        if (!defined("DRUPAL_CONSOLE_CORE")) {
+            define(
+                "DRUPAL_CONSOLE_CORE",
+                "/{$vendorDir}/drupal/console-core/"
+            );
+        }
+        if (!defined("DRUPAL_CONSOLE")) {
+            define("DRUPAL_CONSOLE", "/{$vendorDir}/drupal/console/");
+        }
+        if (!defined("DRUPAL_CONSOLE_LANGUAGE")) {
+            define(
+                "DRUPAL_CONSOLE_LANGUAGE",
+                "/{$vendorDir}/drupal/console-%s/translations/"
+            );
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getConsoleCorePath()
+    {
+        return $this->consoleCorePath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getConsolePath()
+    {
+        return $this->consolePath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getConsoleLanguagePath()
+    {
+        return $this->consoleLanguagePath;
     }
 }

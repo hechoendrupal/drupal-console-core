@@ -149,7 +149,7 @@ class InitCommand extends Command
             '/tmp'
         );
 
-        $this->configParameters['learning'] = $io->confirm(
+        $this->configParameters['chain'] = $io->confirm(
             $this->trans('commands.init.questions.chain'),
             false
         );
@@ -159,7 +159,7 @@ class InitCommand extends Command
             false
         );
 
-        $this->configParameters['chain'] = $io->confirm(
+        $this->configParameters['learning'] = $io->confirm(
             $this->trans('commands.init.questions.learning'),
             false
         );

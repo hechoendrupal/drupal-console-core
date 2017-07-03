@@ -64,12 +64,14 @@ class ShellProcess
             $workingDirectory = $this->appRoot;
         }
 
-        $this->io->newLine();
-        $this->io->comment(
-            $this->translator->trans('commands.exec.messages.working-directory') .': ',
-            false
-        );
-        $this->io->writeln($workingDirectory);
+        if (realpath($workingDirectory)) {
+            $this->io->comment(
+                $this->translator->trans('commands.exec.messages.working-directory') .': ',
+                false
+            );
+            $this->io->writeln(realpath($workingDirectory));
+        }
+
         $this->io->comment(
             $this->translator->trans('commands.exec.messages.executing-command') .': ',
             false

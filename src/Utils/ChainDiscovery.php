@@ -46,9 +46,9 @@ class ChainDiscovery
 
         $this->addDirectories(
             [
-            $this->configurationManager->getHomeDirectory() . DIRECTORY_SEPARATOR . '.console'. DIRECTORY_SEPARATOR .'chain',
-            $this->appRoot . DIRECTORY_SEPARATOR . 'console'. DIRECTORY_SEPARATOR .'chain',
-            $this->appRoot . DIRECTORY_SEPARATOR . '.console'. DIRECTORY_SEPARATOR .'chain',
+                $this->configurationManager->getHomeDirectory() . DIRECTORY_SEPARATOR . '.console'. DIRECTORY_SEPARATOR .'chain',
+                $this->appRoot . DIRECTORY_SEPARATOR . 'console'. DIRECTORY_SEPARATOR .'chain',
+                $this->appRoot . DIRECTORY_SEPARATOR . '.console'. DIRECTORY_SEPARATOR .'chain',
             ]
         );
     }
@@ -104,7 +104,8 @@ class ChainDiscovery
         $chainCommands = [];
         $files = $this->getChainFiles(true);
         foreach ($files as $file) {
-            $chain = Yaml::parse(file_get_contents($file));
+            $chainContent = $this->getFileContents($file);
+            $chain = Yaml::parse($chainContent);
             if (!array_key_exists('command', $chain)) {
                 continue;
             }
@@ -119,9 +120,81 @@ class ChainDiscovery
             $chainCommands[$name] = [
                 'description' => $description,
                 'file' => $file,
+                'commands' => $chain['commands'],
+                'placeholders' => [
+                    'inline' => $this->extractInlinePlaceHolders($chainContent),
+                    'environment' => $this->extractEnvironmentPlaceHolders($chainContent)
+                ],
             ];
         }
 
         return $chainCommands;
+    }
+
+    /**
+     * Helper to load and clean up the chain file.
+     *
+     * @param string $file The file name
+     *
+     * @return string $contents The contents of the file
+     */
+    public function getFileContents($file)
+    {
+        $contents = file_get_contents($file);
+
+        // Remove lines with comments.
+        $contents = preg_replace('![ \t]*#.*[ \t]*[\r|\r\n|\n]!', PHP_EOL, $contents);
+        //  Strip blank lines
+        $contents = preg_replace("/(^[\r\n]*|[\r\n]+)[\t]*[\r\n]+/", PHP_EOL, $contents);
+
+        return $contents;
+    }
+
+    private function extractPlaceHolders($chainContent, $identifier)
+    {
+        $placeHoldersExtracted = [];
+        $regex = '/\\'.$identifier.'{{(.*?)}}/';
+        preg_match_all(
+            $regex,
+            $chainContent,
+            $placeHoldersExtracted
+        );
+
+        if (!$placeHoldersExtracted) {
+            return [];
+        }
+
+        return array_unique($placeHoldersExtracted[1]);
+    }
+
+    public function extractInlinePlaceHolders($chainContent)
+    {
+        $extractedInlinePlaceHolders = $this->extractPlaceHolders($chainContent, '%');
+        $extractedVars = $this->extractVars($chainContent);
+
+        $inlinePlaceHolders = [];
+        foreach ($extractedInlinePlaceHolders as $key => $inlinePlaceHolder) {
+            $placeholderValue = null;
+            if (array_key_exists($inlinePlaceHolder, $extractedVars)) {
+                $placeholderValue = $extractedVars[$inlinePlaceHolder];
+            }
+            $inlinePlaceHolders[$inlinePlaceHolder] = $placeholderValue;
+        }
+
+        return $inlinePlaceHolders;
+    }
+
+    public function extractEnvironmentPlaceHolders($chainContent)
+    {
+        return $this->extractPlaceHolders($chainContent, '$');
+    }
+
+    public function extractVars($chainContent) {
+        $chain = Yaml::parse($chainContent);
+        if (!array_key_exists('vars', $chain)) {
+            return [];
+        }
+
+        return $chain['vars'];
     }
 }

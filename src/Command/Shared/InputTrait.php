@@ -10,7 +10,7 @@ namespace Drupal\Console\Core\Command\Shared;
 /**
  * Class InputTrait
  *
- * @package Drupal\Console\Core\Command
+ * @package Drupal\Console\Core\Command\Shared
  */
 trait InputTrait
 {
@@ -18,6 +18,25 @@ trait InputTrait
      * @return array
      */
     private function inlineValueAsArray($inputValue)
+    {
+        $inputAsArray = [];
+        foreach ($inputValue as $key => $value) {
+            if (!is_array($value)) {
+                try {
+                    $inputAsArray[] = json_decode('[{'.$value.'}]', true)[0];
+                } catch (\Exception $e) {
+                    continue;
+                }
+            }
+        }
+
+        return $inputAsArray?$inputAsArray:$inputValue;
+    }
+
+    /**
+     * @return array
+     */
+    private function placeHolderInlineValueAsArray($inputValue)
     {
         $inputArrayValue = [];
         foreach ($inputValue as $key => $value) {
@@ -28,7 +47,7 @@ trait InputTrait
                 }
                 $inputKeyItem = substr($value, 0, $separatorIndex);
                 $inputValueItem = substr($value, $separatorIndex+1);
-                $inputArrayValue[$key] = [$inputKeyItem => $inputValueItem];
+                $inputArrayValue[$inputKeyItem] = $inputValueItem;
             }
         }
 
