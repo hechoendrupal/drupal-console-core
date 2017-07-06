@@ -79,7 +79,7 @@ services:
     tags:
       - { name: drupal.command }
   console.site_debug:
-    class: Drupal\Console\Core\Command\Site\DebugCommand
+    class: Drupal\Console\Core\Command\Debug\SiteCommand
     arguments: ['@console.configuration_manager']
     tags:
       - { name: drupal.command }
