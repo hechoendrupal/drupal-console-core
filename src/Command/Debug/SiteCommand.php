@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Core\Command\Site\DebugCommand.
+ * Contains \Drupal\Console\Core\Command\Debug\SiteCommand.
  */
 
-namespace Drupal\Console\Core\Command\Site;
+namespace Drupal\Console\Core\Command\Debug;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,11 +17,11 @@ use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
- * Class SiteDebugCommand
+ * Class SiteCommand
  *
- * @package Drupal\Console\Core\Command\Site
+ * @package Drupal\Console\Core\Command\Debug
  */
-class DebugCommand extends Command
+class SiteCommand extends Command
 {
     use CommandTrait;
 
@@ -31,7 +31,7 @@ class DebugCommand extends Command
     protected $configurationManager;
 
     /**
-     * DebugCommand constructor.
+     * SiteCommand constructor.
      *
      * @param ConfigurationManager $configurationManager
      */
@@ -48,21 +48,21 @@ class DebugCommand extends Command
     public function configure()
     {
         $this
-            ->setName('site:debug')
-            ->setDescription($this->trans('commands.site.debug.description'))
+            ->setName('debug:site')
+            ->setDescription($this->trans('commands.debug.site.description'))
             ->addArgument(
                 'target',
                 InputArgument::OPTIONAL,
-                $this->trans('commands.site.debug.options.target'),
+                $this->trans('commands.debug.site.options.target'),
                 null
             )
             ->addArgument(
                 'property',
                 InputArgument::OPTIONAL,
-                $this->trans('commands.site.debug.options.property'),
+                $this->trans('commands.debug.site.options.property'),
                 null
             )
-            ->setHelp($this->trans('commands.site.debug.help'));
+            ->setHelp($this->trans('commands.debug.site.help'));
     }
 
     /**
@@ -75,7 +75,7 @@ class DebugCommand extends Command
         $sites = array_keys($this->configurationManager->getSites());
 
         if (!$sites) {
-            $io->error($this->trans('commands.site.debug.messages.invalid-sites'));
+            $io->error($this->trans('commands.debug.site.messages.invalid-sites'));
 
             return 1;
         }
@@ -85,7 +85,7 @@ class DebugCommand extends Command
         $target = $input->getArgument('target');
         if (!$target) {
             $tableHeader =[
-                $this->trans('commands.site.debug.messages.site'),
+                $this->trans('commands.debug.site.messages.site'),
             ];
 
             $io->table($tableHeader, $sites);
@@ -95,7 +95,7 @@ class DebugCommand extends Command
 
         $targetConfig = $this->configurationManager->readTarget($target);
         if (!$targetConfig) {
-            $io->error($this->trans('commands.site.debug.messages.invalid-site'));
+            $io->error($this->trans('commands.debug.site.messages.invalid-site'));
 
             return 1;
         }
