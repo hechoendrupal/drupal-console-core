@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Core\Command\Settings\DebugCommand.
+ * Contains \Drupal\Console\Core\Command\Debug\SettingsCommand.
  */
 
-namespace Drupal\Console\Core\Command\Settings;
+namespace Drupal\Console\Core\Command\Debug;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -16,11 +16,11 @@ use Drupal\Console\Core\Utils\NestedArray;
 use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
- * Class DebugCommand
+ * Class SettingsCommand
  *
  * @package Drupal\Console\Core\Command\Settings
  */
-class DebugCommand extends Command
+class SettingsCommand extends Command
 {
     use CommandTrait;
 
@@ -55,8 +55,8 @@ class DebugCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('settings:debug')
-            ->setDescription($this->trans('commands.settings.debug.description'));
+            ->setName('debug:settings')
+            ->setDescription($this->trans('commands.debug.settings.description'));
     }
 
     /**
@@ -85,8 +85,8 @@ class DebugCommand extends Command
         );
 
         $tableHeader = [
-            $this->trans('commands.settings.debug.messages.config-key'),
-            $this->trans('commands.settings.debug.messages.config-value'),
+            $this->trans('commands.debug.settings.messages.config-key'),
+            $this->trans('commands.debug.settings.messages.config-value'),
         ];
 
         $tableRows = [];
@@ -101,7 +101,7 @@ class DebugCommand extends Command
         $io->info(
             sprintf(
                 '%s :',
-                $this->trans('commands.settings.debug.messages.config-file')
+                $this->trans('commands.debug.settings.messages.config-file')
             ),
             false
         );

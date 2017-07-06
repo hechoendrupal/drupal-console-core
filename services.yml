@@ -54,7 +54,7 @@ services:
     tags:
       - { name: drupal.command }
   console.settings_debug:
-    class: Drupal\Console\Core\Command\Settings\DebugCommand
+    class: Drupal\Console\Core\Command\Debug\SettingsCommand
     arguments: ['@console.configuration_manager', '@console.nested_array']
     tags:
       - { name: drupal.command }
