@@ -74,7 +74,7 @@ services:
     tags:
       - { name: drupal.command }
   console.chain_debug:
-    class: Drupal\Console\Core\Command\Chain\ChainDebugCommand
+    class: Drupal\Console\Core\Command\Debug\ChainCommand
     arguments: ['@console.chain_discovery']
     tags:
       - { name: drupal.command }
