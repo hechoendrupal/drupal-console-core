@@ -85,7 +85,8 @@ class Application extends BaseApplication
     /**
      * {@inheritdoc}
      */
-    public function doRun(InputInterface $input, OutputInterface $output) {
+    public function doRun(InputInterface $input, OutputInterface $output)
+    {
         $io = new DrupalStyle($input, $output);
         $messages = [];
         if ($commandName = $this->getCommandName($input)) {
@@ -93,14 +94,25 @@ class Application extends BaseApplication
         }
         $this->registerEvents();
         $this->registerExtendCommands();
-        $this->registerCommandsFromAutoWireConfiguration();
-        $this->registerChainCommands();
 
         /**
          * @var ConfigurationManager $configurationManager
          */
         $configurationManager = $this->container
             ->get('console.configuration_manager');
+
+        $config = $configurationManager->getConfiguration()
+            ->get('application.extras.config')?:'true';
+        if ($config === 'true') {
+            $this->registerCommandsFromAutoWireConfiguration();
+        }
+
+        $chains = $configurationManager->getConfiguration()
+            ->get('application.extras.chains')?:'true';
+        if ($chains === 'true') {
+            $this->registerChainCommands();
+        }
+
 
         if ($commandName && !$this->has($commandName)) {
             $config = $configurationManager->getConfiguration();
@@ -117,8 +129,7 @@ class Application extends BaseApplication
                 $this->add(
                     $this->find($commandNameMap)->setAliases([$commandName])
                 );
-            }
-            else {
+            } else {
                 $io->error(
                     sprintf(
                         $this->trans('application.errors.invalid-command'),
@@ -136,7 +147,7 @@ class Application extends BaseApplication
         );
 
         if ($this->commandName != 'init' && $configurationManager->getMissingConfigurationFiles(
-            )
+        )
         ) {
             $io->warning(
                 $this->trans('application.site.errors.missing-config-file')
@@ -150,8 +161,8 @@ class Application extends BaseApplication
         }
 
         if ($this->getCommandName(
-                $input
-            ) == 'list' && $this->container->hasParameter('console.warning')
+            $input
+        ) == 'list' && $this->container->hasParameter('console.warning')
         ) {
             $io->warning(
                 $this->trans($this->container->getParameter('console.warning'))
