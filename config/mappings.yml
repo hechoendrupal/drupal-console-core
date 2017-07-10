@@ -1,0 +1,30 @@
+commands:
+  mappings:
+    breakpoints:debug: debug:breakpoints
+    cache:context:debug: debug:cache:context
+    chain:debug: debug:chain
+    config:debug: debug:config
+    config:settings:debug: debug:config:settings
+    config:validate:debug: debug:config:validate
+    container:debug: debug:container
+    cron:debug: debug:cron
+    database:log:debug: debug:database:log
+    database:table:debug: debug:database:table
+    entity:debug: debug:entity
+    event:debug: debug:event
+    image:styles:debug: debug:image:styles
+    libraries:debug: debug:libraries
+    module:debug: debug:module
+    multisite:debug: debug:multisite
+    permission:debug: debug:permission
+    plugin:debug: debug:plugin
+    queue:debug: debug:queue
+    router:debug: debug:router
+    settings:debug: debug:settings
+    site:debug: debug:site
+    state:debug: debug:state
+    theme:debug: debug:theme
+    update:debug: debug:update
+    user:debug: debug:user
+    views:debug: debug:views
+    views:plugins:debug: debug:views:plugins

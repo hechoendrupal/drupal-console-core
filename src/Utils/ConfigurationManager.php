@@ -94,6 +94,7 @@ class ConfigurationManager
         $builder = new YamlFileConfigurationBuilder($configurationFiles);
         $this->configuration = $builder->build();
         $this->appendCommandAliases();
+        $this->appendCommandMappings();
 
         if ($configurationFiles) {
             $this->missingConfigurationFiles = [];
@@ -245,7 +246,27 @@ class ConfigurationManager
     }
 
     /**
-     * @return string
+     * @return void
+     */
+    public function appendCommandMappings()
+    {
+        $mappings = [];
+        $mappingsFile = $this->applicationDirectory.DRUPAL_CONSOLE_CORE.'config/mappings.yml';
+
+        if (file_exists($mappingsFile)) {
+            $mappings = Yaml::parse(file_get_contents($mappingsFile));
+        }
+
+        if (array_key_exists('commands', $mappings) && array_key_exists('mappings', $mappings['commands'])) {
+            $this->configuration->set(
+                'application.commands.mappings',
+                $mappings['commands']['mappings']
+            );
+        }
+    }
+
+    /**
+     * @return void
      */
     public function appendCommandAliases()
     {
