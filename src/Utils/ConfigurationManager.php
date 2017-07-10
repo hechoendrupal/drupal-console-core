@@ -93,8 +93,14 @@ class ConfigurationManager
 
         $builder = new YamlFileConfigurationBuilder($configurationFiles);
         $this->configuration = $builder->build();
-        $this->appendCommandAliases();
-        $this->appendCommandMappings();
+        $aliases = $this->configuration->get('application.extras.alias')?:'true';
+        if ($aliases === 'true') {
+            $this->appendCommandAliases();
+        }
+        $mappings = $this->configuration->get('application.extras.mappings')?:'true';
+        if ($mappings === 'true') {
+            $this->appendCommandMappings();
+        }
 
         if ($configurationFiles) {
             $this->missingConfigurationFiles = [];
@@ -248,7 +254,7 @@ class ConfigurationManager
     /**
      * @return void
      */
-    public function appendCommandMappings()
+    private function appendCommandMappings()
     {
         $mappings = [];
         $mappingsFile = $this->applicationDirectory.DRUPAL_CONSOLE_CORE.'config/mappings.yml';
@@ -268,7 +274,7 @@ class ConfigurationManager
     /**
      * @return void
      */
-    public function appendCommandAliases()
+    private function appendCommandAliases()
     {
         $aliases = [];
         foreach ($this->configurationDirectories as $directory) {
@@ -344,7 +350,8 @@ class ConfigurationManager
         return $this->sites;
     }
 
-    public function getHomeDirectory() {
+    public function getHomeDirectory()
+    {
         return Path::getHomeDirectory();
     }
 }
