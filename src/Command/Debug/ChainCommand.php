@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Core\Command\Chain\ChainDebugCommand.
+ * Contains \Drupal\Console\Core\Command\Debug\ChainCommand.
  */
 
-namespace Drupal\Console\Core\Command\Chain;
+namespace Drupal\Console\Core\Command\Debug;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,11 +15,11 @@ use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Command\Shared\CommandTrait;
 
 /**
- * Class ChainDebugCommand
+ * Class ChainCommand
  *
- * @package Drupal\Console\Core\Command\Chain
+ * @package Drupal\Console\Core\Command\Debug
  */
-class ChainDebugCommand extends Command
+class ChainCommand extends Command
 {
     use CommandTrait;
 
@@ -29,7 +29,7 @@ class ChainDebugCommand extends Command
     protected $chainDiscovery;
 
     /**
-     * ChainDebugCommand constructor.
+     * ChainCommand constructor.
      *
      * @param ChainDiscovery $chainDiscovery
      */
@@ -47,8 +47,8 @@ class ChainDebugCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('chain:debug')
-            ->setDescription($this->trans('commands.chain.debug.description'));
+            ->setName('debug:chain')
+            ->setDescription($this->trans('commands.debug.chain.description'));
     }
 
     /**
@@ -60,11 +60,11 @@ class ChainDebugCommand extends Command
         $files = $this->chainDiscovery->getChainFiles();
 
         foreach ($files as $directory => $chainFiles) {
-            $io->info($this->trans('commands.chain.debug.messages.directory'), false);
+            $io->info($this->trans('commands.debug.chain.messages.directory'), false);
             $io->comment($directory);
 
             $tableHeader = [
-                $this->trans('commands.chain.debug.messages.file')
+                $this->trans('commands.debug.chain.messages.file')
             ];
 
             $tableRows = [];

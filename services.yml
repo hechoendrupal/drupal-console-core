@@ -54,7 +54,7 @@ services:
     tags:
       - { name: drupal.command }
   console.settings_debug:
-    class: Drupal\Console\Core\Command\Settings\DebugCommand
+    class: Drupal\Console\Core\Command\Debug\SettingsCommand
     arguments: ['@console.configuration_manager', '@console.nested_array']
     tags:
       - { name: drupal.command }
@@ -74,12 +74,12 @@ services:
     tags:
       - { name: drupal.command }
   console.chain_debug:
-    class: Drupal\Console\Core\Command\Chain\ChainDebugCommand
+    class: Drupal\Console\Core\Command\Debug\ChainCommand
     arguments: ['@console.chain_discovery']
     tags:
       - { name: drupal.command }
   console.site_debug:
-    class: Drupal\Console\Core\Command\Site\DebugCommand
+    class: Drupal\Console\Core\Command\Debug\SiteCommand
     arguments: ['@console.configuration_manager']
     tags:
       - { name: drupal.command }

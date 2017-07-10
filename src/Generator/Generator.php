@@ -71,4 +71,8 @@ abstract class Generator
 
         return false;
     }
+
+    public function addSkeletonDir($skeletonDir) {
+        $this->renderer->addSkeletonDir($skeletonDir);
+    }
 }

@@ -93,7 +93,14 @@ class ConfigurationManager
 
         $builder = new YamlFileConfigurationBuilder($configurationFiles);
         $this->configuration = $builder->build();
-        $this->appendCommandAliases();
+        $aliases = $this->configuration->get('application.extras.alias')?:'true';
+        if ($aliases === 'true') {
+            $this->appendCommandAliases();
+        }
+        $mappings = $this->configuration->get('application.extras.mappings')?:'true';
+        if ($mappings === 'true') {
+            $this->appendCommandMappings();
+        }
 
         if ($configurationFiles) {
             $this->missingConfigurationFiles = [];
@@ -245,16 +252,32 @@ class ConfigurationManager
     }
 
     /**
-     * @return string
+     * @return void
      */
-    public function appendCommandAliases()
+    private function appendCommandMappings()
     {
-        $configurationDirectories = array_merge(
-            [$this->applicationDirectory . DRUPAL_CONSOLE_CORE . 'config/dist/'],
-            $this->configurationDirectories
-        );
+        $mappings = [];
+        $mappingsFile = $this->applicationDirectory.DRUPAL_CONSOLE_CORE.'config/mappings.yml';
+
+        if (file_exists($mappingsFile)) {
+            $mappings = Yaml::parse(file_get_contents($mappingsFile));
+        }
+
+        if (array_key_exists('commands', $mappings) && array_key_exists('mappings', $mappings['commands'])) {
+            $this->configuration->set(
+                'application.commands.mappings',
+                $mappings['commands']['mappings']
+            );
+        }
+    }
+
+    /**
+     * @return void
+     */
+    private function appendCommandAliases()
+    {
         $aliases = [];
-        foreach ($configurationDirectories as $directory) {
+        foreach ($this->configurationDirectories as $directory) {
             $aliasFile = $directory . 'aliases.yml';
             if (file_exists($aliasFile)) {
                 $aliases = array_merge(
@@ -327,7 +350,8 @@ class ConfigurationManager
         return $this->sites;
     }
 
-    public function getHomeDirectory() {
+    public function getHomeDirectory()
+    {
         return Path::getHomeDirectory();
     }
 }

@@ -163,7 +163,7 @@ class TextDescriptor extends Descriptor
             $this->writeText("<comment>Examples:</comment>", $options);
             foreach ($examples as $example) {
                 $this->writeText("\n");
-                $this->writeText('  '.$example['description']);
+                $this->writeText('  <info>'.$example['description'].'</info>');
                 $this->writeText("\n");
                 $this->writeText('  '.$example['execution']);
                 $this->writeText("\n");

@@ -88,13 +88,12 @@ class Application extends BaseApplication
     public function doRun(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
+        $messages = [];
         if ($commandName = $this->getCommandName($input)) {
             $this->commandName = $commandName;
         }
         $this->registerEvents();
         $this->registerExtendCommands();
-        $this->registerCommandsFromAutoWireConfiguration();
-        $this->registerChainCommands();
 
         /**
          * @var ConfigurationManager $configurationManager
@@ -102,15 +101,44 @@ class Application extends BaseApplication
         $configurationManager = $this->container
             ->get('console.configuration_manager');
 
-        if ($commandName && !$this->has($commandName)) {
-            $io->error(
-                sprintf(
-                    $this->trans('application.errors.invalid-command'),
-                    $this->commandName
-                )
-            );
+        $config = $configurationManager->getConfiguration()
+            ->get('application.extras.config')?:'true';
+        if ($config === 'true') {
+            $this->registerCommandsFromAutoWireConfiguration();
+        }
 
-            return 1;
+        $chains = $configurationManager->getConfiguration()
+            ->get('application.extras.chains')?:'true';
+        if ($chains === 'true') {
+            $this->registerChainCommands();
+        }
+
+
+        if ($commandName && !$this->has($commandName)) {
+            $config = $configurationManager->getConfiguration();
+            $mappings = $config
+                ->get('application.commands.mappings');
+
+            if (array_key_exists($commandName, $mappings)) {
+                $commandNameMap = $mappings[$commandName];
+                $messages['warning'][] = sprintf(
+                    $this->trans('application.errors.renamed-command'),
+                    $commandName,
+                    $commandNameMap
+                );
+                $this->add(
+                    $this->find($commandNameMap)->setAliases([$commandName])
+                );
+            } else {
+                $io->error(
+                    sprintf(
+                        $this->trans('application.errors.invalid-command'),
+                        $this->commandName
+                    )
+                );
+
+                return 1;
+            }
         }
 
         $code = parent::doRun(
@@ -118,18 +146,31 @@ class Application extends BaseApplication
             $output
         );
 
-        if ($this->commandName != 'init' && $configurationManager->getMissingConfigurationFiles()) {
-            $io->warning($this->trans('application.site.errors.missing-config-file'));
+        if ($this->commandName != 'init' && $configurationManager->getMissingConfigurationFiles(
+        )
+        ) {
+            $io->warning(
+                $this->trans('application.site.errors.missing-config-file')
+            );
             $io->listing($configurationManager->getMissingConfigurationFiles());
             $io->commentBlock(
-                $this->trans('application.site.errors.missing-config-file-command')
+                $this->trans(
+                    'application.site.errors.missing-config-file-command'
+                )
             );
         }
 
-        if ($this->getCommandName($input) == 'list' && $this->container->hasParameter('console.warning')) {
+        if ($this->getCommandName(
+            $input
+        ) == 'list' && $this->container->hasParameter('console.warning')
+        ) {
             $io->warning(
                 $this->trans($this->container->getParameter('console.warning'))
             );
+        }
+
+        foreach ($messages as $type => $message) {
+            $io->$type($message);
         }
 
         return $code;
