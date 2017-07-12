@@ -2,3 +2,36 @@ commands:
   aliases:
     debug:container:
       - cod
+    config:edit:
+      - cdit
+    cron:execute:
+      - cre
+    cron:release:
+      - crr
+    database:log:clear:
+      - dbc
+    debug:module:
+      - mod
+    debug:multisite:
+      - msd
+    debug:router:
+      - rod
+    debug:theme:
+      - tde
+    debug:update:
+      - upd
+    multisite:new:
+      - sn
+    router:rebuild:
+      - ror
+    user:login:clear:attempts:
+      - uslca
+    user:login:url:
+      - usli
+    user:password:hash:
+      - usph
+    user:password:reset:
+      - upsr
+    views:disable:
+      - vdi
+
