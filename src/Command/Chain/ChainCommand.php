@@ -173,7 +173,7 @@ class ChainCommand extends Command
 
         $file = $input->getOption('file');
         if (!$file) {
-            $io->error($this->trans('commands.chain.messages.missing_file'));
+            $io->error($this->trans('commands.chain.messages.missing-file'));
 
             return 1;
         }
@@ -184,7 +184,7 @@ class ChainCommand extends Command
         if (!$fileSystem->exists($file)) {
             $io->error(
                 sprintf(
-                    $this->trans('commands.chain.messages.invalid_file'),
+                    $this->trans('commands.chain.messages.invalid-file'),
                     $file
                 )
             );
