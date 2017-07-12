@@ -203,7 +203,7 @@ class TextDescriptor extends Descriptor
                 $this->writeText("$help\n\n", $options);
             }
             $this->writeText($application->trans('commands.list.messages.usage'), $options);
-            $this->writeText($application->trans('commands.list.messages.usage_details'), $options);
+            $this->writeText($application->trans('commands.list.messages.usage-details'), $options);
             $options['application'] = $application;
             $this->describeInputDefinition(new InputDefinition($application->getDefinition()->getOptions()), $options);
             $this->writeText("\n");

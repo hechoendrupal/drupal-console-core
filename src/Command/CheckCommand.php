@@ -97,7 +97,7 @@ class CheckCommand extends BaseCommand
         if (!$checks['php']['valid']) {
             $io->error(
                 sprintf(
-                    $this->trans('commands.check.messages.php_invalid'),
+                    $this->trans('commands.check.messages.php-invalid'),
                     $checks['php']['current'],
                     $checks['php']['required']
                 )
@@ -110,7 +110,7 @@ class CheckCommand extends BaseCommand
             foreach ($extensions as $extension) {
                 $io->error(
                     sprintf(
-                        $this->trans('commands.check.messages.extension_missing'),
+                        $this->trans('commands.check.messages.extension-missing'),
                         $extension
                     )
                 );
@@ -122,7 +122,7 @@ class CheckCommand extends BaseCommand
                 $io->commentBlock(
                     sprintf(
                         $this->trans(
-                            'commands.check.messages.extension_recommended'
+                            'commands.check.messages.extension-recommended'
                         ),
                         $extension
                     )
@@ -134,7 +134,7 @@ class CheckCommand extends BaseCommand
             foreach ($configurations as $configuration) {
                 $io->error(
                     sprintf(
-                        $this->trans('commands.check.messages.configuration_missing'),
+                        $this->trans('commands.check.messages.configuration-missing'),
                         $configuration
                     )
                 );
@@ -146,7 +146,7 @@ class CheckCommand extends BaseCommand
                 $io->commentBlock(
                     sprintf(
                         $this->trans(
-                            'commands.check.messages.configuration_overwritten'
+                            'commands.check.messages.configuration-overwritten'
                         ),
                         $configuration,
                         $overwritten
