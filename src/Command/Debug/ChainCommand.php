@@ -48,7 +48,8 @@ class ChainCommand extends Command
     {
         $this
             ->setName('debug:chain')
-            ->setDescription($this->trans('commands.debug.chain.description'));
+            ->setDescription($this->trans('commands.debug.chain.description'))
+            ->setAliases(['dch']);
     }
 
     /**
