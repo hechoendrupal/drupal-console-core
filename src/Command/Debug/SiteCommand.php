@@ -62,7 +62,8 @@ class SiteCommand extends Command
                 $this->trans('commands.debug.site.options.property'),
                 null
             )
-            ->setHelp($this->trans('commands.debug.site.help'));
+            ->setHelp($this->trans('commands.debug.site.help'))
+            ->setAliases(['dsi']);
     }
 
     /**

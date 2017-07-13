@@ -56,7 +56,9 @@ class SettingsCommand extends Command
     {
         $this
             ->setName('debug:settings')
-            ->setDescription($this->trans('commands.debug.settings.description'));
+            ->setDescription($this->trans('commands.debug.settings.description'))
+            ->setAliases(['dse']);
+        ;
     }
 
     /**
