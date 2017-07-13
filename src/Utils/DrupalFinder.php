@@ -78,6 +78,13 @@ class DrupalFinder extends DrupalFinderBase
                 "/{$vendorDir}/drupal/console-%s/translations/"
             );
         }
+
+        if (!defined("DRUPAL_CONSOLE_LIBRARY")) {
+            define(
+            "DRUPAL_CONSOLE_LIBRARY",
+            "/{$vendorDir}/drupal/%s/console/translations/%s"
+            );
+        }
     }
 
     /**
