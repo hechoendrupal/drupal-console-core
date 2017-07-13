@@ -191,7 +191,7 @@ class NestedArray
      * @param $array1
      * @param $array2
      * @param bool   $negate if Negate is true only if values are equal are returned.
-     * @param$$statistics mixed array
+     * @param $statistics mixed array
      * @return array
      */
     public function arrayDiff($array1, $array2, $negate = false, &$statistics)
