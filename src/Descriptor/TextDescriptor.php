@@ -154,20 +154,11 @@ class TextDescriptor extends Descriptor
         $command->getSynopsis(false);
         $command->mergeApplicationDefinition(false);
         $this->writeText($command->trans('commands.list.messages.usage'), $options);
-        foreach (array_merge([$command->getSynopsis(true)], $command->getAliases(), $command->getUsages()) as $usage) {
-            $this->writeText('  '.$usage, $options);
-            $this->writeText("\n");
-        }
-        if ($examples) {
-            $this->writeText("\n");
-            $this->writeText("<comment>Examples:</comment>", $options);
-            foreach ($examples as $example) {
-                $this->writeText("\n");
-                $this->writeText('  <info>'.$example['description'].'</info>');
-                $this->writeText("\n");
-                $this->writeText('  '.$example['execution']);
+        foreach (array_merge([$command->getSynopsis(true)], $command->getAliases(), $command->getUsages()) as $key => $usage) {
+            if ($key > 0) {
                 $this->writeText("\n");
             }
+            $this->writeText('  '.$usage, $options);
         }
 
         $this->writeText("\n");
@@ -177,6 +168,21 @@ class TextDescriptor extends Descriptor
             $this->describeInputDefinition($definition, $options);
             $this->writeText("\n");
         }
+
+        if ($examples) {
+            $this->writeText("\n");
+            $this->writeText("<comment>Examples:</comment>", $options);
+            foreach ($examples as $key => $example) {
+                $this->writeText("\n");
+                if ($key != 0) {
+                    $this->writeText("\n");
+                }
+                $this->writeText('  <info>'.$example['description'].'</info>');
+                $this->writeText("\n");
+                $this->writeText('  '.$example['execution']);
+            }
+        }
+
         if ($help = $command->getProcessedHelp()) {
             $this->writeText("\n");
             $this->writeText($command->trans('commands.list.messages.help'), $options);
