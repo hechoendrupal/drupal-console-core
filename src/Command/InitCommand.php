@@ -206,7 +206,7 @@ class InitCommand extends Command
             )
         );
         if (!$this->configParameters['chain']) {
-            $finder->exclude('chain');
+            $finder->exclude('chain/optional');
         }
         if (!$this->configParameters['sites']) {
             $finder->exclude('sites');
@@ -225,6 +225,12 @@ class InitCommand extends Command
                 '%s%s',
                 $destination,
                 $configFile->getRelativePathname()
+            );
+
+            $destinationFile = str_replace(
+                'chain/optional/',
+                'chain/',
+                $destinationFile
             );
 
             if ($this->copyFile($sourceFile, $destinationFile, $override)) {
