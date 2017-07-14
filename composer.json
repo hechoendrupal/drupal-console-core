@@ -39,6 +39,7 @@
         "php": "^5.5.9 || ^7.0",
         "drupal/console-en" : "1.0.0-rc23",
         "dflydev/dot-access-configuration": "1.0.1",
+        "dflydev/dot-access-data": "^1.1.0",
         "stecman/symfony-console-completion": "~0.7",
         "symfony/console": "~2.8",
         "symfony/debug": "~2.8",
