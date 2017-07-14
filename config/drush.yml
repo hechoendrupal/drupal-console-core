@@ -1,7 +1,7 @@
 ---
 commands:
   config:
-    config-edit: ~
+    config-edit: 'config:edit'
     config-export: 'config:export'
     config-get: 'config:debug CONFIG_NAME'
     config-import: 'config:import'
@@ -24,7 +24,7 @@ commands:
     core-topic: ~
     drupal-directory: ~
     entity-updates: 'update:entities'
-    help: help
+    help: 'help'
     image-derive: ~
     image-flush: 'image:styles:flush'
     php-eval: ~
@@ -57,7 +57,7 @@ commands:
     field-clone: ~
     field-create: ~
     field-delete: ~
-    field-info: ~
+    field-info: 'field:info'
     field-update: ~
   language:
     language-add: ~
@@ -101,7 +101,7 @@ commands:
   role:
     role-add-perm: ~
     role-create: ~
-    role-delete: ~
+    role-delete: 
     role-list: ~
     role-remove-perm: ~
   runserver:
@@ -144,14 +144,14 @@ commands:
     state-get: 'state:debug'
     state-set: 'state:override'
   user:
-    user-add-role: ~
+    user-add-role: 'user:role'
     user-block: ~
     user-cancel: ~
-    user-create: ~
+    user-create: 'user:create'
     user-information: ~
     user-login: 'user:login:url'
-    user-password: ~
-    user-remove-role: ~
+    user-password: 'user:password:reset'
+    user-remove-role: 'user:role'
     user-unblock: ~
   watchdog:
     watchdog-delete: 'database:log:clear'
