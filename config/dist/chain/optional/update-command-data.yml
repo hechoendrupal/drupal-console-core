@@ -1,131 +1,136 @@
+# How to use
+# update:command:data --directory="/path/to/drupal-project/"
+command:
+  name: update:command:data
+  description: 'Update gitbook'
 commands:
   - command: settings:set
     arguments:
-      setting-name: language
-      setting-value: ca
+      name: language
+      value: ca
   - command: generate:doc:data
     options:
       file: '%{{data_path}}/ca.json'
   - command: settings:set
     arguments:
-      setting-name: language
-      setting-value: en
+      name: language
+      value: en
   - command: generate:doc:data
     options:
       file: '%{{data_path}}/en.json'
   - command: settings:set
     arguments:
-      setting-name: language
-      setting-value: es
+      name: language
+      value: es
   - command: generate:doc:data
     options:
       file: '%{{data_path}}/es.json'
   - command: settings:set
     arguments:
-      setting-name: language
-      setting-value: fr
+      name: language
+      value: fr
   - command: generate:doc:data
     options:
       file: '%{{data_path}}/fr.json'
   - command: settings:set
     arguments:
-      setting-name: language
-      setting-value: gu
+      name: language
+      value: gu
   - command: generate:doc:data
     options:
       file: '%{{data_path}}/gu.json'
   - command: settings:set
     arguments:
-      setting-name: language
-      setting-value: hi
+      name: language
+      value: hi
   - command: generate:doc:data
     options:
       file: '%{{data_path}}/hi.json'
   - command: settings:set
     arguments:
-      setting-name: language
-      setting-value: hu
+      name: language
+      value: hu
   - command: generate:doc:data
     options:
       file: '%{{data_path}}/hu.json'
   - command: settings:set
     arguments:
-      setting-name: language
-      setting-value: id
+      name: language
+      value: id
   - command: generate:doc:data
     options:
       file: '%{{data_path}}/id.json'
   - command: settings:set
     arguments:
-      setting-name: language
-      setting-value: ja
+      name: language
+      value: ja
   - command: generate:doc:data
     options:
       file: '%{{data_path}}/ja.json'
   - command: settings:set
     arguments:
-      setting-name: language
-      setting-value: ko
+      name: language
+      value: ko
   - command: generate:doc:data
     options:
       file: '%{{data_path}}/ko.json'
   - command: settings:set
     arguments:
-      setting-name: language
-      setting-value: mr
+      name: language
+      value: mr
   - command: generate:doc:data
     options:
       file: '%{{data_path}}/mr.json'
   - command: settings:set
     arguments:
-      setting-name: language
-      setting-value: pa
+      name: language
+      value: pa
   - command: generate:doc:data
     options:
       file: '%{{data_path}}/pa.json'
   - command: settings:set
     arguments:
-      setting-name: language
-      setting-value: pt_br
+      name: language
+      value: pt_br
   - command: generate:doc:data
     options:
       file: '%{{data_path}}/pt_br.json'
   - command: settings:set
     arguments:
-      setting-name: language
-      setting-value: ro
+      name: language
+      value: ro
   - command: generate:doc:data
     options:
       file: '%{{data_path}}/ro.json'
   - command: settings:set
     arguments:
-      setting-name: language
-      setting-value: ru
+      name: language
+      value: ru
   - command: generate:doc:data
     options:
       file: '%{{data_path}}/ru.json'
   - command: settings:set
     arguments:
-      setting-name: language
-      setting-value: tl
+      name: language
+      value: tl
   - command: generate:doc:data
     options:
       file: '%{{data_path}}/tl.json'
   - command: settings:set
     arguments:
-      setting-name: language
-      setting-value: vn
+      name: language
+      value: vn
   - command: generate:doc:data
     options:
       file: '%{{data_path}}/vn.json'
   - command: settings:set
     arguments:
-      setting-name: language
-      setting-value: zh_hans
+      name: language
+      value: zh_hans
   - command: generate:doc:data
     options:
       file: '%{{data_path}}/zh_hans.json'
   - command: settings:set
     arguments:
-      setting-name: language
-      setting-value: en
+      name: language
+      value: en
