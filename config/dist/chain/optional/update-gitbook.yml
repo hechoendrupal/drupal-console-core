@@ -1,0 +1,80 @@
+# How to use
+# update:gitbook --directory="/path/to/drupal-project/"
+command:
+  name: update:gitbook
+  description: 'Update gitbook'
+commands:
+  # - command: exec
+  #   arguments:
+  #     bin: composer require drupal/features
+  - command: 'module:install'
+    arguments:
+      module:
+        - rest
+        - taxonomy
+        - locale
+        - migrate
+        - simpletest
+        - features
+        - breakpoint
+        - node
+  - command: settings:set
+    arguments:
+      name: language
+      value: en
+  - command: generate:doc:gitbook
+    options:
+      path: '%{{directory}}/en'
+  - command: settings:set
+    arguments:
+      name: language
+      value: es
+  - command: generate:doc:gitbook
+    options:
+      path: '%{{directory}}/es'
+  - command: settings:set
+    arguments:
+      name: language
+      value: hi
+  - command: generate:doc:gitbook
+    options:
+      path: '%{{directory}}/hi'
+  - command: settings:set
+    arguments:
+      name: language
+      value: hu
+  - command: generate:doc:gitbook
+    options:
+      path: '%{{directory}}/hu'
+  - command: settings:set
+    arguments:
+      name: language
+      value: pt_br
+  - command: generate:doc:gitbook
+    options:
+      path: '%{{directory}}/pt_br'
+  - command: settings:set
+    arguments:
+      name: language
+      value: ro
+  - command: generate:doc:gitbook
+    options:
+      path: '%{{directory}}/ro'
+  - command: settings:set
+    arguments:
+      name: language
+      value: vn
+  - command: generate:doc:gitbook
+    options:
+      path: '%{{directory}}/vn'
+  - command: settings:set
+    arguments:
+      name: language
+      value: zh_hans
+  - command: generate:doc:gitbook
+    options:
+      path: '%{{directory}}/zh_hans'
+  - command: settings:set
+    arguments:
+      name: language
+      value: en
