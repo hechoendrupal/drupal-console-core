@@ -1,7 +1,7 @@
 # How to use
-# console:contribute --drupal=/path/to/drupal-directory --code=/path/to/code-directory
+# develop:contribute --drupal=/path/to/drupal-directory --code=/path/to/code-directory
 command:
-  name: console:contribute
+  name: develop:contribute
   description: 'Download Drupal + Drupal Console to contribute.'
 vars:
   repository: drupal-composer/drupal-project:8.x-dev
@@ -20,4 +20,4 @@ commands:
       bin: drupal site:install standard --root=%{{drupal}} --db-type="sqlite" --no-interaction
   - command: exec
     arguments:
-      bin: drupal develop:contribute --code-directory=%{{code}} --root=%{{drupal}}
+      bin: drupal develop:create:symlinks --code-directory=%{{code}} --root=%{{drupal}}
