@@ -1,0 +1,23 @@
+# How to use
+# develop:contribute --drupal=/path/to/drupal-directory --code=/path/to/code-directory
+command:
+  name: develop:contribute
+  description: 'Download Drupal + Drupal Console to contribute.'
+vars:
+  repository: drupal-composer/drupal-project:8.x-dev
+commands:
+  - command: exec
+    arguments:
+      bin: composer create-project %{{repository}} %{{drupal}} --prefer-dist --no-progress --no-interaction --no-install
+  - command: exec
+    arguments:
+      bin: composer require drupal/console-develop --dev --working-dir=%{{drupal}} --no-update
+  - command: exec
+    arguments:
+      bin: composer install --working-dir=%{{drupal}}
+  - command: exec
+    arguments:
+      bin: drupal site:install standard --root=%{{drupal}} --db-type="sqlite" --no-interaction
+  - command: exec
+    arguments:
+      bin: drupal develop:create:symlinks --code-directory=%{{code}} --root=%{{drupal}}

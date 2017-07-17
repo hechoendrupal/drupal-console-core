@@ -136,7 +136,7 @@ class ChainCommand extends Command
                         $inlinePlaceHolder,
                         $io->choice(
                             sprintf(
-                                'Select value for %s placeholder',
+                                $this->trans('commands.chain.message.select-value-for-placeholder'),
                                 $inlinePlaceHolder
                             ),
                             $inlinePlaceHolderValue,
@@ -149,7 +149,7 @@ class ChainCommand extends Command
                         $inlinePlaceHolder,
                         $io->ask(
                             sprintf(
-                                'Enter value for %s placeholder',
+                                $this->trans('commands.chain.message.enter-value-for-placeholder'),
                                 $inlinePlaceHolder
                             ),
                             $inlinePlaceHolderValue
