@@ -149,7 +149,7 @@ class ChainCommand extends Command
                         $inlinePlaceHolder,
                         $io->ask(
                             sprintf(
-                                $this->trans('commands.chain.message.enter-value-for-placeholder'),
+                                $this->trans('commands.chain.messages.enter-value-for-placeholder'),
                                 $inlinePlaceHolder
                             ),
                             $inlinePlaceHolderValue
