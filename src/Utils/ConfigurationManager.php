@@ -201,13 +201,15 @@ class ConfigurationManager
         $equivalents = [];
         $aliasInformation = Yaml::parse(
             file_get_contents(
-                $this->applicationDirectory.DRUPAL_CONSOLE_CORE.'config/drush.yml'
+                $this->applicationDirectory . DRUPAL_CONSOLE_CORE . 'config/drush.yml'
             )
         );
 
         foreach ($aliasInformation['commands'] as $key => $commands) {
             foreach ($commands as $drush => $console) {
-                $equivalents[$drush] = $console;
+                if($console) {
+                    $equivalents[$drush] = $console;
+                }
             }
         }
 
