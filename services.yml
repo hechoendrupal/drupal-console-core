@@ -88,3 +88,8 @@ services:
     class: Drupal\Console\Core\Generator\InitGenerator
     tags:
       - { name: drupal.generator }
+  console.drush:
+    class: Drupal\Console\Core\Command\DrushCommand
+    arguments: ['@console.configuration_manager', '@console.chain_queue']
+    tags:
+      - { name: drupal.command }

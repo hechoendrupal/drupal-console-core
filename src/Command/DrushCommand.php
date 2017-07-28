@@ -5,7 +5,7 @@
  * Contains \Drupal\Console\Core\Command\Exclude\DrushCommand.
  */
 
-namespace Drupal\Console\Core\Command\Exclude;
+namespace Drupal\Console\Core\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -19,7 +19,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 /**
  * Class DrushCommand
  *
- * @package Drupal\Console\Core\Command\Exclude
+ * @package Drupal\Console\Core\Command
  */
 class DrushCommand extends Command
 {
