@@ -12,8 +12,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\ProcessBuilder;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Generator\InitGenerator;
 use Drupal\Console\Core\Utils\ShowFile;
@@ -26,8 +24,6 @@ use Drupal\Console\Core\Style\DrupalStyle;
  */
 class InitCommand extends Command
 {
-    use CommandTrait;
-
     /**
      * @var ShowFile
      */
