@@ -11,8 +11,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Dumper;
-use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Style\DrupalStyle;
 
@@ -23,8 +22,6 @@ use Drupal\Console\Core\Style\DrupalStyle;
  */
 class SiteCommand extends Command
 {
-    use CommandTrait;
-
     /**
      * @var ConfigurationManager
      */
