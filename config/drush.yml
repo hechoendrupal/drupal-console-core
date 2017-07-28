@@ -1,6 +1,7 @@
 ---
 commands:
   config:
+    config-delete: 'config:delete'
     config-edit: 'config:edit'
     config-export: 'config:export'
     config-get: 'config:debug CONFIG_NAME'
@@ -11,8 +12,7 @@ commands:
   core:
     archive-dump: ~
     archive-restore: ~
-    browse: ~
-    core-cli: ~
+    core-cli: 'shell'
     core-config: ~
     core-cron: 'cron:execute'
     core-execute: 'exec'
@@ -39,20 +39,7 @@ commands:
     twig-compile: ~
     updatedb: 'update:execute'
     updatedb-status: 'update:debug'
-    variable-delete: ~
-    variable-get: ~
-    variable-set: 'config:override'
     version: '--version'
-  drush_extras:
-    block-configure: ~
-    block-disable: ~
-    block-show: ~
-    copy-id: ~
-    give-comment: ~
-    give-node: ~
-    grep: ~
-    sql-compare: ~
-    sql-hash: ~
   field:
     field-clone: ~
     field-create: ~
@@ -60,16 +47,8 @@ commands:
     field-info: 'field:info'
     field-update: ~
   language:
-    language-add: ~
-    language-default: ~
-    language-disable: ~
-    language-enable: ~
-    language-prefix: ~
-  language_translations:
-    language-export-translations: ~
-    language-groups-info: ~
-    language-import-translations: ~
-    language-refresh-translations: ~
+    language-add: locale:language:add
+    language-disable: locale:language:delete
   make:
     make: ~
     make-convert: ~
@@ -77,13 +56,7 @@ commands:
     make-lock: ~
     make-update: ~
   other:
-    clean-modules: ~
-    coder-format: ~
-    coder-review: ~
-    composer: ~
-    registry-rebuild: ~
-    vimrc-install: ~
-    vimrc-tag-gen: ~
+    registry-rebuild: 'cache:rebuild'
   pm:
     pm-disable: 'module:uninstall, theme:uninstall'
     pm-download: 'module:download, theme:download'
@@ -101,7 +74,7 @@ commands:
   role:
     role-add-perm: ~
     role-create: ~
-    role-delete: 
+    role-delete: ~
     role-list: ~
     role-remove-perm: ~
   runserver:
@@ -119,26 +92,10 @@ commands:
     search-reindex: ~
     search-status: ~
   site_audit:
-    audit_all: ~
-    audit_best_practices: ~
-    audit_block: ~
-    audit_cache: ~
-    audit_codebase: ~
-    audit_content: ~
-    audit_cron: ~
-    audit_database: ~
-    audit_extensions: ~
-    audit_insights: ~
-    audit_security: ~
-    audit_status: ~
-    audit_users: ~
-    audit_views: ~
-    audit_watchdog: ~
     cache-clear: 'cache:rebuild'
     cache-get: ~
     cache-rebuild: 'cache:rebuild'
     cache-set: ~
-    site-audit-version: ~
   state:
     state-delete: 'state:delete'
     state-get: 'state:debug'
@@ -155,5 +112,5 @@ commands:
     user-unblock: ~
   watchdog:
     watchdog-delete: 'database:log:clear'
-    watchdog-list: ~
+    watchdog-list: 'database:log:poll'
     watchdog-show: 'database:log:debug'
