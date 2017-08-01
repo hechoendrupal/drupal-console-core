@@ -28,10 +28,14 @@ commands:
       - uslca
     user:login:url:
       - usli
+      - uli
     user:password:hash:
       - usph
     user:password:reset:
       - upsr
     views:disable:
       - vdi
-
+    cache:rebuild:
+      - cc
+    update:execute:
+      - updb
