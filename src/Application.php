@@ -115,6 +115,7 @@ class Application extends BaseApplication
 
 
         if ($commandName && !$this->has($commandName)) {
+            $isValidCommand = false;
             $config = $configurationManager->getConfiguration();
             $mappings = $config
                 ->get('application.commands.mappings');
@@ -129,7 +130,23 @@ class Application extends BaseApplication
                 $this->add(
                     $this->find($commandNameMap)->setAliases([$commandName])
                 );
-            } else {
+                $isValidCommand = true;
+            }
+
+            $drushCommand = $configurationManager->readDrushEquivalents($commandName);
+            if ($drushCommand) {
+                $this->add(
+                    $this->find($drushCommand)->setAliases([$commandName])
+                );
+                $isValidCommand = true;
+                $messages['warning'][] = sprintf(
+                    $this->trans('application.errors.drush-command'),
+                    $commandName,
+                    $drushCommand
+                );
+            }
+
+            if (!$isValidCommand) {
                 $io->error(
                     sprintf(
                         $this->trans('application.errors.invalid-command'),
