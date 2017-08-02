@@ -251,12 +251,19 @@ class Application extends BaseApplication
      */
     private function addOptions()
     {
+        // Get the configuration from config.yml.
+        $env = $this->container
+          ->get('console.configuration_manager')
+          ->getConfiguration()
+          ->get('application.environment');
+
         $this->getDefinition()->addOption(
             new InputOption(
                 '--env',
                 '-e',
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('application.options.env'), 'prod'
+                $this->trans('application.options.env'),
+                !empty($env) ? $env : 'prod'
             )
         );
         $this->getDefinition()->addOption(
