@@ -8,8 +8,6 @@ commands:
       - cre
     cron:release:
       - crr
-    database:log:clear:
-      - dbc
     debug:module:
       - mod
     debug:multisite:
