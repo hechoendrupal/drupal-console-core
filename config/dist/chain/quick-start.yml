@@ -10,8 +10,6 @@ vars:
     - drupal-composer/drupal-project:8.x-dev
     - acquia/lightning-project
     - acquia/reservoir-project
-vars:
-  repository: drupal-composer/drupal-project:8.x-dev
   profile: standard
 commands:
   # Create Drupal project using DrupalComposer
