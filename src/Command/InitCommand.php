@@ -10,6 +10,7 @@ namespace Drupal\Console\Core\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\ProcessBuilder;
 use Symfony\Component\Finder\Finder;
 use Drupal\Console\Core\Utils\ConfigurationManager;
@@ -57,6 +58,11 @@ class InitCommand extends Command
         'learning' => false,
         'generate_inline' => false,
         'generate_chain' => false
+    ];
+
+    private $directories = [
+      'chain',
+      'sites',
     ];
 
     /**
@@ -228,6 +234,13 @@ class InitCommand extends Command
                 'chain/',
                 $destinationFile
             );
+
+            $fs = new Filesystem();
+            foreach ($this->directories as $directory) {
+                if (!$fs->exists($destination.$directory)) {
+                    $fs->mkdir($destination.$directory);
+                }
+            }
 
             if ($this->copyFile($sourceFile, $destinationFile, $override)) {
                 $copiedFiles[] = $destinationFile;
