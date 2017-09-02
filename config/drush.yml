@@ -4,9 +4,9 @@ commands:
     config-delete: 'config:delete'
     config-edit: 'config:edit'
     config-export: 'config:export'
-    config-get: 'config:debug CONFIG_NAME'
+    config-get: 'debug:config CONFIG_NAME'
     config-import: 'config:import'
-    config-list: 'config:debug'
+    config-list: 'debug:config'
     config-pull: ~
     config-set: 'config:override'
   core:
@@ -17,7 +17,7 @@ commands:
     core-cron: 'cron:execute'
     core-execute: 'exec'
     core-init: 'init'
-    core-quick-drupal: 'chain --file=~/.console/chain/quick-start.yml'
+    core-quick-drupal: 'quick:start'
     core-requirements: 'site:status'
     core-rsync: ~
     core-status: 'site:status'
@@ -29,16 +29,16 @@ commands:
     image-flush: 'image:styles:flush'
     php-eval: ~
     php-script: ~
-    queue-list: 'queue:debug'
+    queue-list: 'debug:queue'
     queue-run: 'queue:run'
     shell-alias: ~
-    site-alias: ~
+    site-alias: 'debug:site'
     site-install: 'site:install'
     site-set: ~
     site-ssh: ~
     twig-compile: ~
     updatedb: 'update:execute'
-    updatedb-status: 'update:debug'
+    updatedb-status: 'debug:update'
     version: '--version'
   field:
     field-clone: ~
@@ -47,8 +47,8 @@ commands:
     field-info: 'field:info'
     field-update: ~
   language:
-    language-add: locale:language:add
-    language-disable: locale:language:delete
+    language-add: 'locale:language:add'
+    language-disable: 'locale:language:delete'
   make:
     make: ~
     make-convert: ~
@@ -56,13 +56,13 @@ commands:
     make-lock: ~
     make-update: ~
   other:
-    registry-rebuild: 'cache:rebuild'
+    registry-rebuild: 'cache:rebuild all'
   pm:
     pm-disable: 'module:uninstall, theme:uninstall'
     pm-download: 'module:download, theme:download'
     pm-enable: 'module:install, theme:install'
     pm-info: ~
-    pm-list: 'module:debug, theme:debug'
+    pm-list: 'debug:module, debug:theme'
     pm-projectinfo: ~
     pm-refresh: ~
     pm-releasenotes: ~
@@ -78,7 +78,7 @@ commands:
     role-list: ~
     role-remove-perm: ~
   runserver:
-    runserver: server
+    runserver: 'server'
     sql-cli: 'database:client'
     sql-connect: 'database:connect'
     sql-create: ~
@@ -98,7 +98,7 @@ commands:
     cache-set: ~
   state:
     state-delete: 'state:delete'
-    state-get: 'state:debug'
+    state-get: 'debug:state'
     state-set: 'state:override'
   user:
     user-add-role: 'user:role'
@@ -113,4 +113,4 @@ commands:
   watchdog:
     watchdog-delete: 'database:log:clear'
     watchdog-list: 'database:log:poll'
-    watchdog-show: 'database:log:debug'
+    watchdog-show: 'debug:database:log'
