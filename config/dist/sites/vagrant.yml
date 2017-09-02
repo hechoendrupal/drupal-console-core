@@ -1,0 +1,7 @@
+# DrupalVM Example
+dev:
+  root: /var/www/drupalvm/drupal
+  host: 192.168.88.88
+  user: vagrant
+  extra-options: '-o PasswordAuthentication=no -i ~/.vagrant.d/insecure_private_key'
+  type: ssh
