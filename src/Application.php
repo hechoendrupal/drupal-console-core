@@ -89,9 +89,8 @@ class Application extends BaseApplication
     {
         $io = new DrupalStyle($input, $output);
         $messages = [];
-        if ($commandName = $this->getCommandName($input)) {
-            $this->commandName = $commandName;
-        }
+        $commandName = $this->getCommandName($input)?:'list';
+        $this->commandName = $commandName;
         $this->registerEvents();
         $this->registerExtendCommands();
 
