@@ -254,14 +254,20 @@ class TextDescriptor extends Descriptor
                             implode(',', $description->getCommand($name)->getAliases())
                         );
                     }
+
                     $spacingWidth = $width - strlen($name.$alias);
+                    if($spacingWidth < 0) {
+                        $spacingWidth = 0;
+                    }
+
                     $this->writeText(
                         sprintf(
                             '  <info>%s</info> <comment>%s</comment> %s%s',
                             $name,
                             $alias,
                             str_repeat(' ', $spacingWidth),
-                            $description->getCommand($name)->getDescription()
+                            $description->getCommand($name)->getDescription(
+                            )
                         ),
                         $options
                     );
