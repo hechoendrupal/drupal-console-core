@@ -8,6 +8,12 @@ commands:
       - cre
     cron:release:
       - crr
+    database:connect:
+      - sqlc
+    database:query:
+      - sqlq
+    debug:database:log:
+      - ws
     debug:module:
       - mod
     debug:multisite:
@@ -22,6 +28,8 @@ commands:
       - sn
     router:rebuild:
       - ror
+    site:status:
+      - st
     user:login:clear:attempts:
       - uslca
     user:login:url:
