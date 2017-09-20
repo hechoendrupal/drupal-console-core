@@ -276,7 +276,7 @@ class ChainCommand extends Command
         $environmentPlaceHolders = $this->chainDiscovery->extractEnvironmentPlaceHolders($chainContent);
         $envPlaceHolderMap = [];
         $missingEnvironmentPlaceHolders = [];
-        foreach ($environmentPlaceHolders as $envPlaceHolder => $envPlaceHolderValue) {
+        foreach ($environmentPlaceHolders as $envPlaceHolder) {
             if (!getenv($envPlaceHolder)) {
                 $missingEnvironmentPlaceHolders[$envPlaceHolder] = sprintf(
                     'export %s=%s_VALUE',
