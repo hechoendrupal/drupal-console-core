@@ -13,14 +13,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Parser;
 use Drupal\Console\Core\Utils\ChainQueue;
 use Drupal\Console\Core\Utils\ChainDiscovery;
 use Drupal\Console\Core\Command\Shared\InputTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 
 /**
  * Class ChainCommand
@@ -29,7 +28,6 @@ use Drupal\Console\Core\Command\Shared\CommandTrait;
  */
 class ChainCommand extends Command
 {
-    use CommandTrait;
     use InputTrait;
 
     /**
@@ -136,7 +134,7 @@ class ChainCommand extends Command
                         $inlinePlaceHolder,
                         $io->choice(
                             sprintf(
-                                $this->trans('commands.chain.message.select-value-for-placeholder'),
+                                $this->trans('commands.chain.messages.select-value-for-placeholder'),
                                 $inlinePlaceHolder
                             ),
                             $inlinePlaceHolderValue,
@@ -149,7 +147,7 @@ class ChainCommand extends Command
                         $inlinePlaceHolder,
                         $io->ask(
                             sprintf(
-                                $this->trans('commands.chain.message.enter-value-for-placeholder'),
+                                $this->trans('commands.chain.messages.enter-value-for-placeholder'),
                                 $inlinePlaceHolder
                             ),
                             $inlinePlaceHolderValue
@@ -278,7 +276,7 @@ class ChainCommand extends Command
         $environmentPlaceHolders = $this->chainDiscovery->extractEnvironmentPlaceHolders($chainContent);
         $envPlaceHolderMap = [];
         $missingEnvironmentPlaceHolders = [];
-        foreach ($environmentPlaceHolders as $envPlaceHolder => $envPlaceHolderValue) {
+        foreach ($environmentPlaceHolders as $envPlaceHolder) {
             if (!getenv($envPlaceHolder)) {
                 $missingEnvironmentPlaceHolders[$envPlaceHolder] = sprintf(
                     'export %s=%s_VALUE',

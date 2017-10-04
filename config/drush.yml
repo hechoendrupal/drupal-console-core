@@ -1,23 +1,23 @@
 ---
 commands:
   config:
+    config-delete: 'config:delete'
     config-edit: 'config:edit'
     config-export: 'config:export'
-    config-get: 'config:debug CONFIG_NAME'
+    config-get: 'debug:config CONFIG_NAME'
     config-import: 'config:import'
-    config-list: 'config:debug'
+    config-list: 'debug:config'
     config-pull: ~
     config-set: 'config:override'
   core:
     archive-dump: ~
     archive-restore: ~
-    browse: ~
-    core-cli: ~
+    core-cli: 'shell'
     core-config: ~
     core-cron: 'cron:execute'
     core-execute: 'exec'
     core-init: 'init'
-    core-quick-drupal: 'chain --file=~/.console/chain/quick-start.yml'
+    core-quick-drupal: 'quick:start'
     core-requirements: 'site:status'
     core-rsync: ~
     core-status: 'site:status'
@@ -29,30 +29,17 @@ commands:
     image-flush: 'image:styles:flush'
     php-eval: ~
     php-script: ~
-    queue-list: 'queue:debug'
+    queue-list: 'debug:queue'
     queue-run: 'queue:run'
     shell-alias: ~
-    site-alias: ~
+    site-alias: 'debug:site'
     site-install: 'site:install'
     site-set: ~
     site-ssh: ~
     twig-compile: ~
     updatedb: 'update:execute'
-    updatedb-status: 'update:debug'
-    variable-delete: ~
-    variable-get: ~
-    variable-set: 'config:override'
+    updatedb-status: 'debug:update'
     version: '--version'
-  drush_extras:
-    block-configure: ~
-    block-disable: ~
-    block-show: ~
-    copy-id: ~
-    give-comment: ~
-    give-node: ~
-    grep: ~
-    sql-compare: ~
-    sql-hash: ~
   field:
     field-clone: ~
     field-create: ~
@@ -60,16 +47,8 @@ commands:
     field-info: 'field:info'
     field-update: ~
   language:
-    language-add: ~
-    language-default: ~
-    language-disable: ~
-    language-enable: ~
-    language-prefix: ~
-  language_translations:
-    language-export-translations: ~
-    language-groups-info: ~
-    language-import-translations: ~
-    language-refresh-translations: ~
+    language-add: 'locale:language:add'
+    language-disable: 'locale:language:delete'
   make:
     make: ~
     make-convert: ~
@@ -77,19 +56,13 @@ commands:
     make-lock: ~
     make-update: ~
   other:
-    clean-modules: ~
-    coder-format: ~
-    coder-review: ~
-    composer: ~
-    registry-rebuild: ~
-    vimrc-install: ~
-    vimrc-tag-gen: ~
+    registry-rebuild: 'cache:rebuild all'
   pm:
     pm-disable: 'module:uninstall, theme:uninstall'
     pm-download: 'module:download, theme:download'
     pm-enable: 'module:install, theme:install'
     pm-info: ~
-    pm-list: 'module:debug, theme:debug'
+    pm-list: 'debug:module, debug:theme'
     pm-projectinfo: ~
     pm-refresh: ~
     pm-releasenotes: ~
@@ -101,11 +74,11 @@ commands:
   role:
     role-add-perm: ~
     role-create: ~
-    role-delete: 
+    role-delete: ~
     role-list: ~
     role-remove-perm: ~
   runserver:
-    runserver: server
+    runserver: 'server'
     sql-cli: 'database:client'
     sql-connect: 'database:connect'
     sql-create: ~
@@ -119,29 +92,13 @@ commands:
     search-reindex: ~
     search-status: ~
   site_audit:
-    audit_all: ~
-    audit_best_practices: ~
-    audit_block: ~
-    audit_cache: ~
-    audit_codebase: ~
-    audit_content: ~
-    audit_cron: ~
-    audit_database: ~
-    audit_extensions: ~
-    audit_insights: ~
-    audit_security: ~
-    audit_status: ~
-    audit_users: ~
-    audit_views: ~
-    audit_watchdog: ~
     cache-clear: 'cache:rebuild'
     cache-get: ~
     cache-rebuild: 'cache:rebuild'
     cache-set: ~
-    site-audit-version: ~
   state:
     state-delete: 'state:delete'
-    state-get: 'state:debug'
+    state-get: 'debug:state'
     state-set: 'state:override'
   user:
     user-add-role: 'user:role'
@@ -155,5 +112,5 @@ commands:
     user-unblock: ~
   watchdog:
     watchdog-delete: 'database:log:clear'
-    watchdog-list: ~
-    watchdog-show: 'database:log:debug'
+    watchdog-list: 'database:log:poll'
+    watchdog-show: 'debug:database:log'

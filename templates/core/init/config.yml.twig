@@ -1,10 +1,10 @@
 application:
   environment: 'prod'
   language: '{{language}}'
-  editor: 'vim'
+#  editor: 'vim'
   temp: '{{temp}}'
   develop: 'false'
-  command: 'about'
+  command: 'list'
   checked: 'false'
   clear: 'false'
   extras:
@@ -14,38 +14,12 @@ application:
     chains: 'true'
     mappings: 'true'
   remote:
-    user: 'drupal'
-#    password: 'drupal'
     port: '22'
-#    keys:
-#      public: '~/.ssh/id_rsa.pub'
-#      private: '~/.ssh/id_rsa'
-#      passphrase: '~/.ssh/passphrase.txt'
-  composer:
-    create-project:
-      default:
-        package: 'drupal-composer/drupal-project'
-      drupal:
-        package: 'drupal/drupal'
-    repositories:
-      default: 'https://packagist.drupal-composer.org'
-      drupal: 'https://packages.drupal.org/8'
-      packagist: 'https://packagist.org'
-  disable:
-    modules:
-#      - module_name_one
-#      - module_name_two
-    commands:
-      module:download: 'composer require drupal/project'
-      module:update: 'composer update drupal/project'
-      theme:download: 'composer require drupal/project'
-      theme:update: 'composer update drupal/project'
-    namespaces:
-#      - generate
-#      - create
+    user: 'drupal'
+    type: 'ssh'
   options:
     learning: {{learning}}
-#    target: drupalvm.dev
-#    uri: miltisite.dev
+#    target: 'site-alias.dev'
+#    uri: 'multi-site.dev'
     generate-inline: {{generate_inline}}
     generate-chain: {{generate_chain}}

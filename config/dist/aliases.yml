@@ -8,8 +8,12 @@ commands:
       - cre
     cron:release:
       - crr
-    database:log:clear:
-      - dbc
+    database:connect:
+      - sqlc
+    database:query:
+      - sqlq
+    debug:database:log:
+      - ws
     debug:module:
       - mod
     debug:multisite:
@@ -24,14 +28,20 @@ commands:
       - sn
     router:rebuild:
       - ror
+    site:status:
+      - st
     user:login:clear:attempts:
       - uslca
     user:login:url:
       - usli
+      - uli
     user:password:hash:
       - usph
     user:password:reset:
       - upsr
     views:disable:
       - vdi
-
+    cache:rebuild:
+      - cc
+    update:execute:
+      - updb

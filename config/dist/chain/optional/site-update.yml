@@ -1,11 +1,11 @@
 commands:
-# Drop database
+# Backup current database
   - command: database:dump
     arguments:
       database: 'default'
 # Import configurations
   - command: config:import
-# Restore Database
+# Run pending update hooks
   - command: update:execute
     arguments:
         module: 'all'

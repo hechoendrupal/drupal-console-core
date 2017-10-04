@@ -9,10 +9,9 @@ namespace Drupal\Console\Core\Command\Debug;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Utils\ChainDiscovery;
 use Drupal\Console\Core\Style\DrupalStyle;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 
 /**
  * Class ChainCommand
@@ -21,8 +20,6 @@ use Drupal\Console\Core\Command\Shared\CommandTrait;
  */
 class ChainCommand extends Command
 {
-    use CommandTrait;
-
     /**
      * @var ChainDiscovery
      */

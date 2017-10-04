@@ -9,8 +9,6 @@ namespace Drupal\Console\Core\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command as BaseCommand;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Utils\RequirementChecker;
 use Drupal\Console\Core\Utils\ChainQueue;
@@ -21,10 +19,8 @@ use Drupal\Console\Core\Style\DrupalStyle;
  *
  * @package Drupal\Console\Core\Command
  */
-class CheckCommand extends BaseCommand
+class CheckCommand extends Command
 {
-    use CommandTrait;
-
     /**
      * @var RequirementChecker
      */
