@@ -26,6 +26,8 @@ services:
   console.chain_discovery:
     class: Drupal\Console\Core\Utils\ChainDiscovery
     arguments: ['@console.root', '@console.configuration_manager']
+  console.count_code_lines:
+    class: Drupal\Console\Core\Utils\CountCodeLines
   # DrupalConsoleCore Commands
   console.about:
     class: Drupal\Console\Core\Command\AboutCommand
