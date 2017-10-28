@@ -244,6 +244,7 @@ class Application extends BaseApplication
         );
         $dispatcher->addSubscriber(
             new ShowGenerateCountCodeLinesListener(
+                $this->container->get('console.translator_manager'),
                 $this->container->get('console.count_code_lines')
             )
         );

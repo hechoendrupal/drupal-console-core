@@ -7,11 +7,12 @@
 
 namespace Drupal\Console\Core\EventSubscriber;
 
-use Drupal\Console\Core\Utils\CountCodeLines;
 use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Utils\TranslatorManagerInterface;
+use Drupal\Console\Core\Utils\CountCodeLines;
 use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
@@ -28,32 +29,47 @@ class ShowGenerateCountCodeLinesListener implements EventSubscriberInterface
     protected $countCodeLines;
 
     /**
+     * @var TranslatorManagerInterface
+     */
+    protected $translator;
+
+    /**
      * ShowGenerateChainListener constructor.
      *
+     * @param TranslatorManagerInterface $translator
+     *
      * @param CountCodeLines $countCodeLines
+     *
      */
     public function __construct(
+        TranslatorManagerInterface $translator,
         CountCodeLines $countCodeLines
     ) {
+        $this->translator = $translator;
         $this->countCodeLines = $countCodeLines;
     }
 
     /**
      * @param ConsoleTerminateEvent $event
      */
-    public function showGenerateCountLines(ConsoleTerminateEvent $event)
+    public function showGenerateCountCodeLines(ConsoleTerminateEvent $event)
     {
         if ($event->getExitCode() != 0) {
             return;
         }
 
-        /* @var Command $command */
-        $command = $event->getCommand();
         /* @var DrupalStyle $io */
         $io = new DrupalStyle($event->getInput(), $event->getOutput());
 
         $countCodeLines = $this->countCodeLines->getCountCodeLines();
-        $io->writeln($countCodeLines);
+        if ($countCodeLines > 0) {
+            $io->commentBlock(
+                sprintf(
+                    $this->translator->trans('application.messages.lines-code'),
+                    $countCodeLines
+                )
+            );
+        }
     }
 
     /**
