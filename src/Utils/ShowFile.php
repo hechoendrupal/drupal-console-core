@@ -50,7 +50,7 @@ class ShowFile
         $pathKey = null;
         $path = null;
         if ($showPath) {
-            $pathKey = 'application.user.messages.path';
+            $pathKey = 'application.messages.path';
             $path = $this->root;
         }
         $this->showMMultiple(
