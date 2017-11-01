@@ -121,8 +121,8 @@ class DrupalStyle extends SymfonyStyle
      */
     public function askEmpty($question, $validator = null)
     {
-        $question = new Question($question, ' ');
-        $question->setValidator($validator);
+        $question = new Question($question, '');
+        $question->setValidator(function ($answer) { return $answer; });
 
         return trim($this->askQuestion($question));
     }
