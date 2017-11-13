@@ -22,6 +22,7 @@ use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Utils\ChainDiscovery;
 use Drupal\Console\Core\Command\Chain\ChainCustomCommand;
+use Drupal\Console\Core\Bootstrap\DrupalInterface;
 
 /**
  * Class Application
@@ -41,6 +42,17 @@ class Application extends BaseApplication
     protected $commandName;
 
     /**
+     * @var DrupalInterface
+     */
+    protected $drupal;
+
+
+    /**
+     * @var bool
+     */
+    protected $eventRegistered;
+
+    /**
      * ConsoleApplication constructor.
      *
      * @param ContainerInterface $container
@@ -53,6 +65,7 @@ class Application extends BaseApplication
         $version
     ) {
         $this->container = $container;
+        $this->eventRegistered = false;
         parent::__construct($name, $version);
         $this->addOptions();
     }
@@ -90,8 +103,17 @@ class Application extends BaseApplication
     {
         $io = new DrupalStyle($input, $output);
         $messages = [];
-        $commandName = $this->getCommandName($input)?:'list';
-        $this->commandName = $commandName;
+        $this->commandName = $this->getCommandName($input)?:'list';
+
+        $clear = $this->container->get('console.configuration_manager')
+            ->getConfiguration()
+            ->get('application.clear')?:false;
+        if ($clear === true || $clear === 'true') {
+            $output->write(sprintf("\033\143"));
+        }
+
+        $this->registerGenerators();
+        $this->registerCommands();
         $this->registerEvents();
         $this->registerExtendCommands();
 
@@ -113,35 +135,34 @@ class Application extends BaseApplication
             $this->registerChainCommands();
         }
 
-
-        if ($commandName && !$this->has($commandName)) {
+        if (!$this->has($this->commandName)) {
             $isValidCommand = false;
             $config = $configurationManager->getConfiguration();
             $mappings = $config
                 ->get('application.commands.mappings');
 
-            if (array_key_exists($commandName, $mappings)) {
-                $commandNameMap = $mappings[$commandName];
+            if (array_key_exists($this->commandName, $mappings)) {
+                $commandNameMap = $mappings[$this->commandName];
                 $messages['warning'][] = sprintf(
                     $this->trans('application.errors.renamed-command'),
-                    $commandName,
+                    $this->commandName,
                     $commandNameMap
                 );
                 $this->add(
-                    $this->find($commandNameMap)->setAliases([$commandName])
+                    $this->find($commandNameMap)->setAliases([$this->commandName])
                 );
                 $isValidCommand = true;
             }
 
-            $drushCommand = $configurationManager->readDrushEquivalents($commandName);
+            $drushCommand = $configurationManager->readDrushEquivalents($this->commandName);
             if ($drushCommand) {
                 $this->add(
-                    $this->find($drushCommand)->setAliases([$commandName])
+                    $this->find($drushCommand)->setAliases([$this->commandName])
                 );
                 $isValidCommand = true;
                 $messages['warning'][] = sprintf(
                     $this->trans('application.errors.drush-command'),
-                    $commandName,
+                    $this->commandName,
                     $drushCommand
                 );
             }
@@ -163,13 +184,13 @@ class Application extends BaseApplication
             $output
         );
 
-        if ($this->commandName != 'init' && $configurationManager->getMissingConfigurationFiles(
-        )
-        ) {
+        $missingConfigurationFiles =  $configurationManager
+            ->getMissingConfigurationFiles();
+        if ($this->commandName != 'init' && $missingConfigurationFiles) {
             $io->warning(
                 $this->trans('application.site.errors.missing-config-file')
             );
-            $io->listing($configurationManager->getMissingConfigurationFiles());
+            $io->listing($missingConfigurationFiles);
             $io->commentBlock(
                 $this->trans(
                     'application.site.errors.missing-config-file-command'
@@ -177,13 +198,14 @@ class Application extends BaseApplication
             );
         }
 
-        if ($this->getCommandName(
-            $input
-        ) == 'list' && $this->container->hasParameter('console.warning')
-        ) {
-            $io->warning(
-                $this->trans($this->container->getParameter('console.warning'))
-            );
+        if ($this->commandName == 'list') {
+            if ($this->container->hasParameter('console.warning')) {
+                $io->commentBlock(
+                    $this->trans(
+                        $this->container->getParameter('console.warning')
+                    )
+                );
+            }
         }
 
         foreach ($messages as $type => $message) {
@@ -198,59 +220,61 @@ class Application extends BaseApplication
      */
     private function registerEvents()
     {
-        $dispatcher = new EventDispatcher();
-        /* @todo Register listeners as services */
-        $dispatcher->addSubscriber(
-            new ValidateExecutionListener(
-                $this->container->get('console.translator_manager'),
-                $this->container->get('console.configuration_manager')
-            )
-        );
-        $dispatcher->addSubscriber(
-            new ShowWelcomeMessageListener(
-                $this->container->get('console.translator_manager')
-            )
-        );
-        $dispatcher->addSubscriber(
-            new DefaultValueEventListener(
-                $this->container->get('console.configuration_manager')
-            )
-        );
-        $dispatcher->addSubscriber(
-            new ShowTipsListener(
-                $this->container->get('console.translator_manager')
-            )
-        );
-        $dispatcher->addSubscriber(
-            new CallCommandListener(
-                $this->container->get('console.chain_queue')
-            )
-        );
-        $dispatcher->addSubscriber(
-            new ShowGeneratedFilesListener(
-                $this->container->get('console.file_queue'),
-                $this->container->get('console.show_file')
-            )
-        );
-        $dispatcher->addSubscriber(
-            new ShowGenerateInlineListener(
-                $this->container->get('console.translator_manager')
-            )
-        );
-        $dispatcher->addSubscriber(
-            new ShowGenerateChainListener(
-                $this->container->get('console.translator_manager')
-            )
-        );
+        if (!$this->eventRegistered) {
+            $dispatcher = new EventDispatcher();
+            $dispatcher->addSubscriber(
+                new ValidateExecutionListener(
+                    $this->container->get('console.translator_manager'),
+                    $this->container->get('console.configuration_manager')
+                )
+            );
+            $dispatcher->addSubscriber(
+                new ShowWelcomeMessageListener(
+                    $this->container->get('console.translator_manager')
+                )
+            );
+            $dispatcher->addSubscriber(
+                new DefaultValueEventListener(
+                    $this->container->get('console.configuration_manager')
+                )
+            );
+            $dispatcher->addSubscriber(
+                new ShowTipsListener(
+                    $this->container->get('console.translator_manager')
+                )
+            );
+            $dispatcher->addSubscriber(
+                new CallCommandListener(
+                    $this->container->get('console.chain_queue')
+                )
+            );
+            $dispatcher->addSubscriber(
+                new ShowGeneratedFilesListener(
+                    $this->container->get('console.file_queue'),
+                    $this->container->get('console.show_file')
+                )
+            );
+            $dispatcher->addSubscriber(
+                new ShowGenerateInlineListener(
+                    $this->container->get('console.translator_manager')
+                )
+            );
+            $dispatcher->addSubscriber(
+                new ShowGenerateChainListener(
+                    $this->container->get('console.translator_manager')
+                )
+            );
 
-        $dispatcher->addSubscriber(
-            new ShowGenerateCountCodeLinesListener(
-                $this->container->get('console.translator_manager'),
-                $this->container->get('console.count_code_lines')
-            )
-        );
+            $dispatcher->addSubscriber(
+                new ShowGenerateCountCodeLinesListener(
+                    $this->container->get('console.translator_manager'),
+                    $this->container->get('console.count_code_lines')
+                )
+            );
 
-        $this->setDispatcher($dispatcher);
+            $this->setDispatcher($dispatcher);
+            $this->eventRegistered = true;
+        }
     }
 
     /**
@@ -260,9 +284,9 @@ class Application extends BaseApplication
     {
         // Get the configuration from config.yml.
         $env = $this->container
-          ->get('console.configuration_manager')
-          ->getConfiguration()
-          ->get('application.environment');
+            ->get('console.configuration_manager')
+            ->getConfiguration()
+            ->get('application.environment');
 
         $this->getDefinition()->addOption(
             new InputOption(
@@ -348,12 +372,110 @@ class Application extends BaseApplication
     }
 
     /**
-     * registerExtendCommands
+     * registerCommands
      */
-    private function registerExtendCommands()
+    private function registerCommands()
     {
-        $this->container->get('console.configuration_manager')
-            ->loadExtendConfiguration();
+        $consoleCommands = $this->container
+            ->findTaggedServiceIds('drupal.command');
+
+        $aliases = $this->container->get('console.configuration_manager')
+            ->getConfiguration()
+            ->get('application.commands.aliases')?:[];
+
+        $invalidCommands = [];
+        if ($this->container->has('console.invalid_commands')) {
+            $invalidCommands = (array)$this->container
+                ->get('console.invalid_commands');
+        }
+
+        foreach ($consoleCommands as $name => $tags) {
+            if (in_array($name, $invalidCommands)) {
+                continue;
+            }
+
+            if (!$this->container->has($name)) {
+                continue;
+            }
+
+            try {
+                $command = $this->container->get($name);
+            } catch (\Exception $e) {
+                echo $name . ' - ' . $e->getMessage() . PHP_EOL;
+
+                continue;
+            }
+
+            if (!$command) {
+                continue;
+            }
+
+            if (method_exists($command, 'setTranslator')) {
+                $command->setTranslator(
+                    $this->container->get('console.translator_manager')
+                );
+            }
+
+            if (method_exists($command, 'setContainer')) {
+                $command->setContainer(
+                    $this->container->get('service_container')
+                );
+            }
+
+            if (array_key_exists($command->getName(), $aliases)) {
+                $commandAliases = $aliases[$command->getName()];
+                if (!is_array($commandAliases)) {
+                    $commandAliases = [$commandAliases];
+                }
+                $command->setAliases($commandAliases);
+            }
+
+            $this->add($command);
+        }
+    }
+
+    /**
+     * registerGenerators
+     */
+    private function registerGenerators()
+    {
+        $consoleGenerators = $this->container
+            ->findTaggedServiceIds('drupal.generator');
+
+        foreach ($consoleGenerators as $name => $tags) {
+            if (!$this->container->has($name)) {
+                continue;
+            }
+
+            try {
+                $generator = $this->container->get($name);
+            } catch (\Exception $e) {
+                echo $name . ' - ' . $e->getMessage() . PHP_EOL;
+
+                continue;
+            }
+
+            if (!$generator) {
+                continue;
+            }
+            if (method_exists($generator, 'setRenderer')) {
+                $generator->setRenderer(
+                    $this->container->get('console.renderer')
+                );
+            }
+
+            if (method_exists($generator, 'setFileQueue')) {
+                $generator->setFileQueue(
+                    $this->container->get('console.file_queue')
+                );
+            }
+
+            if (method_exists($generator, 'setCountCodeLines')) {
+                $generator->setCountCodeLines(
+                    $this->container->get('console.count_code_lines')
+                );
+            }
+        }
     }
 
     /**
@@ -476,6 +598,34 @@ class Application extends BaseApplication
                 echo $e->getMessage() . PHP_EOL;
             }
         }
+    }
+
+    /**
+     * registerExtendCommands
+     */
+    private function registerExtendCommands()
+    {
+        $this->container->get('console.configuration_manager')
+            ->loadExtendConfiguration();
+    }
+
+    /**
+     * @return DrupalInterface
+     */
+    public function getDrupal() {
+        return $this->drupal;
+    }
+
+    /**
+     * @param DrupalInterface $drupal
+     */
+    public function setDrupal($drupal) {
+        $this->drupal = $drupal;
+    }
+
+    public function setContainer($container)
+    {
+        $this->container = $container;
     }
 
     /**

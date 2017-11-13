@@ -82,17 +82,6 @@ class DrupalConsoleCore
             $consoleRoot
         );
 
-        $configurationManager = $container->get('console.configuration_manager');
-        $directory = $configurationManager->getConsoleDirectory() . 'extend/';
-        $autoloadFile = $directory . 'vendor/autoload.php';
-        if (is_file($autoloadFile)) {
-            include_once $autoloadFile;
-            $extendServicesFile = $directory . 'extend.console.uninstall.services.yml';
-            if (is_file($extendServicesFile)) {
-                $loader->load($extendServicesFile);
-            }
-        }
-
         $container->get('console.renderer')
             ->setSkeletonDirs(
                 [
