@@ -103,6 +103,9 @@ class Application extends BaseApplication
     {
         $io = new DrupalStyle($input, $output);
         $messages = [];
+        if ($this->container->hasParameter('console.messages')) {
+            $messages = $this->container->getParameter('console.messages');
+        }
         $this->commandName = $this->getCommandName($input)?:'list';
 
         $clear = $this->container->get('console.configuration_manager')
@@ -143,11 +146,13 @@ class Application extends BaseApplication
 
             if (array_key_exists($this->commandName, $mappings)) {
                 $commandNameMap = $mappings[$this->commandName];
-                $messages['warning'][] = sprintf(
-                    $this->trans('application.errors.renamed-command'),
-                    $this->commandName,
-                    $commandNameMap
-                );
+                $messages[] =[
+                    'warning' => sprintf(
+                        $this->trans('application.errors.renamed-command'),
+                        $this->commandName,
+                        $commandNameMap
+                    )
+                ];
                 $this->add(
                     $this->find($commandNameMap)->setAliases([$this->commandName])
                 );
@@ -160,11 +165,13 @@ class Application extends BaseApplication
                     $this->find($drushCommand)->setAliases([$this->commandName])
                 );
                 $isValidCommand = true;
-                $messages['warning'][] = sprintf(
-                    $this->trans('application.errors.drush-command'),
-                    $this->commandName,
-                    $drushCommand
-                );
+                $messages[] = [
+                    'warning' => sprintf(
+                        $this->trans('application.errors.drush-command'),
+                        $this->commandName,
+                        $drushCommand
+                    )
+                ];
             }
 
             if (!$isValidCommand) {
@@ -198,17 +205,8 @@ class Application extends BaseApplication
             );
         }
 
-        if ($this->commandName == 'list') {
-            if ($this->container->hasParameter('console.warning')) {
-                $io->commentBlock(
-                    $this->trans(
-                        $this->container->getParameter('console.warning')
-                    )
-                );
-            }
-        }
-
-        foreach ($messages as $type => $message) {
+        foreach ($messages as $key => $message) {
+            $type = key($message);
             $io->$type($message);
         }
 
