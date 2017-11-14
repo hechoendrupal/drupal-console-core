@@ -425,6 +425,10 @@ class Application extends BaseApplication
                 if (!is_array($commandAliases)) {
                     $commandAliases = [$commandAliases];
                 }
+                $commandAliases = array_merge(
+                    $command->getAliases(),
+                    $commandAliases
+                );
                 $command->setAliases($commandAliases);
             }
 
