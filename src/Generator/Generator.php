@@ -76,7 +76,7 @@ abstract class Generator
                 throw new \InvalidArgumentException(
                     sprintf(
                         'Path "%s" is invalid. You need to provide a valid path.',
-                        $parameters["path"]
+                        dirname($target)
                     )
                 );
             }
