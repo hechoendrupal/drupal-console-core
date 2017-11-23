@@ -46,7 +46,6 @@ class Application extends BaseApplication
      */
     protected $drupal;
 
-
     /**
      * @var bool
      */
@@ -102,10 +101,7 @@ class Application extends BaseApplication
     public function doRun(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
-        $messages = [];
-        if ($this->container->hasParameter('console.messages')) {
-            $messages = $this->container->getParameter('console.messages');
-        }
+        $messageManager = $this->container->get('console.message_manager');
         $this->commandName = $this->getCommandName($input)?:'list';
 
         $clear = $this->container->get('console.configuration_manager')
@@ -146,13 +142,13 @@ class Application extends BaseApplication
 
             if (array_key_exists($this->commandName, $mappings)) {
                 $commandNameMap = $mappings[$this->commandName];
-                $messages[] =[
-                    'warning' => sprintf(
+                $messageManager->warning(
+                    sprintf(
                         $this->trans('application.errors.renamed-command'),
                         $this->commandName,
                         $commandNameMap
                     )
-                ];
+                );
                 $this->add(
                     $this->find($commandNameMap)->setAliases([$this->commandName])
                 );
@@ -165,13 +161,13 @@ class Application extends BaseApplication
                     $this->find($drushCommand)->setAliases([$this->commandName])
                 );
                 $isValidCommand = true;
-                $messages[] = [
-                    'warning' => sprintf(
+                $messageManager->warning(
+                    sprintf(
                         $this->trans('application.errors.drush-command'),
                         $this->commandName,
                         $drushCommand
                     )
-                ];
+                );
             }
 
             if (!$isValidCommand) {
@@ -204,10 +200,11 @@ class Application extends BaseApplication
                 )
             );
         }
+        $messages = $messageManager->getMessages();
 
-        foreach ($messages as $key => $message) {
-            $type = key($message);
-            $io->$type($message);
+        foreach ($messages as $message) {
+            $type = $message['type'];
+            $io->$type($message['message']);
         }
 
         return $code;
@@ -614,14 +611,16 @@ class Application extends BaseApplication
     /**
      * @return DrupalInterface
      */
-    public function getDrupal() {
+    public function getDrupal()
+    {
         return $this->drupal;
     }
 
     /**
      * @param DrupalInterface $drupal
      */
-    public function setDrupal($drupal) {
+    public function setDrupal($drupal)
+    {
         $this->drupal = $drupal;
     }
 

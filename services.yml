@@ -29,8 +29,8 @@ services:
     arguments: ['@console.root', '@console.configuration_manager']
   console.count_code_lines:
     class: Drupal\Console\Core\Utils\CountCodeLines
-  console.message_parser:
-    class: Drupal\Console\Core\Utils\MessageParser
+  console.message_manager:
+    class: Drupal\Console\Core\Utils\MessageManager
   # DrupalConsoleCore Commands
   console.about:
     class: Drupal\Console\Core\Command\AboutCommand
