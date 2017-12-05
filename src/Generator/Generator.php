@@ -72,7 +72,14 @@ abstract class Generator
         $flag = null
     ) {
         if (!is_dir(dirname($target))) {
-            mkdir(dirname($target), 0777, true);
+            if(!mkdir(dirname($target), 0777, true)){
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        'Path "%s" is invalid. You need to provide a valid path.',
+                        dirname($target)
+                    )
+                );
+            }
         }
 
         $currentLine = 0;
