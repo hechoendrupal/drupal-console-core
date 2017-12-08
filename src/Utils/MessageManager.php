@@ -19,46 +19,46 @@ class MessageManager
      * @param $type
      * @param $message
      * @param $code
-     * @param $isRemovable
+     * @param $removableBy
      */
-    private function add($type, $message, $code, $isRemovable)
+    private function add($type, $message, $code, $removableBy)
     {
         $this->messages[] = [
             'type' =>$type,
             'message' => $message,
             'code' => $code,
-            'isRemovable' => $isRemovable
+            'removableBy' => $removableBy
         ];
     }
 
     /**
      * @param $message
      * @param $code
-     * @param $isRemovable
+     * @param $removableBy
      */
-    public function error($message, $code = 0, $isRemovable = false)
+    public function error($message, $code = 0, $removableBy = null)
     {
-        $this->add('error', $message, $code, $isRemovable);
+        $this->add('error', $message, $code, $removableBy);
     }
 
     /**
      * @param $message
      * @param $code
-     * @param $isRemovable
+     * @param $removableBy
      */
-    public function warning($message, $code = 0, $isRemovable = false)
+    public function warning($message, $code = 0, $removableBy = null)
     {
-        $this->add('warning', $message, $code, $isRemovable);
+        $this->add('warning', $message, $code, $removableBy);
     }
 
     /**
      * @param $message
      * @param $code
-     * @param $isRemovable
+     * @param $removableBy
      */
-    public function info($message, $code = 0, $isRemovable = false)
+    public function info($message, $code = 0, $removableBy = null)
     {
-        $this->add('info', $message, $code, $isRemovable);
+        $this->add('info', $message, $code, $removableBy);
     }
 
     /**
@@ -69,27 +69,16 @@ class MessageManager
         return $this->messages;
     }
 
-    public function remove($type, $code = null) {
+    public function remove($removeBy = null) {
         $this->messages = array_filter(
             $this->messages,
-            function ($element) use ($type, $code)  {
-
-                if (!$element['isRemovable']) {
-
-                    return true;
-                }
-
-                if ($type != 'all' && $element['type'] != $type) {
+            function ($message) use ($removeBy)  {
+                if (is_null($message['removableBy'])) {
 
                     return true;
                 }
 
-
-                if (is_null($code)) {
-                    return false;
-                }
-
-                return !($element['code'] == $code);
+                return !($message['removableBy'] == $removeBy);
             }
         );
     }
