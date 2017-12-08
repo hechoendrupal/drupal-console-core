@@ -2,6 +2,7 @@
 
 namespace Drupal\Console\Core;
 
+use Drupal\Console\Core\EventSubscriber\RemoveMessagesListener;
 use Drupal\Console\Core\EventSubscriber\ShowGenerateCountCodeLinesListener;
 use Drupal\Console\Core\Utils\TranslatorManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -264,6 +265,12 @@ class Application extends BaseApplication
                 new ShowGenerateCountCodeLinesListener(
                     $this->container->get('console.translator_manager'),
                     $this->container->get('console.count_code_lines')
+                )
+            );
+
+            $dispatcher->addSubscriber(
+                new RemoveMessagesListener(
+                    $this->container->get('console.message_manager')
                 )
             );
 
