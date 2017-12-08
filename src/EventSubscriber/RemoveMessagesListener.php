@@ -22,11 +22,6 @@ use Drupal\Console\Core\Utils\MessageManager;
 class RemoveMessagesListener implements EventSubscriberInterface
 {
     /**
-     * @var TranslatorManagerInterface
-     */
-    protected $translator;
-
-    /**
      * @var MessageManager
      */
     protected $messageManager;
@@ -34,14 +29,11 @@ class RemoveMessagesListener implements EventSubscriberInterface
     /**
      * ShowGenerateInlineListener constructor.
      *
-     * @param TranslatorManagerInterface $translator
      * @param MessageManager $messageManager
      */
     public function __construct(
-        TranslatorManagerInterface $translator,
         MessageManager $messageManager
     ) {
-        $this->translator = $translator;
         $this->messageManager = $messageManager;
     }
 

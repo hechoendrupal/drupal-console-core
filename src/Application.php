@@ -270,7 +270,6 @@ class Application extends BaseApplication
 
             $dispatcher->addSubscriber(
                 new RemoveMessagesListener(
-                    $this->container->get('console.translator_manager'),
                     $this->container->get('console.message_manager')
                 )
             );
