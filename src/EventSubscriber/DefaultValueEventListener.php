@@ -9,6 +9,7 @@ namespace Drupal\Console\Core\EventSubscriber;
 
 use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
+use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Core\Utils\ConfigurationManager;
@@ -60,29 +61,50 @@ class DefaultValueEventListener implements EventSubscriberInterface
             return;
         }
 
-        $input = $command->getDefinition();
-        $options = $input->getOptions();
-        foreach ($options as $key => $option) {
-            $defaultOption = sprintf(
-                'application.default.commands.%s.options.%s',
-                str_replace(':', '.', $command->getName()),
-                $key
-            );
-            $defaultValue = $configuration->get($defaultOption);
-            if ($defaultValue) {
-                $option->setDefault($defaultValue);
+        $inputDefinition = $command->getDefinition();
+        $input = $event->getInput();
+        $commandConfigKey = sprintf(
+            'application.default.commands.%s',
+            str_replace(':', '.', $command->getName())
+        );
+        $defaults = $configuration->get($commandConfigKey);
+        $defaultOptions = array_key_exists('options', $defaults)?$defaults['options']:[];
+        $defaultValues = [];
+        if ($defaultOptions) {
+            $reflection = new \ReflectionObject($input);
+            $prop = $reflection->getProperty('tokens');
+            $prop->setAccessible(true);
+            $tokens = $prop->getValue($input);
+            foreach ($defaultOptions as $key => $defaultValue) {
+                $option = $inputDefinition->getOption($key);
+                if ($input->getOption($key)) {
+                    continue;
+                }
+                if ($option->acceptValue()) {
+                    $defaultValues[] = sprintf(
+                        '--%s=%s',
+                        $key,
+                        $defaultValue
+                    );
+                    continue;
+                }
+                $defaultValues[] = sprintf(
+                    '--%s',
+                    $key
+                );
             }
+            $prop->setValue(
+                $input,
+                array_unique(array_merge($tokens, $defaultValues))
+            );
         }
 
-        $arguments = $input->getArguments();
-        foreach ($arguments as $key => $argument) {
-            $defaultArgument = sprintf(
-                'application.default.commands.%s.arguments.%s',
-                str_replace(':', '.', $command->getName()),
-                $key
-            );
-            $defaultValue = $configuration->get($defaultArgument);
-            if ($defaultValue) {
+        $defaultArguments = array_key_exists('arguments', $defaults)?$defaults['arguments']:[];
+        foreach ($defaultArguments as $key => $defaultValue) {
+            if ($input->getArgument($key)) {
+                continue;
+            }
+            if ($argument = $inputDefinition->getArgument($key)) {
                 $argument->setDefault($defaultValue);
             }
         }
