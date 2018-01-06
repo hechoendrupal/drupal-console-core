@@ -169,7 +169,7 @@ class ArgvInputReader
      * @param $option
      * @param $value
      */
-    private function set($option, $value)
+    public function set($option, $value)
     {
         if ($value) {
             $this->options[$option] = $value;

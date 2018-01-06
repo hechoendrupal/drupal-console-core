@@ -12,6 +12,10 @@ application:
         druplicon:
           class: '\Drupal\Console\Core\Command\Exclude\DrupliconCommand'
           arguments: ['@app.root', '@console.renderer']
+  commands:
+    aliases: ~
+    defaults: ~
+    mappings: ~
   languages:
     en: 'English'
     es: 'Español'

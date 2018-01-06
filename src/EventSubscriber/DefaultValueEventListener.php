@@ -64,11 +64,18 @@ class DefaultValueEventListener implements EventSubscriberInterface
         $inputDefinition = $command->getDefinition();
         $input = $event->getInput();
         $commandConfigKey = sprintf(
-            'application.default.commands.%s',
+            'application.commands.defaults.%s',
             str_replace(':', '.', $command->getName())
         );
         $defaults = $configuration->get($commandConfigKey);
-        $defaultOptions = array_key_exists('options', $defaults)?$defaults['options']:[];
+
+        $this->setOptions($defaults, $input, $inputDefinition);
+        $this->setArguments($defaults, $input, $inputDefinition);
+    }
+
+    private function setOptions($defaults, $input, $inputDefinition)
+    {
+        $defaultOptions = $this->extractKey($defaults, 'options');
         $defaultValues = [];
         if ($defaultOptions) {
             $reflection = new \ReflectionObject($input);
@@ -98,16 +105,35 @@ class DefaultValueEventListener implements EventSubscriberInterface
                 array_unique(array_merge($tokens, $defaultValues))
             );
         }
+    }
 
-        $defaultArguments = array_key_exists('arguments', $defaults)?$defaults['arguments']:[];
+    private function setArguments($defaults, $input, $inputDefinition)
+    {
+        $defaultArguments = $this->extractKey($defaults, 'arguments');
+
         foreach ($defaultArguments as $key => $defaultValue) {
             if ($input->getArgument($key)) {
                 continue;
             }
+
             if ($argument = $inputDefinition->getArgument($key)) {
                 $argument->setDefault($defaultValue);
             }
         }
+    }
+
+    private function extractKey($defaults, $key)
+    {
+        if (!$defaults || !is_array($defaults)) {
+            return [];
+        }
+
+        $defaults = array_key_exists($key, $defaults)?$defaults[$key]:[];
+        if (!is_array($defaults)) {
+            return [];
+        }
+
+        return $defaults;
     }
 
     /**
