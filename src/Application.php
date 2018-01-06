@@ -138,8 +138,7 @@ class Application extends BaseApplication
         if (!$this->has($this->commandName)) {
             $isValidCommand = false;
             $config = $configurationManager->getConfiguration();
-            $mappings = $config
-                ->get('application.commands.mappings');
+            $mappings = $config->get('application.commands.mappings');
 
             if (array_key_exists($this->commandName, $mappings)) {
                 $commandNameMap = $mappings[$this->commandName];
@@ -188,19 +187,6 @@ class Application extends BaseApplication
             $output
         );
 
-        $missingConfigurationFiles =  $configurationManager
-            ->getMissingConfigurationFiles();
-        if ($this->commandName != 'init' && $missingConfigurationFiles) {
-            $io->warning(
-                $this->trans('application.site.errors.missing-config-file')
-            );
-            $io->listing($missingConfigurationFiles);
-            $io->commentBlock(
-                $this->trans(
-                    'application.site.errors.missing-config-file-command'
-                )
-            );
-        }
         $messages = $messageManager->getMessages();
 
         foreach ($messages as $message) {
@@ -801,6 +787,11 @@ class Application extends BaseApplication
     public function setContainer($container)
     {
         $this->container = $container;
+    }
+
+    public function getContainer()
+    {
+        return $this->container;
     }
 
     /**

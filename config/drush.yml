@@ -1,4 +1,3 @@
----
 commands:
   config:
     config-delete: 'config:delete'
