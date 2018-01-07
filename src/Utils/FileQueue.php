@@ -27,7 +27,7 @@ class FileQueue
     /**
      * FileQueue constructor.
      *
-     * @param string                     $appRoot
+     * @param string $appRoot
      */
     public function __construct($appRoot)
     {

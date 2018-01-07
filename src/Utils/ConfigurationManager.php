@@ -383,7 +383,8 @@ class ConfigurationManager
     /**
      * @return array
      */
-    public function getConfigurationFiles() {
+    public function getConfigurationFiles()
+    {
         return $this->configurationFiles;
     }
 

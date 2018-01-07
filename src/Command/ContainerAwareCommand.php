@@ -11,6 +11,7 @@ use Drupal\Console\Core\Command\Shared\ContainerAwareCommandTrait;
 
 /**
  * Class ContainerAwareCommand
+ *
  * @package Drupal\Console\Core\Command
  */
 abstract class ContainerAwareCommand extends Command

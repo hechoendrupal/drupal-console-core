@@ -55,8 +55,9 @@ class ChainCustomCommand extends Command
         $name,
         $description,
         $placeHolders,
-        $file)
-    {
+        $file
+    ) {
+    
         $this->name = $name;
         $this->description = $description;
         $this->file = $file;

@@ -15,6 +15,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class Command
+ *
  * @package Drupal\Console\Core\Command
  */
 abstract class Command extends BaseCommand
@@ -37,7 +38,8 @@ abstract class Command extends BaseCommand
     /**
      * @return \Drupal\Console\Core\Style\DrupalStyle
      */
-    public function getIo() {
+    public function getIo()
+    {
         return $this->io;
     }
 }
