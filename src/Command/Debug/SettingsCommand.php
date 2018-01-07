@@ -67,7 +67,7 @@ class SettingsCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         $configuration = $this->configurationManager->getConfiguration();
-        $configApplication = $configuration->get('application');
+        $configApplication['application'] = $configuration->getRaw('application');
 
         $io->write(Yaml::dump($configApplication, 6, 2));
 
