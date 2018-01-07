@@ -380,6 +380,14 @@ class ConfigurationManager
         return $this->sites;
     }
 
+    /**
+     * @return array
+     */
+    public function getConfigurationFiles() {
+        return $this->configurationFiles;
+    }
+
+
     public function getHomeDirectory()
     {
         return Path::getHomeDirectory();
