@@ -11,7 +11,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Utils\ConfigurationManager;
-use Drupal\Console\Core\Utils\NestedArray;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Symfony\Component\Yaml\Yaml;
 
@@ -28,22 +27,14 @@ class SettingsCommand extends Command
     protected $configurationManager;
 
     /**
-     * @var NestedArray
-     */
-    protected $nestedArray;
-
-    /**
      * CheckCommand constructor.
      *
      * @param ConfigurationManager $configurationManager
-     * @param NestedArray          $nestedArray
      */
     public function __construct(
-        ConfigurationManager $configurationManager,
-        NestedArray $nestedArray
+        ConfigurationManager $configurationManager
     ) {
         $this->configurationManager = $configurationManager;
-        $this->nestedArray = $nestedArray;
         parent::__construct();
     }
 
