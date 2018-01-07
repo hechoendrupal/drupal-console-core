@@ -13,6 +13,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class AboutCommand
+ *
  * @package Drupal\Console\Core\Command
  */
 class AboutCommand extends Command

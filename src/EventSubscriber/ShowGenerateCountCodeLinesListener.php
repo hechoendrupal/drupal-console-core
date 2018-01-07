@@ -38,8 +38,7 @@ class ShowGenerateCountCodeLinesListener implements EventSubscriberInterface
      *
      * @param TranslatorManagerInterface $translator
      *
-     * @param CountCodeLines $countCodeLines
-     *
+     * @param CountCodeLines             $countCodeLines
      */
     public function __construct(
         TranslatorManagerInterface $translator,

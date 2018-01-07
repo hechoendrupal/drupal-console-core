@@ -189,7 +189,8 @@ class ChainDiscovery
         return $this->extractPlaceHolders($chainContent, '$');
     }
 
-    public function extractVars($chainContent) {
+    public function extractVars($chainContent)
+    {
         $chain = Yaml::parse($chainContent);
         if (!array_key_exists('vars', $chain)) {
             return [];

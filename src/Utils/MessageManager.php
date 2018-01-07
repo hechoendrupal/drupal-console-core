@@ -69,12 +69,12 @@ class MessageManager
         return $this->messages;
     }
 
-    public function remove($removeBy = null) {
+    public function remove($removeBy = null)
+    {
         $this->messages = array_filter(
             $this->messages,
-            function ($message) use ($removeBy)  {
+            function ($message) use ($removeBy) {
                 if (is_null($message['removableBy'])) {
-
                     return true;
                 }
 

@@ -60,21 +60,20 @@ trait CommandTrait
         return parent::getDescription();
     }
 
-  /**
+    /**
    * @inheritdoc
    */
-  public function getHelp()
-  {
-    $help = sprintf(
-      'commands.%s.help',
-      str_replace(':', '.', $this->getName())
-    );
+    public function getHelp()
+    {
+        $help = sprintf(
+            'commands.%s.help',
+            str_replace(':', '.', $this->getName())
+        );
 
-    if (parent::getHelp()==$help) {
-      return $this->trans($help);
+        if (parent::getHelp()==$help) {
+            return $this->trans($help);
+        }
+
+        return parent::getHelp();
     }
-
-    return parent::getHelp();
-  }
-
 }

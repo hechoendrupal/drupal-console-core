@@ -190,7 +190,7 @@ class NestedArray
     /**
      * @param $array1
      * @param $array2
-     * @param bool   $negate if Negate is true only if values are equal are returned.
+     * @param bool                   $negate if Negate is true only if values are equal are returned.
      * @param $statistics mixed array
      * @return array
      */

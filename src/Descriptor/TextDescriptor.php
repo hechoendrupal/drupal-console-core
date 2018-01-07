@@ -256,7 +256,7 @@ class TextDescriptor extends Descriptor
                     }
 
                     $spacingWidth = $width - strlen($name.$alias);
-                    if($spacingWidth < 0) {
+                    if ($spacingWidth < 0) {
                         $spacingWidth = 0;
                     }
 
