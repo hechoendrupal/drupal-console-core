@@ -11,8 +11,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Utils\ConfigurationManager;
-use Drupal\Console\Core\Utils\NestedArray;
 use Drupal\Console\Core\Style\DrupalStyle;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class SettingsCommand
@@ -27,22 +27,14 @@ class SettingsCommand extends Command
     protected $configurationManager;
 
     /**
-     * @var NestedArray
-     */
-    protected $nestedArray;
-
-    /**
      * CheckCommand constructor.
      *
      * @param ConfigurationManager $configurationManager
-     * @param NestedArray          $nestedArray
      */
     public function __construct(
-        ConfigurationManager $configurationManager,
-        NestedArray $nestedArray
+        ConfigurationManager $configurationManager
     ) {
         $this->configurationManager = $configurationManager;
-        $this->nestedArray = $nestedArray;
         parent::__construct();
     }
 
@@ -66,56 +58,21 @@ class SettingsCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         $configuration = $this->configurationManager->getConfiguration();
-        $configApplication = $configuration->get('application');
+        $configApplication['application'] = $configuration->getRaw('application');
 
-        unset($configApplication['autowire']);
-        unset($configApplication['languages']);
-        unset($configApplication['aliases']);
-        unset($configApplication['composer']);
-        unset($configApplication['default']['commands']);
+        $io->write(Yaml::dump($configApplication, 6, 2));
 
-        $configApplicationFlatten = [];
-        $keyFlatten = '';
+        $io->newLine();
+        $io->info($this->trans('commands.debug.settings.messages.config-file'));
 
-        $this->nestedArray->yamlFlattenArray(
-            $configApplication,
-            $configApplicationFlatten,
-            $keyFlatten
-        );
-
-        $tableHeader = [
-            $this->trans('commands.debug.settings.messages.config-key'),
-            $this->trans('commands.debug.settings.messages.config-value'),
-        ];
-
-        $tableRows = [];
-        foreach ($configApplicationFlatten as $ymlKey => $ymlValue) {
-            $tableRows[] = [
-                $ymlKey,
-                $ymlValue
-            ];
+        $configurationFiles = [];
+        foreach ($this->configurationManager->getConfigurationFiles() as $key => $configurationFile) {
+            $configurationFiles = array_merge(
+                $configurationFiles,
+                $configurationFile
+            );
         }
-
-        $io->newLine();
-        $io->info(
-            sprintf(
-                '%s :',
-                $this->trans('commands.debug.settings.messages.config-file')
-            ),
-            false
-        );
-
-        $io->comment(
-            sprintf(
-                '%s/.console/config.yml',
-                $this->configurationManager->getHomeDirectory()
-            ),
-            true
-        );
-
-        $io->newLine();
-
-        $io->table($tableHeader, $tableRows, 'compact');
+        $io->listing($configurationFiles);
 
         return 0;
     }

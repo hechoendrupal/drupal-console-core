@@ -60,7 +60,7 @@ services:
       - { name: drupal.command }
   console.settings_debug:
     class: Drupal\Console\Core\Command\Debug\SettingsCommand
-    arguments: ['@console.configuration_manager', '@console.nested_array']
+    arguments: ['@console.configuration_manager']
     tags:
       - { name: drupal.command }
   console.settings_set:
