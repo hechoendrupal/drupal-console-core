@@ -225,6 +225,7 @@ class TextDescriptor extends Descriptor
                 'about',
                 'chain',
                 'check',
+                'composerize',
                 'exec',
                 'help',
                 'init',
