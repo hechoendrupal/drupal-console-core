@@ -109,7 +109,7 @@ class ChainCommand extends Command
         $placeholder = array_merge(
             array_filter(
                 $inlinePlaceHolders,
-                function($value) {
+                function ($value) {
                     return $value !== null;
                 }
             ),
@@ -208,7 +208,7 @@ class ChainCommand extends Command
         $placeholder = array_merge(
             array_filter(
                 $inlinePlaceHolders,
-                function($value) {
+                function ($value) {
                     return $value !== null;
                 }
             ),

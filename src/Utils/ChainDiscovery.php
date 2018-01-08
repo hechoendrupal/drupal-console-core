@@ -145,7 +145,6 @@ class ChainDiscovery
     public function getFileContents($file)
     {
         $contents = file_get_contents($file);
-
         // Remove lines with comments.
         $contents = preg_replace('![ \t]*#.*[ \t]*[\r|\r\n|\n]!', PHP_EOL, $contents);
         //  Strip blank lines
