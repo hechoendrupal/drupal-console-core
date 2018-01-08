@@ -202,13 +202,12 @@ class InitCommand extends Command
         $finder = new Finder();
         $finder->in(
             sprintf(
-                '%s%s/config/dist/',
-                $this->configurationManager->getApplicationDirectory(),
-                DRUPAL_CONSOLE_CORE
+                '%sdist/',
+                $this->configurationManager->getVendorCoreRoot()
             )
         );
         if (!$this->configParameters['chain']) {
-            $finder->exclude('chain/optional');
+            $finder->exclude('chain');
         }
         if (!$this->configParameters['sites']) {
             $finder->exclude('sites');
@@ -217,9 +216,8 @@ class InitCommand extends Command
 
         foreach ($finder as $configFile) {
             $sourceFile = sprintf(
-                '%s%s/config/dist/%s',
-                $this->configurationManager->getApplicationDirectory(),
-                DRUPAL_CONSOLE_CORE,
+                '%sdist/%s',
+                $this->configurationManager->getVendorCoreRoot(),
                 $configFile->getRelativePathname()
             );
 
@@ -229,11 +227,11 @@ class InitCommand extends Command
                 $configFile->getRelativePathname()
             );
 
-            $destinationFile = str_replace(
-                'chain/optional/',
-                'chain/',
-                $destinationFile
-            );
+//            $destinationFile = str_replace(
+//                'chain/optional/',
+//                'chain/',
+//                $destinationFile
+//            );
 
             $fs = new Filesystem();
             foreach ($this->directories as $directory) {

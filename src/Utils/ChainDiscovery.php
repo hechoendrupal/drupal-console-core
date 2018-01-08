@@ -44,13 +44,14 @@ class ChainDiscovery
         $this->appRoot = $appRoot;
         $this->configurationManager = $configurationManager;
 
-        $this->addDirectories(
-            [
-                $this->configurationManager->getHomeDirectory() . DIRECTORY_SEPARATOR . '.console'. DIRECTORY_SEPARATOR .'chain',
-                $this->appRoot . DIRECTORY_SEPARATOR . 'console'. DIRECTORY_SEPARATOR .'chain',
-                $this->appRoot . DIRECTORY_SEPARATOR . '.console'. DIRECTORY_SEPARATOR .'chain',
-            ]
+        $directories = array_map(
+            function ($item) {
+                return $item . 'chain/';
+            },
+            $configurationManager->getConfigurationDirectories(true)
         );
+
+        $this->addDirectories($directories);
     }
 
     /**
@@ -78,7 +79,7 @@ class ChainDiscovery
                 ->in($directory);
             foreach ($finder as $file) {
                 $chainFiles[$file->getPath()][] = sprintf(
-                    '%s/%s',
+                    '%s%s',
                     $directory,
                     $file->getBasename()
                 );

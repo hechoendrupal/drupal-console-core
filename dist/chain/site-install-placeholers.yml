@@ -4,16 +4,16 @@ vars:
   db_name: drupal
   db_port: 3306
 commands:
-# Install Drupal
+  # Install Drupal
   - command: site:install
     options:
       langcode: 'en'
-      db-type: '%{{db_type}}'
-      db-host: '%{{db_host}}'
-      db-name: '%{{db_name}}'
-      db-user: '%{{db_user}}'
-      db-pass: '%{{db_pass}}'
-      db-port: '%{{db_port}}'
+      db-type: '{{db_type}}'
+      db-host: '{{db_host}}'
+      db-name: '{{db_name}}'
+      db-user: '{{db_user}}'
+      db-pass: '{{db_pass}}'
+      db-port: '{{db_port}}'
       site-name: 'Drupal 8 site'
       site-mail: 'admin@example.org' # default email
       account-name: 'admin' # default account

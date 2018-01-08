@@ -15,12 +15,12 @@ commands:
   # Create Drupal project using DrupalComposer
   - command: exec
     arguments:
-      bin: composer create-project %{{repository}} %{{directory}} --prefer-dist --no-progress --no-interaction
+      bin: composer create-project {{repository}} {{directory}} --prefer-dist --no-progress --no-interaction
   # Install Drupal
   - command: exec
     arguments:
-      bin: drupal site:install %{{profile}} --root=%{{directory}} --db-type="sqlite" --no-interaction
+      bin: drupal site:install {{profile}} --root={{directory}} --db-type="sqlite" --no-interaction
   # Start PHP built-in server
   - command: exec
     arguments:
-      bin: drupal server --root=%{{directory}}
+      bin: drupal server --root={{directory}}

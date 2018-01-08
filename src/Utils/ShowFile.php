@@ -64,7 +64,7 @@ class ShowFile
 
     /**
      * @param DrupalStyle $io
-     * @param string      $files
+     * @param array      $files
      * @param boolean     $showPath
      */
     public function copiedFiles($io, $files, $showPath = true)

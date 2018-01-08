@@ -10,126 +10,126 @@ commands:
       value: ca
   - command: generate:doc:data
     options:
-      file: '%{{data_path}}/ca.json'
+      file: '{{directory}}/ca.json'
   - command: settings:set
     arguments:
       name: language
       value: en
   - command: generate:doc:data
     options:
-      file: '%{{data_path}}/en.json'
+      file: '{{directory}}/en.json'
   - command: settings:set
     arguments:
       name: language
       value: es
   - command: generate:doc:data
     options:
-      file: '%{{data_path}}/es.json'
+      file: '{{directory}}/es.json'
   - command: settings:set
     arguments:
       name: language
       value: fr
   - command: generate:doc:data
     options:
-      file: '%{{data_path}}/fr.json'
+      file: '{{directory}}/fr.json'
   - command: settings:set
     arguments:
       name: language
       value: gu
   - command: generate:doc:data
     options:
-      file: '%{{data_path}}/gu.json'
+      file: '{{directory}}/gu.json'
   - command: settings:set
     arguments:
       name: language
       value: hi
   - command: generate:doc:data
     options:
-      file: '%{{data_path}}/hi.json'
+      file: '{{directory}}/hi.json'
   - command: settings:set
     arguments:
       name: language
       value: hu
   - command: generate:doc:data
     options:
-      file: '%{{data_path}}/hu.json'
+      file: '{{directory}}/hu.json'
   - command: settings:set
     arguments:
       name: language
       value: id
   - command: generate:doc:data
     options:
-      file: '%{{data_path}}/id.json'
+      file: '{{directory}}/id.json'
   - command: settings:set
     arguments:
       name: language
       value: ja
   - command: generate:doc:data
     options:
-      file: '%{{data_path}}/ja.json'
+      file: '{{directory}}/ja.json'
   - command: settings:set
     arguments:
       name: language
       value: ko
   - command: generate:doc:data
     options:
-      file: '%{{data_path}}/ko.json'
+      file: '{{directory}}/ko.json'
   - command: settings:set
     arguments:
       name: language
       value: mr
   - command: generate:doc:data
     options:
-      file: '%{{data_path}}/mr.json'
+      file: '{{directory}}/mr.json'
   - command: settings:set
     arguments:
       name: language
       value: pa
   - command: generate:doc:data
     options:
-      file: '%{{data_path}}/pa.json'
+      file: '{{directory}}/pa.json'
   - command: settings:set
     arguments:
       name: language
       value: pt_br
   - command: generate:doc:data
     options:
-      file: '%{{data_path}}/pt_br.json'
+      file: '{{directory}}/pt_br.json'
   - command: settings:set
     arguments:
       name: language
       value: ro
   - command: generate:doc:data
     options:
-      file: '%{{data_path}}/ro.json'
+      file: '{{directory}}/ro.json'
   - command: settings:set
     arguments:
       name: language
       value: ru
   - command: generate:doc:data
     options:
-      file: '%{{data_path}}/ru.json'
+      file: '{{directory}}/ru.json'
   - command: settings:set
     arguments:
       name: language
       value: tl
   - command: generate:doc:data
     options:
-      file: '%{{data_path}}/tl.json'
+      file: '{{directory}}/tl.json'
   - command: settings:set
     arguments:
       name: language
       value: vn
   - command: generate:doc:data
     options:
-      file: '%{{data_path}}/vn.json'
+      file: '{{directory}}/vn.json'
   - command: settings:set
     arguments:
       name: language
       value: zh_hans
   - command: generate:doc:data
     options:
-      file: '%{{data_path}}/zh_hans.json'
+      file: '{{directory}}/zh_hans.json'
   - command: settings:set
     arguments:
       name: language

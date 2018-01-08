@@ -1,5 +1,5 @@
 commands:
-# Install Drupal
+  # Install Drupal
   - command: site:install
     options:
       langcode: en

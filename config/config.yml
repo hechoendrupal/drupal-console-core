@@ -8,10 +8,10 @@ application:
       name:
         elephpant:
           class: '\Drupal\Console\Core\Command\Exclude\ElephpantCommand'
-          arguments: ['@app.root', '@console.renderer']
+          arguments: ['@app.root', '@console.renderer', '@console.configuration_manager']
         druplicon:
           class: '\Drupal\Console\Core\Command\Exclude\DrupliconCommand'
-          arguments: ['@app.root', '@console.renderer']
+          arguments: ['@app.root', '@console.renderer', '@console.configuration_manager']
   commands:
     aliases: ~
     defaults: ~

@@ -13,6 +13,7 @@ use Symfony\Component\Finder\Finder;
 use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Utils\TwigRenderer;
 use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Core\Utils\ConfigurationManager;
 
 /**
  * Class ElephpantCommand
@@ -32,17 +33,26 @@ class ElephpantCommand extends Command
     protected $renderer;
 
     /**
-     * DrupliconCommand constructor.
+     * @var ConfigurationManager
+     */
+    protected $configurationManager;
+
+
+    /**
+     * ElephpantCommand constructor.
      *
-     * @param string       $appRoot
-     * @param TwigRenderer $renderer
+     * @param string                $appRoot
+     * @param TwigRenderer          $renderer
+     * @param ConfigurationManager  $configurationManager
      */
     public function __construct(
         $appRoot,
-        TwigRenderer $renderer
+        TwigRenderer $renderer,
+        ConfigurationManager $configurationManager
     ) {
         $this->appRoot = $appRoot;
         $this->renderer = $renderer;
+        $this->configurationManager = $configurationManager;
         parent::__construct();
     }
 
@@ -65,7 +75,7 @@ class ElephpantCommand extends Command
 
         $directory = sprintf(
             '%stemplates/core/elephpant/',
-            $this->appRoot . DRUPAL_CONSOLE_CORE
+            $this->configurationManager->getVendorCoreRoot()
         );
 
         $finder = new Finder();
