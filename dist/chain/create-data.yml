@@ -1,5 +1,5 @@
 commands:
-# Create dummy data
+  # Create dummy data
   - command: create:users
     options:
       limit: 5

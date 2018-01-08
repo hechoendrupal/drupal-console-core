@@ -13,6 +13,7 @@ use Symfony\Component\Finder\Finder;
 use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Utils\TwigRenderer;
 use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Core\Utils\ConfigurationManager;
 
 /**
  * Class DrupliconCommand
@@ -25,23 +26,32 @@ class DrupliconCommand extends Command
      * @var string
      */
     protected $appRoot;
+
     /**
      * @var TwigRenderer
      */
     protected $renderer;
 
     /**
+     * @var ConfigurationManager
+     */
+    protected $configurationManager;
+
+    /**
      * DrupliconCommand constructor.
      *
-     * @param string       $appRoot
-     * @param TwigRenderer $renderer
+     * @param string                $appRoot
+     * @param TwigRenderer          $renderer
+     * @param ConfigurationManager  $configurationManager
      */
     public function __construct(
         $appRoot,
-        TwigRenderer $renderer
+        TwigRenderer $renderer,
+        ConfigurationManager $configurationManager
     ) {
         $this->appRoot = $appRoot;
         $this->renderer = $renderer;
+        $this->configurationManager = $configurationManager;
         parent::__construct();
     }
 
@@ -64,7 +74,7 @@ class DrupliconCommand extends Command
 
         $directory = sprintf(
             '%s/templates/core/druplicon/',
-            $this->appRoot . DRUPAL_CONSOLE_CORE
+            $this->configurationManager->getVendorCoreRoot()
         );
 
         $finder = new Finder();

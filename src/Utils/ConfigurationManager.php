@@ -57,7 +57,10 @@ class ConfigurationManager
         $input = new ArgvInput();
         $root = $input->getParameterOption(['--root']);
         if ($root && is_dir($root)) {
-            $this->addConfigurationFilesByDirectory($root. '/console/', true);
+            $this->addConfigurationFilesByDirectory(
+                $root. '/console/',
+                true
+            );
         }
 
         $builder = new YamlFileConfigurationBuilder(
@@ -195,6 +198,17 @@ class ConfigurationManager
         return [];
     }
 
+    public function getVendorCoreRoot()
+    {
+        $consoleCoreDirectory = dirname(__FILE__, 3) . '/';
+
+        if (is_dir($consoleCoreDirectory)) {
+            return $consoleCoreDirectory;
+        }
+
+        return null;
+    }
+
     public function getVendorCoreDirectory()
     {
         $consoleCoreDirectory = dirname(__FILE__, 3) . '/config/';
@@ -241,11 +255,21 @@ class ConfigurationManager
     }
 
     /**
+     * @param $includeVendorCore
+     *
      * @return array
      */
-    public function getConfigurationDirectories()
+    public function getConfigurationDirectories($includeVendorCore = false)
     {
         if ($this->configurationDirectories) {
+
+            if ($includeVendorCore) {
+                return array_merge(
+                    [$this->getVendorCoreDirectory()],
+                    $this->configurationDirectories
+                );
+            }
+
             return $this->configurationDirectories;
         }
 
