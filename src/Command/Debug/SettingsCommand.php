@@ -60,19 +60,11 @@ class SettingsCommand extends Command
         $configuration = $this->configurationManager->getConfiguration();
         $configApplication['application'] = $configuration->getRaw('application');
 
+        unset($configApplication['application']['autowire']);
+        unset($configApplication['application']['languages']);
+
         $io->write(Yaml::dump($configApplication, 6, 2));
-
         $io->newLine();
-        $io->info($this->trans('commands.debug.settings.messages.config-file'));
-
-        $configurationFiles = [];
-        foreach ($this->configurationManager->getConfigurationFiles() as $key => $configurationFile) {
-            $configurationFiles = array_merge(
-                $configurationFiles,
-                $configurationFile
-            );
-        }
-        $io->listing($configurationFiles);
 
         return 0;
     }

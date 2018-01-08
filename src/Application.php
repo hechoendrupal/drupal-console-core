@@ -608,6 +608,7 @@ class Application extends BaseApplication
             'about',
             'chain',
             'check',
+            'composerize',
             'exec',
             'help',
             'init',
