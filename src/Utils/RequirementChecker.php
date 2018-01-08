@@ -114,7 +114,7 @@ class RequirementChecker
     }
 
     /**
-     * @param $file
+     * @param $files
      * @return array
      */
     public function validate($files)
@@ -125,7 +125,7 @@ class RequirementChecker
 
         foreach ($files as $file) {
             if (file_exists($file)) {
-                array_merge(
+                $this->requirements = array_merge(
                     $this->requirements,
                     $this->parser->parse(
                         file_get_contents($file)

@@ -41,9 +41,9 @@ class ElephpantCommand extends Command
     /**
      * ElephpantCommand constructor.
      *
-     * @param string                $appRoot
-     * @param TwigRenderer          $renderer
-     * @param ConfigurationManager  $configurationManager
+     * @param string               $appRoot
+     * @param TwigRenderer         $renderer
+     * @param ConfigurationManager $configurationManager
      */
     public function __construct(
         $appRoot,

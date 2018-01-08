@@ -262,7 +262,6 @@ class ConfigurationManager
     public function getConfigurationDirectories($includeVendorCore = false)
     {
         if ($this->configurationDirectories) {
-
             if ($includeVendorCore) {
                 return array_merge(
                     [$this->getVendorCoreDirectory()],
@@ -330,9 +329,13 @@ class ConfigurationManager
 
         $configData = [];
         foreach ($this->configurationFiles[$type] as $configFile) {
+            if (file_get_contents($configFile)==='') {
+                continue;
+            }
+            $parsed = Yaml::parse(file_get_contents($configFile));
             $configData = array_merge(
                 $configData,
-                Yaml::parse(file_get_contents($configFile))
+                is_array($parsed)?$parsed:[]
             );
         }
 
@@ -411,7 +414,6 @@ class ConfigurationManager
     {
         return $this->configurationFiles;
     }
-
 
     public function getHomeDirectory()
     {
