@@ -31,6 +31,9 @@ class ChainDiscovery
      */
     private $directories = [];
 
+    const INLINE_REGEX = '/{{(.*?)}}/';
+    const ENV_REGEX =  '/%env\((.*?)\)%/';
+
     /**
      * ChainDiscovery constructor.
      *
@@ -151,10 +154,11 @@ class ChainDiscovery
         return $contents;
     }
 
-    private function extractPlaceHolders($chainContent, $identifier)
-    {
+    private function extractPlaceHolders(
+        $chainContent,
+        $regex
+    ) {
         $placeHoldersExtracted = [];
-        $regex = '/\\'.$identifier.'{{(.*?)}}/';
         preg_match_all(
             $regex,
             $chainContent,
@@ -170,7 +174,10 @@ class ChainDiscovery
 
     public function extractInlinePlaceHolders($chainContent)
     {
-        $extractedInlinePlaceHolders = $this->extractPlaceHolders($chainContent, '%');
+        $extractedInlinePlaceHolders = $this->extractPlaceHolders(
+            $chainContent,
+            $this::INLINE_REGEX
+        );
         $extractedVars = $this->extractVars($chainContent);
 
         $inlinePlaceHolders = [];
@@ -187,7 +194,7 @@ class ChainDiscovery
 
     public function extractEnvironmentPlaceHolders($chainContent)
     {
-        return $this->extractPlaceHolders($chainContent, '$');
+        return $this->extractPlaceHolders($chainContent, $this::ENV_REGEX);
     }
 
     public function extractVars($chainContent)
