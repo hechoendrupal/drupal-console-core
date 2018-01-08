@@ -227,12 +227,6 @@ class InitCommand extends Command
                 $configFile->getRelativePathname()
             );
 
-//            $destinationFile = str_replace(
-//                'chain/optional/',
-//                'chain/',
-//                $destinationFile
-//            );
-
             $fs = new Filesystem();
             foreach ($this->directories as $directory) {
                 if (!$fs->exists($destination.$directory)) {
