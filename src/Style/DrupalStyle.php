@@ -276,11 +276,11 @@ class DrupalStyle extends SymfonyStyle
         }
     }
 
-		/**
-		 * @return InputInterface
-		 */
-		public function getInput()
-		{
-			return $this->input;
-		}
+    /**
+     * @return InputInterface
+     */
+    public function getInput()
+    {
+        return $this->input;
+    }
 }
