@@ -25,7 +25,7 @@ abstract class Command extends BaseCommand
     /**
      * @var DrupalStyle
      */
-    protected $io;
+    private $io;
 
     /**
      * {@inheritdoc}

@@ -275,4 +275,12 @@ class DrupalStyle extends SymfonyStyle
             parent::newLine();
         }
     }
+
+		/**
+		 * @return InputInterface
+		 */
+		public function getInput()
+		{
+			return $this->input;
+		}
 }
