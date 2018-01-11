@@ -200,7 +200,7 @@ class ConfigurationManager
 
     public function getVendorCoreRoot()
     {
-        $consoleCoreDirectory = dirname(__FILE__, 3) . '/';
+        $consoleCoreDirectory = dirname(dirname(dirname(__FILE__))) . '/';
 
         if (is_dir($consoleCoreDirectory)) {
             return $consoleCoreDirectory;
@@ -211,7 +211,7 @@ class ConfigurationManager
 
     public function getVendorCoreDirectory()
     {
-        $consoleCoreDirectory = dirname(__FILE__, 3) . '/config/';
+        $consoleCoreDirectory = dirname(dirname(dirname(__FILE__))) . '/config/';
 
         if (is_dir($consoleCoreDirectory)) {
             return $consoleCoreDirectory;
