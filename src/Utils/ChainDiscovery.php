@@ -34,6 +34,12 @@ class ChainDiscovery
     const INLINE_REGEX = '/{{(.*?)}}/';
     const ENV_REGEX =  '/%env\((.*?)\)%/';
 
+    const ENV_REGEX_LEGACY = [
+        '/%env\((.*?)\)%/',
+        '/% env\((.*?)\) %/',
+        '/{{ env\((.*?)\) }}/'
+    ];
+
     /**
      * ChainDiscovery constructor.
      *
@@ -108,7 +114,8 @@ class ChainDiscovery
         $chainCommands = [];
         $files = $this->getChainFiles(true);
         foreach ($files as $file) {
-            $chainContent = $this->getFileContents($file);
+            $chainContent = $this->getFileMetadata($file);
+
             $chain = Yaml::parse($chainContent);
             if (!array_key_exists('command', $chain)) {
                 continue;
@@ -124,15 +131,80 @@ class ChainDiscovery
             $chainCommands[$name] = [
                 'description' => $description,
                 'file' => $file,
-                'commands' => $chain['commands'],
-                'placeholders' => [
-                    'inline' => $this->extractInlinePlaceHolders($chainContent),
-                    'environment' => $this->extractEnvironmentPlaceHolders($chainContent)
-                ],
             ];
         }
 
         return $chainCommands;
+    }
+
+    public function parseContent($file, $placeholders)
+    {
+        $placeholders = array_filter(
+            $placeholders,
+            function ($element) {
+                return $element !== null;
+            }
+        );
+
+        unset($placeholders['file']);
+        unset($placeholders['placeholder']);
+
+        $contents = $this->getFileContents($file);
+
+        $loader = new \Twig_Loader_Array(
+            [
+            'chain' => $contents,
+            ]
+        );
+
+        $twig = new \Twig_Environment($loader);
+        $envFunction = new \Twig_SimpleFunction(
+            'env',
+            function ($variableName) {
+                $variableValue = getenv($variableName);
+                if (!empty($variableValue)) {
+                    return $variableValue;
+                }
+
+                return '%env('.$variableName.')%';
+            }
+        );
+        $twig->addFunction($envFunction);
+
+        $variables = $this->extractInlinePlaceHolderNames($contents);
+
+        foreach ($variables as $variable) {
+            if (!array_key_exists($variable, $placeholders)) {
+                $placeholders[$variable] = '{{ ' . $variable . ' }}';
+            }
+        }
+
+        return $twig->render('chain', $placeholders);
+    }
+
+    public function getFileMetadata($file)
+    {
+        $contents = $this->getFileContents($file);
+
+        $line = strtok($contents, PHP_EOL);
+        $metadata = '';
+        $index = 0;
+        while ($line !== false) {
+            $index++;
+
+            if ($index === 1 && $line !== 'command:') {
+                break;
+            }
+
+            if ($index > 1 && substr($line, 0, 2) !== "  ") {
+                break;
+            }
+
+            $metadata .= $line . PHP_EOL;
+            $line = strtok(PHP_EOL);
+        }
+
+        return $metadata;
     }
 
     /**
@@ -171,6 +243,18 @@ class ChainDiscovery
         return array_unique($placeHoldersExtracted[1]);
     }
 
+    public function extractInlinePlaceHolderNames($content)
+    {
+        preg_match_all($this::INLINE_REGEX, $content, $matches);
+
+        return array_map(
+            function ($item) {
+                return trim($item);
+            },
+            $matches[1]
+        );
+    }
+
     public function extractInlinePlaceHolders($chainContent)
     {
         $extractedInlinePlaceHolders = $this->extractPlaceHolders(
@@ -181,6 +265,7 @@ class ChainDiscovery
 
         $inlinePlaceHolders = [];
         foreach ($extractedInlinePlaceHolders as $key => $inlinePlaceHolder) {
+            $inlinePlaceHolder = trim($inlinePlaceHolder);
             $placeholderValue = null;
             if (array_key_exists($inlinePlaceHolder, $extractedVars)) {
                 $placeholderValue = $extractedVars[$inlinePlaceHolder];

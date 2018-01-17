@@ -578,12 +578,11 @@ class Application extends BaseApplication
             try {
                 $file = $chainCommand['file'];
                 $description = $chainCommand['description'];
-                $placeHolders = $chainCommand['placeholders'];
                 $command = new ChainCustomCommand(
                     $name,
                     $description,
-                    $placeHolders,
-                    $file
+                    $file,
+                    $chainDiscovery
                 );
                 $this->add($command);
             } catch (\Exception $e) {
