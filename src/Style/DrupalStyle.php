@@ -40,16 +40,16 @@ class DrupalStyle extends SymfonyStyle
      * @param string $question
      * @param array  $choices
      * @param mixed  $default
-     * @param bool   $allowEmpty
+     * @param bool   $skipValidation
      *
      * @return string
      */
-    public function choiceNoList($question, array $choices, $default = null, $allowEmpty = false)
-    {
-        if ($allowEmpty) {
-            $default = ' ';
-        }
-
+    public function choiceNoList(
+        $question,
+        array $choices,
+        $default = null,
+        $skipValidation = false
+    ) {
         if (is_null($default)) {
             $default = current($choices);
         }
@@ -63,7 +63,16 @@ class DrupalStyle extends SymfonyStyle
             $default = $values[$default];
         }
 
-        return trim($this->askChoiceQuestion(new ChoiceQuestion($question, $choices, $default)));
+        $choiceQuestion = new ChoiceQuestion($question, $choices, $default);
+        if ($skipValidation) {
+            $choiceQuestion->setValidator(
+                function ($answer) {
+                    return $answer;
+                }
+            );
+        }
+
+        return trim($this->askChoiceQuestion($choiceQuestion));
     }
 
     /**
@@ -107,21 +116,26 @@ class DrupalStyle extends SymfonyStyle
      */
     public function askHiddenEmpty($question)
     {
-        $question = new Question($question, ' ');
+        $question = new Question($question, '');
         $question->setHidden(true);
+        $question->setValidator(
+            function ($answer) {
+                return $answer;
+            }
+        );
 
         return trim($this->askQuestion($question));
     }
 
     /**
-     * @param string        $question
-     * @param null|callable $validator
+     * @param string $question
+     * @param string $default
      *
      * @return string
      */
-    public function askEmpty($question, $validator = null)
+    public function askEmpty($question, $default = '')
     {
-        $question = new Question($question, '');
+        $question = new Question($question, $default);
         $question->setValidator(
             function ($answer) {
                 return $answer;

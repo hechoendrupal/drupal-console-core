@@ -212,11 +212,11 @@ class ChainCommand extends BaseCommand
         }
 
         $parser = new Parser();
-        $configData = $parser->parse($chainContent);
+        $chainData = $parser->parse($chainContent);
 
         $commands = [];
-        if (array_key_exists('commands', $configData)) {
-            $commands = $configData['commands'];
+        if (array_key_exists('commands', $chainData)) {
+            $commands = $chainData['commands'];
         }
 
         $chainInlineOptions = $input->getOptions();
