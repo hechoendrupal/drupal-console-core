@@ -4,132 +4,16 @@ command:
   name: update:command:data
   description: 'Update gitbook'
 commands:
+{% set languages = ['en', 'es', 'hi', 'hu', 'pt_br', 'ro', 'vn', 'zh_hans'] %}
+{% for language in languages %}
   - command: settings:set
     arguments:
       name: language
-      value: ca
+      value: {{ language }}
   - command: generate:doc:data
     options:
-      file: '{{directory}}/ca.json'
-  - command: settings:set
-    arguments:
-      name: language
-      value: en
-  - command: generate:doc:data
-    options:
-      file: '{{directory}}/en.json'
-  - command: settings:set
-    arguments:
-      name: language
-      value: es
-  - command: generate:doc:data
-    options:
-      file: '{{directory}}/es.json'
-  - command: settings:set
-    arguments:
-      name: language
-      value: fr
-  - command: generate:doc:data
-    options:
-      file: '{{directory}}/fr.json'
-  - command: settings:set
-    arguments:
-      name: language
-      value: gu
-  - command: generate:doc:data
-    options:
-      file: '{{directory}}/gu.json'
-  - command: settings:set
-    arguments:
-      name: language
-      value: hi
-  - command: generate:doc:data
-    options:
-      file: '{{directory}}/hi.json'
-  - command: settings:set
-    arguments:
-      name: language
-      value: hu
-  - command: generate:doc:data
-    options:
-      file: '{{directory}}/hu.json'
-  - command: settings:set
-    arguments:
-      name: language
-      value: id
-  - command: generate:doc:data
-    options:
-      file: '{{directory}}/id.json'
-  - command: settings:set
-    arguments:
-      name: language
-      value: ja
-  - command: generate:doc:data
-    options:
-      file: '{{directory}}/ja.json'
-  - command: settings:set
-    arguments:
-      name: language
-      value: ko
-  - command: generate:doc:data
-    options:
-      file: '{{directory}}/ko.json'
-  - command: settings:set
-    arguments:
-      name: language
-      value: mr
-  - command: generate:doc:data
-    options:
-      file: '{{directory}}/mr.json'
-  - command: settings:set
-    arguments:
-      name: language
-      value: pa
-  - command: generate:doc:data
-    options:
-      file: '{{directory}}/pa.json'
-  - command: settings:set
-    arguments:
-      name: language
-      value: pt_br
-  - command: generate:doc:data
-    options:
-      file: '{{directory}}/pt_br.json'
-  - command: settings:set
-    arguments:
-      name: language
-      value: ro
-  - command: generate:doc:data
-    options:
-      file: '{{directory}}/ro.json'
-  - command: settings:set
-    arguments:
-      name: language
-      value: ru
-  - command: generate:doc:data
-    options:
-      file: '{{directory}}/ru.json'
-  - command: settings:set
-    arguments:
-      name: language
-      value: tl
-  - command: generate:doc:data
-    options:
-      file: '{{directory}}/tl.json'
-  - command: settings:set
-    arguments:
-      name: language
-      value: vn
-  - command: generate:doc:data
-    options:
-      file: '{{directory}}/vn.json'
-  - command: settings:set
-    arguments:
-      name: language
-      value: zh_hans
-  - command: generate:doc:data
-    options:
-      file: '{{directory}}/zh_hans.json'
+      file: '{{ directory }}/{{ language }}.json'
+{% endfor %}
   - command: settings:set
     arguments:
       name: language
