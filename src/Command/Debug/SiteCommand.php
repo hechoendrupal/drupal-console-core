@@ -70,7 +70,7 @@ class SiteCommand extends Command
     {
         $io = new DrupalStyle($input, $output);
 
-        $sites = array_keys($this->configurationManager->getSites());
+        $sites = $this->configurationManager->getSites();
 
         if (!$sites) {
             $io->error($this->trans('commands.debug.site.messages.invalid-sites'));
@@ -78,15 +78,22 @@ class SiteCommand extends Command
             return 1;
         }
 
-
-        // --target argument
         $target = $input->getArgument('target');
         if (!$target) {
-            $tableHeader =[
-                $this->trans('commands.debug.site.messages.site'),
-            ];
+            foreach ($sites as $key => $site) {
+                $environments = array_keys($site);
+                unset($environments[0]);
 
-            $io->table($tableHeader, $sites);
+                $environments = array_map(
+                    function ($element) use ($key) {
+                        return $key . '.' . $element;
+                    },
+                    $environments
+                );
+
+                $io->info($key);
+                $io->listing($environments);
+            }
 
             return 0;
         }
@@ -114,7 +121,7 @@ class SiteCommand extends Command
 
         $io->info($target);
         $dumper = new Dumper();
-        $io->writeln($dumper->dump($targetConfig, 2));
+        $io->writeln($dumper->dump($targetConfig, 4, 2));
 
         return 0;
     }

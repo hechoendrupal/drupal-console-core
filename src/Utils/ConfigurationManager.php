@@ -94,7 +94,7 @@ class ConfigurationManager
         return $this->configuration;
     }
 
-    public function readSite($siteFile)
+    private function readSite($siteFile)
     {
         if (!file_exists($siteFile)) {
             return [];
@@ -110,20 +110,30 @@ class ConfigurationManager
      */
     public function readTarget($target)
     {
-        if (!array_key_exists($target, $this->sites)) {
+        $site = $target;
+        $environment = null;
+        $exploded = explode('.', $target, 2);
+
+        if (count($exploded)>1) {
+            $site = $exploded[0];
+            $environment = $exploded[1];
+        }
+
+        if (!array_key_exists($site, $this->sites)) {
             return [];
         }
 
-        $targetInformation = $this->sites[$target];
+        $targetInformation = $this->sites[$site];
 
-        if (array_key_exists('host', $targetInformation) && $targetInformation['host'] != 'local') {
-            $targetInformation['remote'] = true;
+        if ($environment) {
+            if (!array_key_exists($environment, $this->sites[$site])) {
+                return [];
+            }
+
+            $targetInformation = $this->sites[$site][$environment];
         }
 
-        return array_merge(
-            $this->configuration->get('application.remote'),
-            $targetInformation
-        );
+        return $targetInformation;
     }
 
     /**
@@ -398,9 +408,23 @@ class ConfigurationManager
                 continue;
             }
 
+            $this->sites[$siteName] = [
+                'file' => $site->getRealPath()
+            ];
+
             foreach ($environments as $environment => $config) {
-                $site = $siteName . '.' . $environment;
-                $this->sites[$site] = $config;
+                if ($config['type'] !== 'local') {
+                    if (array_key_exists('host', $config)) {
+                        $targetInformation['remote'] = true;
+                    }
+
+                    $config = array_merge(
+                        $this->configuration->get('application.remote')?:[],
+                        $config
+                    );
+                }
+
+                $this->sites[$siteName][$environment] = $config;
             }
         }
 

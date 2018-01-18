@@ -175,8 +175,8 @@ class Application extends BaseApplication
             if (in_array($this->commandName, $namespaces)) {
                 $input = new ArrayInput(
                     [
-                    'command' => 'list',
-                    'namespace' => $this->commandName
+                        'command' => 'list',
+                        'namespace' => $this->commandName
                     ]
                 );
                 $this->commandName = 'list';
@@ -478,6 +478,12 @@ class Application extends BaseApplication
             if (method_exists($generator, 'setCountCodeLines')) {
                 $generator->setCountCodeLines(
                     $this->container->get('console.count_code_lines')
+                );
+            }
+
+            if (method_exists($generator, 'setDrupalFinder')) {
+                $generator->setDrupalFinder(
+                    $this->container->get('console.drupal_finder')
                 );
             }
         }
