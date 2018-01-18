@@ -19,7 +19,6 @@ use Symfony\Component\Yaml\Parser;
 use Drupal\Console\Core\Utils\ChainQueue;
 use Drupal\Console\Core\Utils\ChainDiscovery;
 use Drupal\Console\Core\Command\Shared\InputTrait;
-use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ChainCommand
@@ -83,13 +82,12 @@ class ChainCommand extends Command
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
         $file = $input->getOption('file');
 
         if (!$file) {
             $files = $this->chainDiscovery->getChainFiles(true);
 
-            $file = $io->choice(
+            $file = $this->getIo()->choice(
                 $this->trans('commands.chain.questions.chain-file'),
                 array_values($files)
             );
@@ -132,7 +130,7 @@ class ChainCommand extends Command
                     $placeholder[] = sprintf(
                         '%s:%s',
                         $inlinePlaceHolder,
-                        $io->choice(
+                        $this->getIo()->choice(
                             sprintf(
                                 $this->trans('commands.chain.messages.select-value-for-placeholder'),
                                 $inlinePlaceHolder
@@ -145,7 +143,7 @@ class ChainCommand extends Command
                     $placeholder[] = sprintf(
                         '%s:%s',
                         $inlinePlaceHolder,
-                        $io->ask(
+                        $this->getIo()->ask(
                             sprintf(
                                 $this->trans('commands.chain.messages.enter-value-for-placeholder'),
                                 $inlinePlaceHolder
@@ -164,14 +162,12 @@ class ChainCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
-
         $interactive = false;
         $learning = $input->hasOption('learning')?$input->getOption('learning'):false;
 
         $file = $input->getOption('file');
         if (!$file) {
-            $io->error($this->trans('commands.chain.messages.missing-file'));
+            $this->getIo()->error($this->trans('commands.chain.messages.missing-file'));
 
             return 1;
         }
@@ -180,7 +176,7 @@ class ChainCommand extends Command
         $file = calculateRealPath($file);
 
         if (!$fileSystem->exists($file)) {
-            $io->error(
+            $this->getIo()->error(
                 sprintf(
                     $this->trans('commands.chain.messages.invalid-file'),
                     $file
@@ -240,29 +236,29 @@ class ChainCommand extends Command
         }
 
         if ($missingInlinePlaceHolders) {
-            $io->error(
+            $this->getIo()->error(
                 sprintf(
                     $this->trans('commands.chain.messages.missing-inline-placeholders'),
                     implode(', ', array_keys($missingInlinePlaceHolders))
                 )
             );
 
-            $io->info(
+            $this->getIo()->info(
                 $this->trans(
                     'commands.chain.messages.set-inline-placeholders'
                 )
             );
             foreach ($missingInlinePlaceHoldersMessages['default'] as $missingInlinePlaceHoldersMessage) {
-                $io->block($missingInlinePlaceHoldersMessage);
+                $this->getIo()->block($missingInlinePlaceHoldersMessage);
             }
 
-            $io->info(
+            $this->getIo()->info(
                 $this->trans(
                     'commands.chain.messages.set-inline-placeholders'
                 )
             );
             foreach ($missingInlinePlaceHoldersMessages['custom'] as $missingInlinePlaceHoldersMessage) {
-                $io->block($missingInlinePlaceHoldersMessage);
+                $this->getIo()->block($missingInlinePlaceHoldersMessage);
             }
 
             return 1;
@@ -290,15 +286,15 @@ class ChainCommand extends Command
         }
 
         if ($missingEnvironmentPlaceHolders) {
-            $io->error(
+            $this->getIo()->error(
                 sprintf(
                     $this->trans('commands.chain.messages.missing-environment-placeholders-default'),
                     implode(', ', array_keys($missingEnvironmentPlaceHolders))
                 )
             );
 
-            $io->info($this->trans('commands.chain.messages.set-environment-placeholders-custom'));
-            $io->block(array_values($missingEnvironmentPlaceHolders));
+            $this->getIo()->info($this->trans('commands.chain.messages.set-environment-placeholders-custom'));
+            $this->getIo()->block(array_values($missingEnvironmentPlaceHolders));
 
             return 1;
         }
@@ -350,8 +346,8 @@ class ChainCommand extends Command
                 continue;
             }
 
-            $io->text($command['command']);
-            $io->newLine();
+            $this->getIo()->text($command['command']);
+            $this->getIo()->newLine();
 
             $input = new ArrayInput($moduleInputs);
             if (!is_null($interactive)) {
@@ -360,10 +356,10 @@ class ChainCommand extends Command
 
             $allowFailure = array_key_exists('allow_failure', $command)?$command['allow_failure']:false;
             try {
-                $callCommand->run($input, $io);
+                $callCommand->run($input, $this->getIo());
             } catch (\Exception $e) {
                 if (!$allowFailure) {
-                    $io->error($e->getMessage());
+                    $this->getIo()->error($e->getMessage());
                     return 1;
                 }
             }

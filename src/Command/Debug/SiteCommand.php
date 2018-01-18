@@ -13,7 +13,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Dumper;
 use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Utils\ConfigurationManager;
-use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class SiteCommand
@@ -68,12 +67,10 @@ class SiteCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
-
         $sites = array_keys($this->configurationManager->getSites());
 
         if (!$sites) {
-            $io->error($this->trans('commands.debug.site.messages.invalid-sites'));
+            $this->getIo()->error($this->trans('commands.debug.site.messages.invalid-sites'));
 
             return 1;
         }
@@ -86,14 +83,14 @@ class SiteCommand extends Command
                 $this->trans('commands.debug.site.messages.site'),
             ];
 
-            $io->table($tableHeader, $sites);
+            $this->getIo()->table($tableHeader, $sites);
 
             return 0;
         }
 
         $targetConfig = $this->configurationManager->readTarget($target);
         if (!$targetConfig) {
-            $io->error($this->trans('commands.debug.site.messages.invalid-site'));
+            $this->getIo()->error($this->trans('commands.debug.site.messages.invalid-site'));
 
             return 1;
         }
@@ -108,13 +105,13 @@ class SiteCommand extends Command
                 $val = &$val[$property_key];
             }
 
-            $io->writeln($val);
+            $this->getIo()->writeln($val);
             return 0;
         }
 
-        $io->info($target);
+        $this->getIo()->info($target);
         $dumper = new Dumper();
-        $io->writeln($dumper->dump($targetConfig, 2));
+        $this->getIo()->writeln($dumper->dump($targetConfig, 2));
 
         return 0;
     }

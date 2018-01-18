@@ -11,7 +11,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Utils\ChainDiscovery;
-use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ChainCommand
@@ -54,12 +53,11 @@ class ChainCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
         $files = $this->chainDiscovery->getChainFiles();
 
         foreach ($files as $directory => $chainFiles) {
-            $io->info($this->trans('commands.debug.chain.messages.directory'), false);
-            $io->comment($directory);
+            $this->getIo()->info($this->trans('commands.debug.chain.messages.directory'), false);
+            $this->getIo()->comment($directory);
 
             $tableHeader = [
                 $this->trans('commands.debug.chain.messages.file')
@@ -70,7 +68,7 @@ class ChainCommand extends Command
                 $tableRows[] = $file;
             }
 
-            $io->table($tableHeader, $tableRows);
+            $this->getIo()->table($tableHeader, $tableRows);
         }
 
         return 0;

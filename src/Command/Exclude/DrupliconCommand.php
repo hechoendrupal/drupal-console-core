@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Utils\TwigRenderer;
-use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Utils\ConfigurationManager;
 
 /**
@@ -70,8 +69,6 @@ class DrupliconCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
-
         $directory = sprintf(
             '%s/templates/core/druplicon/',
             $this->configurationManager->getVendorCoreRoot()
@@ -94,7 +91,7 @@ class DrupliconCommand extends Command
             )
         );
 
-        $io->writeln($druplicon);
+        $this->getIo()->writeln($druplicon);
         return 0;
     }
 }

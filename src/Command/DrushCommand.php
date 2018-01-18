@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Utils\ChainQueue;
-use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class DrushCommand
@@ -67,24 +66,23 @@ class DrushCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
         $commandName = $input->getArgument('command-name');
 
         $alternative = $this->configurationManager->readDrushEquivalents($commandName);
 
-        $io->newLine();
-        $io->info($this->trans('commands.drush.description'));
-        $io->newLine();
+        $this->getIo()->newLine();
+        $this->getIo()->info($this->trans('commands.drush.description'));
+        $this->getIo()->newLine();
 
         if (!$alternative) {
-            $io->error($this->trans('commands.drush.messages.not-found'));
+            $this->getIo()->error($this->trans('commands.drush.messages.not-found'));
 
             return 1;
         }
 
         $tableHeader = ['drush','drupal console'];
         if (is_array($alternative)) {
-            $io->table(
+            $this->getIo()->table(
                 $tableHeader,
                 $alternative
             );
@@ -92,7 +90,7 @@ class DrushCommand extends Command
             return 0;
         }
 
-        $io->table(
+        $this->getIo()->table(
             $tableHeader,
             [[$commandName, $alternative]]
         );

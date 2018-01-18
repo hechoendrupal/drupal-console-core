@@ -16,7 +16,6 @@ use Symfony\Component\Finder\Finder;
 use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Generator\InitGenerator;
 use Drupal\Console\Core\Utils\ShowFile;
-use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class InitCommand
@@ -122,14 +121,13 @@ class InitCommand extends Command
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
         $destination = $input->getOption('destination');
         $autocomplete = $input->getOption('autocomplete');
         $configuration = $this->configurationManager->getConfiguration();
 
         if (!$destination) {
             if ($this->appRoot && $this->consoleRoot) {
-                $destination = $io->choice(
+                $destination = $this->getIo()->choice(
                     $this->trans('commands.init.questions.destination'),
                     $this->configurationManager->getConfigurationDirectories()
                 );
@@ -141,43 +139,43 @@ class InitCommand extends Command
             $input->setOption('destination', $destination);
         }
 
-        $this->configParameters['language'] = $io->choiceNoList(
+        $this->configParameters['language'] = $this->getIo()->choiceNoList(
             $this->trans('commands.init.questions.language'),
             array_keys($configuration->get('application.languages'))
         );
 
-        $this->configParameters['temp'] = $io->ask(
+        $this->configParameters['temp'] = $this->getIo()->ask(
             $this->trans('commands.init.questions.temp'),
             '/tmp'
         );
 
-        $this->configParameters['chain'] = $io->confirm(
+        $this->configParameters['chain'] = $this->getIo()->confirm(
             $this->trans('commands.init.questions.chain'),
             false
         );
 
-        $this->configParameters['sites'] = $io->confirm(
+        $this->configParameters['sites'] = $this->getIo()->confirm(
             $this->trans('commands.init.questions.sites'),
             false
         );
 
-        $this->configParameters['learning'] = $io->confirm(
+        $this->configParameters['learning'] = $this->getIo()->confirm(
             $this->trans('commands.init.questions.learning'),
             false
         );
 
-        $this->configParameters['generate_inline'] = $io->confirm(
+        $this->configParameters['generate_inline'] = $this->getIo()->confirm(
             $this->trans('commands.init.questions.generate-inline'),
             false
         );
 
-        $this->configParameters['generate_chain'] = $io->confirm(
+        $this->configParameters['generate_chain'] = $this->getIo()->confirm(
             $this->trans('commands.init.questions.generate-chain'),
             false
         );
 
         if (!$autocomplete) {
-            $autocomplete = $io->confirm(
+            $autocomplete = $this->getIo()->confirm(
                 $this->trans('commands.init.questions.autocomplete'),
                 false
             );
@@ -190,7 +188,6 @@ class InitCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
         $copiedFiles = [];
         $destination = $input->getOption('destination');
         $autocomplete = $input->getOption('autocomplete');
@@ -240,8 +237,8 @@ class InitCommand extends Command
         }
 
         if ($copiedFiles) {
-            $this->showFile->copiedFiles($io, $copiedFiles, false);
-            $io->newLine();
+            $this->showFile->copiedFiles($this->getIo(), $copiedFiles, false);
+            $this->getIo()->newLine();
         }
 
         $executableName = null;
@@ -263,7 +260,7 @@ class InitCommand extends Command
             $this->configParameters
         );
 
-        $io->writeln($this->trans('application.messages.autocomplete'));
+        $this->getIo()->writeln($this->trans('application.messages.autocomplete'));
 
         return 0;
     }
