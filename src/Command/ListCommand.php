@@ -51,6 +51,7 @@ class ListCommand extends Command
             );
             $input->setOption('format', 'xml');
         }
+        $commandName = $input->getFirstArgument()?$input->getFirstArgument():'help';
         $helper = new DescriptorHelper();
         $helper->describe(
             $this->getIo(),
@@ -59,7 +60,8 @@ class ListCommand extends Command
                 'format' => $input->getOption('format'),
                 'raw_text' => $input->getOption('raw'),
                 'namespace' => $input->getArgument('namespace'),
-                'translator' => $this->getApplication()->getTranslator()
+                'translator' => $this->getApplication()->getTranslator(),
+                'command' => $this->getApplication()->find($commandName)
             ]
         );
     }

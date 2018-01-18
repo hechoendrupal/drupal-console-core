@@ -67,7 +67,7 @@ class SiteCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $sites = array_keys($this->configurationManager->getSites());
+        $sites = $this->configurationManager->getSites();
 
         if (!$sites) {
             $this->getIo()->error($this->trans('commands.debug.site.messages.invalid-sites'));
@@ -75,15 +75,22 @@ class SiteCommand extends Command
             return 1;
         }
 
-
-        // --target argument
         $target = $input->getArgument('target');
         if (!$target) {
-            $tableHeader =[
-                $this->trans('commands.debug.site.messages.site'),
-            ];
+            foreach ($sites as $key => $site) {
+                $environments = array_keys($site);
+                unset($environments[0]);
 
-            $this->getIo()->table($tableHeader, $sites);
+                $environments = array_map(
+                    function ($element) use ($key) {
+                        return $key . '.' . $element;
+                    },
+                    $environments
+                );
+
+                $this->getIo()->info($key);
+                $this->getIo()->listing($environments);
+            }
 
             return 0;
         }
@@ -111,7 +118,7 @@ class SiteCommand extends Command
 
         $this->getIo()->info($target);
         $dumper = new Dumper();
-        $this->getIo()->writeln($dumper->dump($targetConfig, 2));
+        $this->getIo()->writeln($dumper->dump($targetConfig, 4, 2));
 
         return 0;
     }

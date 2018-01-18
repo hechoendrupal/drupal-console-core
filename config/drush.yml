@@ -78,6 +78,7 @@ commands:
     role-remove-perm: ~
   runserver:
     runserver: 'server'
+  sql:
     sql-cli: 'database:client'
     sql-connect: 'database:connect'
     sql-create: ~

@@ -11,6 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Application as BaseApplication;
+use Symfony\Component\Console\Input\ArrayInput;
 use Drupal\Console\Core\EventSubscriber\DefaultValueEventListener;
 use Drupal\Console\Core\EventSubscriber\ShowGenerateChainListener;
 use Drupal\Console\Core\EventSubscriber\ShowTipsListener;
@@ -168,6 +169,18 @@ class Application extends BaseApplication
                         $drushCommand
                     )
                 );
+            }
+
+            $namespaces = $this->getNamespaces();
+            if (in_array($this->commandName, $namespaces)) {
+                $input = new ArrayInput(
+                    [
+                        'command' => 'list',
+                        'namespace' => $this->commandName
+                    ]
+                );
+                $this->commandName = 'list';
+                $isValidCommand = true;
             }
 
             if (!$isValidCommand) {
@@ -467,6 +480,12 @@ class Application extends BaseApplication
                     $this->container->get('console.count_code_lines')
                 );
             }
+
+            if (method_exists($generator, 'setDrupalFinder')) {
+                $generator->setDrupalFinder(
+                    $this->container->get('console.drupal_finder')
+                );
+            }
         }
     }
 
@@ -578,12 +597,11 @@ class Application extends BaseApplication
             try {
                 $file = $chainCommand['file'];
                 $description = $chainCommand['description'];
-                $placeHolders = $chainCommand['placeholders'];
                 $command = new ChainCustomCommand(
                     $name,
                     $description,
-                    $placeHolders,
-                    $file
+                    $file,
+                    $chainDiscovery
                 );
                 $this->add($command);
             } catch (\Exception $e) {
