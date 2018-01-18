@@ -14,7 +14,6 @@ use Symfony\Component\Yaml\Dumper;
 use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Style\DrupalStyle;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class SiteCommand

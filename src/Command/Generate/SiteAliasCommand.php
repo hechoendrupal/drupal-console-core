@@ -17,10 +17,19 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SiteAliasCommand extends Command
 {
+    /**
+     * @var SiteAliasGenerator
+     */
     protected $generator;
 
+    /**
+     * @var DrupalFinder
+     */
     protected $drupalFinder;
 
+    /**
+     * @var ConfigurationManager
+     */
     protected $configurationManager;
 
     /**
