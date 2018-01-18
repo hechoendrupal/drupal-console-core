@@ -44,3 +44,5 @@ aliases:
     - cc
   update:execute:
     - updb
+  server:
+      - rs
