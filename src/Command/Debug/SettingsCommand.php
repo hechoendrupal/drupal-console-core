@@ -11,7 +11,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Utils\ConfigurationManager;
-use Drupal\Console\Core\Style\DrupalStyle;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -55,16 +54,14 @@ class SettingsCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
-
         $configuration = $this->configurationManager->getConfiguration();
         $configApplication['application'] = $configuration->getRaw('application');
 
         unset($configApplication['application']['autowire']);
         unset($configApplication['application']['languages']);
 
-        $io->write(Yaml::dump($configApplication, 6, 2));
-        $io->newLine();
+        $this->getIo()->write(Yaml::dump($configApplication, 6, 2));
+        $this->getIo()->newLine();
 
         return 0;
     }

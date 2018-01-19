@@ -11,7 +11,6 @@ use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
 use Drupal\Console\Core\Helper\DescriptorHelper;
 use Symfony\Component\Console\Output\OutputInterface;
-use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ListCommand
@@ -45,10 +44,8 @@ class ListCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
-
         if ($input->getOption('xml')) {
-            $io->info(
+            $this->getIo()->info(
                 'The --xml option was deprecated in version 2.7 and will be removed in version 3.0. Use the --format option instead',
                 E_USER_DEPRECATED
             );
@@ -57,7 +54,7 @@ class ListCommand extends Command
         $commandName = $input->getFirstArgument()?$input->getFirstArgument():'help';
         $helper = new DescriptorHelper();
         $helper->describe(
-            $io,
+            $this->getIo(),
             $this->getApplication(),
             [
                 'format' => $input->getOption('format'),

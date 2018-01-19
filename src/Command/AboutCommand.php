@@ -9,7 +9,6 @@ namespace Drupal\Console\Core\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class AboutCommand
@@ -34,7 +33,6 @@ class AboutCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
         $application = $this->getApplication();
 
         $aboutTitle = sprintf(
@@ -43,9 +41,9 @@ class AboutCommand extends Command
             $application->getVersion()
         );
 
-        $io->setDecorated(false);
-        $io->title($aboutTitle);
-        $io->setDecorated(true);
+        $this->getIo()->setDecorated(false);
+        $this->getIo()->title($aboutTitle);
+        $this->getIo()->setDecorated(true);
 
         $commands = [
             'init' => [
@@ -73,13 +71,13 @@ class AboutCommand extends Command
         ];
 
         foreach ($commands as $command => $commandInfo) {
-            $io->writeln($commandInfo[0]);
-            $io->comment(sprintf(' %s', $commandInfo[1]));
-            $io->newLine();
+            $this->getIo()->writeln($commandInfo[0]);
+            $this->getIo()->comment(sprintf(' %s', $commandInfo[1]));
+            $this->getIo()->newLine();
         }
 
-        $io->writeln($this->trans('commands.self-update.description'));
-        $io->comment('  drupal self-update');
-        $io->newLine();
+        $this->getIo()->writeln($this->trans('commands.self-update.description'));
+        $this->getIo()->comment('  drupal self-update');
+        $this->getIo()->newLine();
     }
 }
