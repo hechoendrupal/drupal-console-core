@@ -18,5 +18,9 @@ use Drupal\Console\Core\Utils\CountCodeLines;
  */
 interface GeneratorInterface
 {
-    public function generate($parameters = []);
+    /**
+     * @param array $parameters
+     * @return void
+     */
+    public function generate(array $parameters);
 }
