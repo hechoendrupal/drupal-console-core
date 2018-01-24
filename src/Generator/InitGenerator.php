@@ -11,12 +11,12 @@ namespace Drupal\Console\Core\Generator;
  *
  * @package Drupal\Console\Core\Generator
  */
-class InitGenerator extends Generator implements GeneratorInterface
+class InitGenerator extends Generator
 {
     /**
-     * @param array   $parameters
+     * {@inheritdoc}
      */
-    public function generate($parameters = []) {
+    public function generate(array $parameters) {
         $userHome = $parameters['user_home'];
         $executableName = $parameters['executable_name'];
         $override = $parameters['override'];
