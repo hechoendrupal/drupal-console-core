@@ -14,5 +14,10 @@ namespace Drupal\Console\Core\Generator;
  */
 interface GeneratorInterface
 {
+
+    /**
+     * @param array $parameters
+     * @return void
+     */
     public function generate(array $parameters);
 }

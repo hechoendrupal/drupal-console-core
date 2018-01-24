@@ -129,17 +129,19 @@ class DrupalStyle extends SymfonyStyle
     /**
      * @param string $question
      * @param string $default
+     * @param null|callable $validator
      *
      * @return string
      */
-    public function askEmpty($question, $default = '')
+    public function askEmpty($question, $default = '', $validator = null)
     {
         $question = new Question($question, $default);
-        $question->setValidator(
-            function ($answer) {
+        if (!$validator) {
+            $validator = function ($answer) {
                 return $answer;
-            }
-        );
+            };
+        }
+        $question->setValidator($validator);
 
         return trim($this->askQuestion($question));
     }
