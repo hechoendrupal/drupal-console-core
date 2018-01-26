@@ -5,16 +5,12 @@ aliases:
     - cdit
   cron:execute:
     - cre
-  cron:release:
-    - crr
   database:connect:
     - sqlc
   database:query:
     - sqlq
   debug:database:log:
     - ws
-  debug:module:
-    - mod
   debug:multisite:
     - msd
   debug:router:
