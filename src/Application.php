@@ -200,14 +200,32 @@ class Application extends BaseApplication
             $output
         );
 
-        $messages = $messageManager->getMessages();
+        if ($this->showMessages($input)) {
+            $messages = $messageManager->getMessages();
 
-        foreach ($messages as $message) {
-            $type = $message['type'];
-            $io->$type($message['message']);
+            foreach ($messages as $message) {
+                $type = $message['type'];
+                $io->$type($message['message']);
+            }
         }
 
         return $code;
+    }
+
+    /**
+     * @param InputInterface $input
+     *
+     * @return bool
+     */
+    private function showMessages(InputInterface $input)
+    {
+        $format = $input->hasOption('format')?$input->getOption('format'):'txt';
+
+        if ($format !== 'txt') {
+            return false;
+        }
+
+        return true;
     }
 
     /**
