@@ -222,6 +222,18 @@ class ChainDiscovery
         //  Strip blank lines
         $contents = preg_replace("/(^[\r\n]*|[\r\n]+)[\t]*[\r\n]+/", PHP_EOL, $contents);
 
+        // Support backwards compatibility with legacy format for inline/environment variables.
+        $originalContents = $contents;
+        $contents = preg_replace('|%{{(.*?)}}|', '{{$1}}', $originalContents);
+        if ($contents != $originalContents) {
+          print 'Please edit your chain files and change the placeholders for Inline variables from %{{(name}} to {{name}}' . PHP_EOL;
+        }
+        $originalContents = $contents;
+        $contents = preg_replace('|\${{(.*?)}}|', '%env($1)%', $originalContents);
+        if ($contents != $originalContents) {
+          print 'Please edit your chain files and change the placeholders for Inline variables from ${{name}} to %env(name)%' . PHP_EOL;
+        }
+
         return $contents;
     }
 
