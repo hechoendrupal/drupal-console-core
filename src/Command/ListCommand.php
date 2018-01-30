@@ -64,6 +64,8 @@ class ListCommand extends Command
                 'command' => $this->getApplication()->find($commandName)
             ]
         );
+
+        $this->getIo()->newLine();
     }
 
     /**

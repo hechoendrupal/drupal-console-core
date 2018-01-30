@@ -62,6 +62,16 @@ class MessageManager
     }
 
     /**
+     * @param $message
+     * @param $code
+     * @param $removableBy
+     */
+    public function listing(array $message, $code = 0, $removableBy = null)
+    {
+        $this->add('listing', $message, $code, $removableBy);
+    }
+
+    /**
      * @return array
      */
     public function getMessages()

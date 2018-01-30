@@ -1,3 +1,6 @@
+command:
+  name: site:install:inline
+  description: 'Install site using inline placeholders'
 vars:
   db_type: mysql
   db_host: 127.0.0.1

@@ -102,6 +102,17 @@ class ChainCommand extends BaseCommand
                     $inlinePlaceHolderValue
                 );
             }
+
+            if (!$input->hasOption($inlinePlaceHolder)) {
+                $this->addOption(
+                    $inlinePlaceHolder,
+                    null,
+                    InputOption::VALUE_OPTIONAL,
+                    null,
+                    null
+                );
+            }
+
             $input->setOption($inlinePlaceHolder, $placeHolderValue);
         }
     }

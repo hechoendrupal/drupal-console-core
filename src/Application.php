@@ -199,7 +199,6 @@ class Application extends BaseApplication
             $input,
             $output
         );
-
         if ($this->showMessages($input)) {
             $messages = $messageManager->getMessages();
 
@@ -208,6 +207,7 @@ class Application extends BaseApplication
                 $io->$type($message['message']);
             }
         }
+
 
         return $code;
     }

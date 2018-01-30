@@ -1,3 +1,6 @@
+command:
+  name: generate:form:example
+  description: 'Generate form example'
 commands:
   - command: generate:form:config
     options:
