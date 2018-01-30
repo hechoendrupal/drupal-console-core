@@ -17,7 +17,7 @@ use Drupal\Console\Core\Utils\DrupalFinder;
  *
  * @package Drupal\Console\Core\Generator
  */
-abstract class Generator
+abstract class Generator implements GeneratorInterface
 {
     /**
      * @var TwigRenderer

@@ -7,7 +7,7 @@ namespace Drupal\Console\Core\Generator;
  *
  * @package Drupal\Console\Generator
  */
-class SiteAliasGenerator extends Generator implements GeneratorInterface
+class SiteAliasGenerator extends Generator
 {
     /**
      * {@inheritdoc}
@@ -15,8 +15,8 @@ class SiteAliasGenerator extends Generator implements GeneratorInterface
     public function generate(array $parameters)
     {
         $this->renderFile(
-            'core/sites/alias.yml.twig',
-            $parameters['directory'].'/sites/'.$parameters['name'].'.yml',
+            'sites/alias.yml.twig',
+            $parameters['directory'] . '/sites/' . $parameters['name'] . '.yml',
             $parameters,
             FILE_APPEND
         );

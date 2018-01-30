@@ -105,7 +105,6 @@ class DrupalStyle extends SymfonyStyle
     {
         $questionHelper = new DrupalChoiceQuestionHelper();
         $answer = $questionHelper->ask($this->input, $this, $question);
-
         return $answer;
     }
 

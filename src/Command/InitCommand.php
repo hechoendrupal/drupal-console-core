@@ -252,13 +252,13 @@ class InitCommand extends Command
             $process->stop();
         }
 
-        $this->generator->generate(
-            $this->configurationManager->getConsoleDirectory(),
-            $executableName,
-            $override,
-            $destination,
-            $this->configParameters
-        );
+        $this->generator->generate([
+          'user_home' => $this->configurationManager->getConsoleDirectory(),
+          'executable_name' => $executableName,
+          'override' => $override,
+          'destination' => $destination,
+          'config_parameters' => $this->configParameters,
+        ]);
 
         $this->getIo()->writeln($this->trans('application.messages.autocomplete'));
 
