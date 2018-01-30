@@ -145,9 +145,15 @@ class ChainDiscovery
                 $this->getFileMetadata($filePath);
 
                 if ($this->files[$filePath]['messages']) {
-                    $this->messageManager->info($filePath);
+                    $this->messageManager->comment(
+                        $filePath,
+                        0,
+                        'list'
+                    );
                     $this->messageManager->listing(
-                        $this->files[$filePath]['messages']
+                        $this->files[$filePath]['messages'],
+                        0,
+                        'list'
                     );
                 }
 

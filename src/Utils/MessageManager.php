@@ -19,56 +19,73 @@ class MessageManager
      * @param $type
      * @param $message
      * @param $code
-     * @param $removableBy
+     * @param $showBy
+     * @param $removeBy
      */
-    private function add($type, $message, $code, $removableBy)
+    private function add($type, $message, $code, $showBy, $removeBy)
     {
         $this->messages[] = [
             'type' =>$type,
             'message' => $message,
             'code' => $code,
-            'removableBy' => $removableBy
+            'showBy' => $showBy,
+            'removeBy' => $removeBy,
         ];
     }
 
     /**
      * @param $message
      * @param $code
-     * @param $removableBy
+     * @param $showBy
+     * @param $removeBy
      */
-    public function error($message, $code = 0, $removableBy = null)
+    public function error($message, $code = 0, $showBy = 'all', $removeBy = null)
     {
-        $this->add('error', $message, $code, $removableBy);
+        $this->add('error', $message, $code, $showBy, $removeBy);
     }
 
     /**
      * @param $message
      * @param $code
-     * @param $removableBy
+     * @param $showBy
+     * @param $removeBy
      */
-    public function warning($message, $code = 0, $removableBy = null)
+    public function warning($message, $code = 0, $showBy = 'all', $removeBy = null)
     {
-        $this->add('warning', $message, $code, $removableBy);
+        $this->add('warning', $message, $code, $showBy, $removeBy);
     }
 
     /**
      * @param $message
      * @param $code
-     * @param $removableBy
+     * @param $showBy
+     * @param $removeBy
      */
-    public function info($message, $code = 0, $removableBy = null)
+    public function info($message, $code = 0, $showBy = 'all', $removeBy = null)
     {
-        $this->add('info', $message, $code, $removableBy);
+        $this->add('info', $message, $code, $showBy, $removeBy);
     }
 
     /**
      * @param $message
      * @param $code
-     * @param $removableBy
+     * @param $showBy
+     * @param $removeBy
      */
-    public function listing(array $message, $code = 0, $removableBy = null)
+    public function listing(array $message, $code = 0, $showBy = 'all', $removeBy = null)
     {
-        $this->add('listing', $message, $code, $removableBy);
+        $this->add('listing', $message, $code, $showBy, $removeBy);
+    }
+
+    /**
+     * @param $message
+     * @param $code
+     * @param $showBy
+     * @param $removeBy
+     */
+    public function comment($message, $code = 0, $showBy = 'all', $removeBy = null)
+    {
+        $this->add('comment', $message, $code, $showBy, $removeBy);
     }
 
     /**
@@ -84,11 +101,11 @@ class MessageManager
         $this->messages = array_filter(
             $this->messages,
             function ($message) use ($removeBy) {
-                if (is_null($message['removableBy'])) {
+                if (is_null($message['removeBy'])) {
                     return true;
                 }
 
-                return !($message['removableBy'] == $removeBy);
+                return !($message['removeBy'] == $removeBy);
             }
         );
     }

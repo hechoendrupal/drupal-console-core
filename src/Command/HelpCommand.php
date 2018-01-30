@@ -75,6 +75,7 @@ class HelpCommand extends Command
         );
 
         $this->command = null;
+        $this->getIo()->newLine();
     }
 
     /**
