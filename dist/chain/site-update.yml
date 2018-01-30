@@ -1,3 +1,6 @@
+command:
+  name: site:update
+  description: 'Execute update commands'
 commands:
   # Backup current database
   - command: database:dump
@@ -9,6 +12,8 @@ commands:
   - command: update:execute
     arguments:
         module: 'all'
+  # Run pending update entities
+  - command: update:entities
   # Rebuild caches
   - command: cache:rebuild
     arguments:

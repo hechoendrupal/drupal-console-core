@@ -53,19 +53,24 @@ class ChainCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $files = $this->chainDiscovery->getChainFiles();
+        $files = $this->chainDiscovery->getFiles();
+        $filesPerDirectory = $this->chainDiscovery->getFilesPerDirectory();
 
-        foreach ($files as $directory => $chainFiles) {
-            $this->getIo()->info($this->trans('commands.debug.chain.messages.directory'), false);
+        foreach ($filesPerDirectory as $directory => $fileNames) {
+            $this->getIo()->info(' ' . $this->trans('commands.debug.chain.messages.directory'), false);
             $this->getIo()->comment($directory);
 
             $tableHeader = [
-                $this->trans('commands.debug.chain.messages.file')
+                $this->trans('commands.debug.chain.messages.file'),
+                $this->trans('commands.debug.chain.messages.command')
             ];
 
             $tableRows = [];
-            foreach ($chainFiles as $file) {
-                $tableRows[] = $file;
+            foreach ($fileNames as $file) {
+                $tableRows[] = [
+                    'file'  => $file,
+                    'command' => $files[$directory.$file]['command']
+                ];
             }
 
             $this->getIo()->table($tableHeader, $tableRows);

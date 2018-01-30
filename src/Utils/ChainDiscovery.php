@@ -17,41 +17,73 @@ use Symfony\Component\Yaml\Yaml;
 class ChainDiscovery
 {
     /**
+     * @var string
+     */
+    protected $appRoot;
+
+    /**
      * @var ConfigurationManager
      */
     protected $configurationManager;
 
     /**
-     * @var string
+     * @var MessageManager
      */
-    protected $appRoot;
+    protected $messageManager;
+
+    /**
+     * @var TranslatorManagerInterface
+     */
+    protected $translatorManager;
 
     /**
      * @var array
      */
     private $directories = [];
 
+    /**
+     * @var array
+     */
+    private $files = [];
+
+    /**
+     * @var array
+     */
+    private $filesPerDirectory = [];
+
     const INLINE_REGEX = '/{{(.*?)}}/';
     const ENV_REGEX =  '/%env\((.*?)\)%/';
 
+    const INLINE_REGEX_LEGACY = [
+        '/%{{(.*?)}}/',
+        '/%{{ (.*?) }}/',
+    ];
+
     const ENV_REGEX_LEGACY = [
+        '/\${{(.*?)}}/',
+        '/\${{ (.*?) }}/',
         '/%env\((.*?)\)%/',
-        '/% env\((.*?)\) %/',
-        '/{{ env\((.*?)\) }}/'
+        '/% env\((.*?)\) %/'
     ];
 
     /**
      * ChainDiscovery constructor.
      *
-     * @param string               $appRoot
-     * @param ConfigurationManager $configurationManager
+     * @param string                     $appRoot
+     * @param ConfigurationManager       $configurationManager
+     * @param MessageManager             $messageManager
+     * @param TranslatorManagerInterface $translatorManager
      */
     public function __construct(
         $appRoot,
-        ConfigurationManager $configurationManager
+        ConfigurationManager $configurationManager,
+        MessageManager $messageManager,
+        TranslatorManagerInterface $translatorManager
     ) {
         $this->appRoot = $appRoot;
         $this->configurationManager = $configurationManager;
+        $this->messageManager = $messageManager;
+        $this->translatorManager = $translatorManager;
 
         $directories = array_map(
             function ($item) {
@@ -72,12 +104,24 @@ class ChainDiscovery
     }
 
     /**
-     * @param bool $onlyFiles
+     * @deprecated
+     *
      * @return array
      */
-    public function getChainFiles($onlyFiles = false)
+    public function getChainFiles()
     {
-        $chainFiles = [];
+        return $this->getFiles();
+    }
+
+    /**
+     * @return array
+     */
+    public function getFiles()
+    {
+        if ($this->files) {
+            return $this->files;
+        }
+
         foreach ($this->directories as $directory) {
             if (!is_dir($directory)) {
                 continue;
@@ -87,23 +131,39 @@ class ChainDiscovery
                 ->name('*.yml')
                 ->in($directory);
             foreach ($finder as $file) {
-                $chainFiles[$file->getPath()][] = sprintf(
-                    '%s%s',
-                    $directory,
-                    $file->getBasename()
-                );
+                $filePath = $file->getRealPath();
+                if (!is_file($filePath)) {
+                    continue;
+                }
+                $this->files[$filePath] = [
+                    'directory' => $directory,
+                    'file_name' => $file->getBasename(),
+                    'messages' => []
+                ];
+
+                $this->getFileContents($filePath);
+                $this->getFileMetadata($filePath);
+
+                if ($this->files[$filePath]['messages']) {
+                    $this->messageManager->info($filePath);
+                    $this->messageManager->listing(
+                        $this->files[$filePath]['messages']
+                    );
+                }
+
+                $this->filesPerDirectory[$directory][] = $file->getBasename();
             }
         }
 
-        if ($onlyFiles) {
-            $files = [];
-            foreach ($chainFiles as $chainDirectory => $chainFileList) {
-                $files = array_merge($files, $chainFileList);
-            }
-            return $files;
-        }
+        return $this->files;
+    }
 
-        return $chainFiles;
+    /**
+     * @return array
+     */
+    public function getFilesPerDirectory()
+    {
+        return $this->filesPerDirectory;
     }
 
     /**
@@ -112,11 +172,11 @@ class ChainDiscovery
     public function getChainCommands()
     {
         $chainCommands = [];
-        $files = $this->getChainFiles(true);
+        $files = array_keys($this->getFiles());
         foreach ($files as $file) {
-            $chainContent = $this->getFileMetadata($file);
+            $chainMetadata = $this->getFileMetadata($file);
 
-            $chain = Yaml::parse($chainContent);
+            $chain = Yaml::parse($chainMetadata);
             if (!array_key_exists('command', $chain)) {
                 continue;
             }
@@ -132,6 +192,9 @@ class ChainDiscovery
                 'description' => $description,
                 'file' => $file,
             ];
+
+            $this->files[$file]['command'] = $name;
+            $this->files[$file]['description'] = $description;
         }
 
         return $chainCommands;
@@ -153,7 +216,7 @@ class ChainDiscovery
 
         $loader = new \Twig_Loader_Array(
             [
-            'chain' => $contents,
+                'chain' => $contents,
             ]
         );
 
@@ -184,10 +247,13 @@ class ChainDiscovery
 
     public function getFileMetadata($file)
     {
+        if ($metadata = $this->getCacheMetadata($file)) {
+            return $metadata;
+        }
+
         $contents = $this->getFileContents($file);
 
         $line = strtok($contents, PHP_EOL);
-        $metadata = '';
         $index = 0;
         while ($line !== false) {
             $index++;
@@ -204,6 +270,14 @@ class ChainDiscovery
             $line = strtok(PHP_EOL);
         }
 
+        if (!$metadata) {
+            $this->files[$file]['messages'][] = $this->translatorManager
+                ->trans('commands.chain.messages.metadata-registration');
+            return '';
+        }
+
+        $this->files[$file]['metadata'] = $metadata;
+
         return $metadata;
     }
 
@@ -216,13 +290,85 @@ class ChainDiscovery
      */
     public function getFileContents($file)
     {
+        if (empty($file)) {
+            return '';
+        }
+
+        if ($contents = $this->getCacheContent($file)) {
+            return $contents;
+        }
+
         $contents = file_get_contents($file);
+
+        // Support BC for legacy inline variables.
+        $inlineLegacyContent = preg_replace(
+            $this::INLINE_REGEX_LEGACY,
+            '{{ $1 }}',
+            $contents
+        );
+
+        if ($contents !== $inlineLegacyContent) {
+            $this->files[$file]['messages'][] = $this->translatorManager
+                ->trans('commands.chain.messages.legacy-inline');
+            $contents = $inlineLegacyContent;
+        }
+
+        // Support BC for legacy environment variables.
+        $envLegacyContent = preg_replace(
+            $this::ENV_REGEX_LEGACY,
+            '{{ env("$1") }}',
+            $contents
+        );
+
+        if ($contents !== $envLegacyContent) {
+            $this->files[$file]['messages'][] = $this->translatorManager
+                ->trans('commands.chain.messages.legacy-environment');
+            $contents = $envLegacyContent;
+        }
+
         // Remove lines with comments.
-        $contents = preg_replace('![ \t]*#.*[ \t]*[\r|\r\n|\n]!', PHP_EOL, $contents);
+        $contents = preg_replace(
+            '![ \t]*#.*[ \t]*[\r|\r\n|\n]!',
+            PHP_EOL,
+            $contents
+        );
+
         //  Strip blank lines
-        $contents = preg_replace("/(^[\r\n]*|[\r\n]+)[\t]*[\r\n]+/", PHP_EOL, $contents);
+        $contents = preg_replace(
+            "/(^[\r\n]*|[\r\n]+)[\t]*[\r\n]+/",
+            PHP_EOL,
+            $contents
+        );
+
+        $this->files[$file]['content'] = $contents;
 
         return $contents;
+    }
+
+    private function getCacheContent($file)
+    {
+        if (!array_key_exists($file, $this->files)) {
+            return null;
+        }
+
+        if (!array_key_exists('content', $this->files[$file])) {
+            return null;
+        }
+
+        return $this->files[$file]['content'];
+    }
+
+    private function getCacheMetadata($file)
+    {
+        if (!array_key_exists($file, $this->files)) {
+            return null;
+        }
+
+        if (!array_key_exists('metadata', $this->files[$file])) {
+            return null;
+        }
+
+        return $this->files[$file]['metadata'];
     }
 
     private function extractPlaceHolders(

@@ -1,3 +1,6 @@
+command:
+  name: create:data
+  description: 'Create dummy data'
 commands:
   # Create dummy data
   - command: create:users

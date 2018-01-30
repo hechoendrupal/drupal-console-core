@@ -26,7 +26,7 @@ services:
       class: Drupal\Console\Core\Utils\StringConverter
   console.chain_discovery:
     class: Drupal\Console\Core\Utils\ChainDiscovery
-    arguments: ['@console.root', '@console.configuration_manager']
+    arguments: ['@console.root', '@console.configuration_manager', '@console.message_manager', '@console.translator_manager']
   console.count_code_lines:
     class: Drupal\Console\Core\Utils\CountCodeLines
   console.message_manager:

@@ -31,6 +31,7 @@ class BaseCommand extends Command
     ) {
         $this->chainDiscovery = $chainDiscovery;
         parent::__construct();
+        $this->ignoreValidationErrors();
     }
 
     protected function initialize(
@@ -93,11 +94,11 @@ class BaseCommand extends Command
         $file = $input->getOption('file');
 
         if (!$file) {
-            $files = $this->chainDiscovery->getChainFiles(true);
+            $files = array_keys($this->chainDiscovery->getFiles());
 
             $file = $this->getIo()->choice(
                 $this->trans('commands.chain.questions.chain-file'),
-                array_values($files)
+                $files
             );
         }
 
