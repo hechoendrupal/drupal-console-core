@@ -234,6 +234,14 @@ class DrupalStyle extends SymfonyStyle
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function warning($message)
+    {
+        $this->block($message, 'WARNING', 'fg=white;bg=yellow', ' ', true);
+    }
+
+    /**
      * @param array|string $message
      */
     public function text($message)
