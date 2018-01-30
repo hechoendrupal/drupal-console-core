@@ -203,6 +203,10 @@ class Application extends BaseApplication
             $messages = $messageManager->getMessages();
 
             foreach ($messages as $message) {
+                $showBy = $message['showBy'];
+                if ($showBy!=='all' && $showBy!==$this->commandName) {
+                    continue;
+                }
                 $type = $message['type'];
                 $io->$type($message['message']);
             }
@@ -636,7 +640,6 @@ class Application extends BaseApplication
         $this->container->get('console.configuration_manager')
             ->loadExtendConfiguration();
     }
-
 
     public function getData()
     {
