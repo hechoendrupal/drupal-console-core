@@ -61,7 +61,7 @@ class Application extends BaseApplication
      * @param string             $version
      */
     public function __construct(
-        ContainerInterface$container,
+        ContainerInterface $container,
         $name,
         $version
     ) {
@@ -407,9 +407,9 @@ class Application extends BaseApplication
             ->get('application.commands.aliases')?:[];
 
         $invalidCommands = [];
-        if ($this->container->has('console.invalid_commands')) {
-            $invalidCommands = (array)$this->container
-                ->get('console.invalid_commands');
+        if ($this->container->has('console.console_container')) {
+            $invalidCommands = $this->container->get('console.console_container')->get('invalid_commands');
+            var_dump($invalidCommands);
         }
 
         foreach ($consoleCommands as $name => $tags) {
