@@ -4,7 +4,7 @@
 namespace Drupal\Console\Core\Utils;
 
 
-class ConsoleContainer
+class KeyValueStorage
 {
 
     /**

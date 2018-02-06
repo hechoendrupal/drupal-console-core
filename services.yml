@@ -33,8 +33,8 @@ services:
     class: Drupal\Console\Core\Utils\MessageManager
   console.drupal_finder:
     class: Drupal\Console\Core\Utils\DrupalFinder
-  console.console_container:
-    class: Drupal\Console\Core\Utils\ConsoleContainer
+  console.key_value_storage:
+    class: Drupal\Console\Core\Utils\KeyValueStorage
   # DrupalConsoleCore Commands
   console.about:
     class: Drupal\Console\Core\Command\AboutCommand

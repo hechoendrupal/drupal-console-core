@@ -407,8 +407,8 @@ class Application extends BaseApplication
             ->get('application.commands.aliases')?:[];
 
         $invalidCommands = [];
-        if ($this->container->has('console.console_container')) {
-            $invalidCommands = $this->container->get('console.console_container')->get('invalid_commands');
+        if ($this->container->has('console.key_value_storage')) {
+            $invalidCommands = $this->container->get('console.key_value_storage')->get('invalid_commands');
             var_dump($invalidCommands);
         }
 
