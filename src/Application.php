@@ -409,7 +409,6 @@ class Application extends BaseApplication
         $invalidCommands = [];
         if ($this->container->has('console.key_value_storage')) {
             $invalidCommands = $this->container->get('console.key_value_storage')->get('invalid_commands');
-            var_dump($invalidCommands);
         }
 
         foreach ($consoleCommands as $name => $tags) {
