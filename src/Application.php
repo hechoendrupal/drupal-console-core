@@ -61,7 +61,7 @@ class Application extends BaseApplication
      * @param string             $version
      */
     public function __construct(
-        ContainerInterface$container,
+        ContainerInterface $container,
         $name,
         $version
     ) {
@@ -113,28 +113,13 @@ class Application extends BaseApplication
             $output->write(sprintf("\033\143"));
         }
 
-        $this->registerGenerators();
-        $this->registerCommands();
-        $this->registerEvents();
-        $this->registerExtendCommands();
+        $this->loadCommands();
 
         /**
          * @var ConfigurationManager $configurationManager
          */
         $configurationManager = $this->container
             ->get('console.configuration_manager');
-
-        $config = $configurationManager->getConfiguration()
-            ->get('application.extras.config')?:'true';
-        if ($config === 'true') {
-            $this->registerCommandsFromAutoWireConfiguration();
-        }
-
-        $chains = $configurationManager->getConfiguration()
-            ->get('application.extras.chains')?:'true';
-        if ($chains === 'true') {
-            $this->registerChainCommands();
-        }
 
         if (!$this->has($this->commandName)) {
             $isValidCommand = false;
@@ -218,6 +203,32 @@ class Application extends BaseApplication
 
 
         return $code;
+    }
+
+    public function loadCommands()
+    {
+        $this->registerGenerators();
+        $this->registerCommands();
+        $this->registerEvents();
+        $this->registerExtendCommands();
+
+        /**
+         * @var ConfigurationManager $configurationManager
+         */
+        $configurationManager = $this->container
+            ->get('console.configuration_manager');
+
+        $config = $configurationManager->getConfiguration()
+            ->get('application.extras.config')?:'true';
+        if ($config === 'true') {
+            $this->registerCommandsFromAutoWireConfiguration();
+        }
+
+        $chains = $configurationManager->getConfiguration()
+            ->get('application.extras.chains')?:'true';
+        if ($chains === 'true') {
+            $this->registerChainCommands();
+        }
     }
 
     /**
@@ -411,9 +422,8 @@ class Application extends BaseApplication
             ->get('application.commands.aliases')?:[];
 
         $invalidCommands = [];
-        if ($this->container->has('console.invalid_commands')) {
-            $invalidCommands = (array)$this->container
-                ->get('console.invalid_commands');
+        if ($this->container->has('console.key_value_storage')) {
+            $invalidCommands = $this->container->get('console.key_value_storage')->get('invalid_commands');
         }
 
         foreach ($consoleCommands as $name => $tags) {
