@@ -119,18 +119,19 @@ class ConfigurationManager
             $environment = $exploded[1];
         }
 
-        if (!array_key_exists($site, $this->sites)) {
+        $sites = $this->getSites();
+        if (!array_key_exists($site, $sites)) {
             return [];
         }
 
-        $targetInformation = $this->sites[$site];
+        $targetInformation = $sites[$site];
 
         if ($environment) {
-            if (!array_key_exists($environment, $this->sites[$site])) {
+            if (!array_key_exists($environment, $sites[$site])) {
                 return [];
             }
 
-            $targetInformation = $this->sites[$site][$environment];
+            $targetInformation = $sites[$site][$environment];
         }
 
         return $targetInformation;
