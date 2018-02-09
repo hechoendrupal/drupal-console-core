@@ -113,28 +113,13 @@ class Application extends BaseApplication
             $output->write(sprintf("\033\143"));
         }
 
-        $this->registerGenerators();
-        $this->registerCommands();
-        $this->registerEvents();
-        $this->registerExtendCommands();
+        $this->loadCommands();
 
         /**
          * @var ConfigurationManager $configurationManager
          */
         $configurationManager = $this->container
             ->get('console.configuration_manager');
-
-        $config = $configurationManager->getConfiguration()
-            ->get('application.extras.config')?:'true';
-        if ($config === 'true') {
-            $this->registerCommandsFromAutoWireConfiguration();
-        }
-
-        $chains = $configurationManager->getConfiguration()
-            ->get('application.extras.chains')?:'true';
-        if ($chains === 'true') {
-            $this->registerChainCommands();
-        }
 
         if (!$this->has($this->commandName)) {
             $isValidCommand = false;
@@ -199,6 +184,7 @@ class Application extends BaseApplication
             $input,
             $output
         );
+
         if ($this->showMessages($input)) {
             $messages = $messageManager->getMessages();
 
@@ -214,6 +200,32 @@ class Application extends BaseApplication
 
 
         return $code;
+    }
+
+    public function loadCommands()
+    {
+        $this->registerGenerators();
+        $this->registerCommands();
+        $this->registerEvents();
+        $this->registerExtendCommands();
+
+        /**
+         * @var ConfigurationManager $configurationManager
+         */
+        $configurationManager = $this->container
+            ->get('console.configuration_manager');
+
+        $config = $configurationManager->getConfiguration()
+            ->get('application.extras.config')?:'true';
+        if ($config === 'true') {
+            $this->registerCommandsFromAutoWireConfiguration();
+        }
+
+        $chains = $configurationManager->getConfiguration()
+            ->get('application.extras.chains')?:'true';
+        if ($chains === 'true') {
+            $this->registerChainCommands();
+        }
     }
 
     /**
