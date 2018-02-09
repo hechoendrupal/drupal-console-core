@@ -23,7 +23,7 @@ services:
     class: Drupal\Console\Core\Utils\ShellProcess
     arguments: ['@app.root', '@console.translator_manager']
   console.string_converter:
-      class: Drupal\Console\Core\Utils\StringConverter
+    class: Drupal\Console\Core\Utils\StringConverter
   console.chain_discovery:
     class: Drupal\Console\Core\Utils\ChainDiscovery
     arguments: ['@console.root', '@console.configuration_manager', '@console.message_manager', '@console.translator_manager']
@@ -33,6 +33,8 @@ services:
     class: Drupal\Console\Core\Utils\MessageManager
   console.drupal_finder:
     class: Drupal\Console\Core\Utils\DrupalFinder
+  console.key_value_storage:
+    class: Drupal\Console\Core\Utils\KeyValueStorage
   # DrupalConsoleCore Commands
   console.about:
     class: Drupal\Console\Core\Command\AboutCommand
