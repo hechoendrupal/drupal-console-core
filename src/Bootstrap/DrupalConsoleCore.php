@@ -59,11 +59,15 @@ class DrupalConsoleCore
         $container = new ContainerBuilder();
         $loader = new YamlFileLoader($container, new FileLocator($this->root));
 
+        if (substr($this->root, -1) === DIRECTORY_SEPARATOR) {
+            $this->root = substr($this->root, 0, -1);
+        }
+
         $servicesFiles = [
-            $this->root.DRUPAL_CONSOLE_CORE.'/services.yml',
+            $this->root.DRUPAL_CONSOLE_CORE.'services.yml',
             $this->root.'/services.yml',
-            $this->root.DRUPAL_CONSOLE.'/uninstall.services.yml',
-            $this->root.DRUPAL_CONSOLE.'/extend.console.uninstall.services.yml'
+            $this->root.DRUPAL_CONSOLE.'uninstall.services.yml',
+            $this->root.DRUPAL_CONSOLE.'extend.console.uninstall.services.yml'
         ];
 
         foreach ($servicesFiles as $servicesFile) {
