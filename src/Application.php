@@ -185,6 +185,9 @@ class Application extends BaseApplication
             $output
         );
 
+        // Propogate Drupal messages.
+        $this->getDrupalMessages($messageManager);
+
         if ($this->showMessages($input)) {
             $messages = $messageManager->getMessages();
 
@@ -861,5 +864,41 @@ class Application extends BaseApplication
     public function find($name)
     {
         return $this->get($name);
+    }
+
+    /**
+     * Gets Drupal system messages.
+     */
+    protected function getDrupalMessages($messageManager) {
+        if (function_exists('drupal_get_messages')) {
+            $drupalMessages = drupal_get_messages();
+            foreach ($drupalMessages as $type => $messages) {
+                foreach ($messages as $message) {
+                    $method = $this->getMessageMethod($type);
+                    $messageManager->{$method}((string)$message);
+                }
+            }
+        }
+    }
+
+    /**
+     * Gets method name for MessageManager.
+     *
+     * @param string $type
+     *   Type of the message.
+     *
+     * @return string
+     *   Name of the method
+     */
+    protected function getMessageMethod($type) {
+        $methodName = 'info';
+        switch ($type) {
+            case 'error':
+            case 'warning':
+                $methodName = $type;
+                break;
+        }
+
+        return $methodName;
     }
 }
