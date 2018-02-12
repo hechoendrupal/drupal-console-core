@@ -397,6 +397,11 @@ class ConfigurationManager
         }
 
         $sitesDirectories = $this->getSitesDirectories();
+
+        if (!$sitesDirectories) {
+            return [];
+        }
+
         $finder = new Finder();
         $finder->in($sitesDirectories);
         $finder->name("*.yml");
