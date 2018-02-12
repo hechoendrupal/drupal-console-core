@@ -15,7 +15,7 @@ class SiteAliasGenerator extends Generator
     public function generate(array $parameters)
     {
         $this->renderFile(
-            'sites/alias.yml.twig',
+            'core/sites/alias.yml.twig',
             $parameters['directory'] . '/sites/' . $parameters['name'] . '.yml',
             $parameters,
             FILE_APPEND
