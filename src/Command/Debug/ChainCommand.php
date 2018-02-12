@@ -56,6 +56,12 @@ class ChainCommand extends Command
         $files = $this->chainDiscovery->getFiles();
         $filesPerDirectory = $this->chainDiscovery->getFilesPerDirectory();
 
+        if (!$files || !$filesPerDirectory) {
+            $this->getIo()->warning($this->trans('commands.debug.chain.messages.no-files'));
+
+            return 0;
+        }
+
         foreach ($filesPerDirectory as $directory => $fileNames) {
             $this->getIo()->info(' ' . $this->trans('commands.debug.chain.messages.directory'), false);
             $this->getIo()->comment($directory);
