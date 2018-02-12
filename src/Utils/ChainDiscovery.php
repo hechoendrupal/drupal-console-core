@@ -131,7 +131,12 @@ class ChainDiscovery
                 ->name('*.yml')
                 ->in($directory);
             foreach ($finder as $file) {
+
                 $filePath = $file->getRealPath();
+                if (empty($filePath)) {
+                    $filePath = $directory . $file->getBasename();
+                }
+
                 if (!is_file($filePath)) {
                     continue;
                 }
