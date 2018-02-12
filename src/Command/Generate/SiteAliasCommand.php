@@ -149,17 +149,23 @@ class SiteAliasCommand extends Command
     ) {
         $name = $input->getOption('name');
         if (!$name) {
-            $sites = array_keys($this->configurationManager->getSites());
+            $sites = $this->configurationManager->getSites();
+            if (!empty($sites)) {
+                $sites = array_keys($this->configurationManager->getSites());
+                $name = $this->getIo()->choiceNoList(
+                    $this->trans('commands.generate.site.alias.questions.name'),
+                    $sites,
+                    current($sites),
+                    TRUE
+                );
 
-            $name = $this->getIo()->choiceNoList(
-                $this->trans('commands.generate.site.alias.questions.name'),
-                $sites,
-                current($sites),
-                true
-            );
-
-            if (is_numeric($name)) {
-                $name = $sites[$name];
+                if (is_numeric($name)) {
+                    $name = $sites[$name];
+                }
+            } else {
+                $name = $this->getIo()->ask(
+                    $this->trans('commands.generate.site.alias.questions.name')
+                );
             }
 
             $input->setOption('name', $name);
@@ -282,16 +288,16 @@ class SiteAliasCommand extends Command
     ) {
         $this->generator->generate(
             [
-            'name' => $input->getOption('name'),
-            'environment' => $input->getOption('environment'),
-            'type' => $input->getOption('type'),
-            'extra_options' => $input->getOption('extra-options'),
-            'root' => $input->getOption('composer-root'),
-            'uri' => $input->getOption('site-uri'),
-            'port' => $input->getOption('port'),
-            'user' => $input->getOption('user'),
-            'host' => $input->getOption('host'),
-            'directory' => $input->getOption('directory')
+                'name' => $input->getOption('name'),
+                'environment' => $input->getOption('environment'),
+                'type' => $input->getOption('type'),
+                'extra_options' => $input->getOption('extra-options'),
+                'root' => $input->getOption('composer-root'),
+                'uri' => $input->getOption('site-uri'),
+                'port' => $input->getOption('port'),
+                'user' => $input->getOption('user'),
+                'host' => $input->getOption('host'),
+                'directory' => $input->getOption('directory')
             ]
         );
     }
