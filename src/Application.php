@@ -185,8 +185,8 @@ class Application extends BaseApplication
             $output
         );
 
-        // Propogate Drupal messages.
-        $this->getDrupalMessages($messageManager);
+        // Propagate Drupal messages.
+        $this->addDrupalMessages($messageManager);
 
         if ($this->showMessages($input)) {
             $messages = $messageManager->getMessages();
@@ -851,25 +851,9 @@ class Application extends BaseApplication
     }
 
     /**
-     * Finds a command by name or alias.
-     *
-     * @param string $name A command name or a command alias
-     *
-     * @return mixed A Command instance
-     *
-     * Override parent find method to avoid name collisions with automatically
-     * generated command abbreviations.
-     * Command name validation was previously done at doRun method.
+     * Add Drupal system messages.
      */
-    public function find($name)
-    {
-        return $this->get($name);
-    }
-
-    /**
-     * Gets Drupal system messages.
-     */
-    protected function getDrupalMessages($messageManager) {
+    protected function addDrupalMessages($messageManager) {
         if (function_exists('drupal_get_messages')) {
             $drupalMessages = drupal_get_messages();
             foreach ($drupalMessages as $type => $messages) {
@@ -900,5 +884,21 @@ class Application extends BaseApplication
         }
 
         return $methodName;
+    }
+
+    /**
+     * Finds a command by name or alias.
+     *
+     * @param string $name A command name or a command alias
+     *
+     * @return mixed A Command instance
+     *
+     * Override parent find method to avoid name collisions with automatically
+     * generated command abbreviations.
+     * Command name validation was previously done at doRun method.
+     */
+    public function find($name)
+    {
+        return $this->get($name);
     }
 }
