@@ -188,10 +188,10 @@ class ChainDiscovery
             $chainMetadata = $this->getFileMetadata($file);
 
             $chain = Yaml::parse($chainMetadata);
-            if (is_array($chain) && !array_key_exists('command', $chain)) {
+            if (!$chain || !array_key_exists('command', $chain)) {
                 continue;
             }
-            if (is_array($chain['command']) && !array_key_exists('name', $chain['command'])) {
+            if (!is_array($chain['command']) || !array_key_exists('name', $chain['command'])) {
                 continue;
             }
             $name = $chain['command']['name'];
