@@ -166,6 +166,8 @@ class ConfigurationManager
             }
         );
 
+        $sitesDirectories = array_unique($sitesDirectories);
+
         return $sitesDirectories;
     }
 
