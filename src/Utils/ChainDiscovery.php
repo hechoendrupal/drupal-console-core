@@ -54,12 +54,18 @@ class ChainDiscovery
     const INLINE_REGEX = '/{{(.*?)}}/';
     const ENV_REGEX =  '/%env\((.*?)\)%/';
 
-    const INLINE_REGEX_LEGACY = [
+    /**
+     * @var array
+     */
+    private $inlineRegexLegacy = [
         '/%{{(.*?)}}/',
         '/%{{ (.*?) }}/',
     ];
 
-    const ENV_REGEX_LEGACY = [
+    /**
+     * @var array
+     */
+    private $envRegexLegacy = [
         '/\${{(.*?)}}/',
         '/\${{ (.*?) }}/',
         '/%env\((.*?)\)%/',
@@ -313,7 +319,7 @@ class ChainDiscovery
 
         // Support BC for legacy inline variables.
         $inlineLegacyContent = preg_replace(
-            $this::INLINE_REGEX_LEGACY,
+            $this->inlineRegexLegacy,
             '{{ $1 }}',
             $contents
         );
@@ -326,7 +332,7 @@ class ChainDiscovery
 
         // Support BC for legacy environment variables.
         $envLegacyContent = preg_replace(
-            $this::ENV_REGEX_LEGACY,
+            $this->envRegexLegacy,
             '{{ env("$1") }}',
             $contents
         );
