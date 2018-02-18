@@ -193,18 +193,13 @@ class ChainDiscovery
         foreach ($files as $file) {
             $chainMetadata = $this->getFileMetadata($file);
 
-            $chain = Yaml::parse($chainMetadata);
-            if (!$chain || !array_key_exists('command', $chain)) {
+            if (!$chainMetadata) {
                 continue;
             }
-            if (!is_array($chain['command']) || !array_key_exists('name', $chain['command'])) {
-                continue;
-            }
-            $name = $chain['command']['name'];
-            $description = '';
-            if (is_array($chain['command']) && array_key_exists('description', $chain['command'])) {
-                $description = $chain['command']['description'];
-            }
+
+            $name = $chainMetadata['command']['name'];
+            $description = $chainMetadata['command']['description'];
+
             $chainCommands[$name] = [
                 'description' => $description,
                 'file' => $file,
@@ -287,15 +282,43 @@ class ChainDiscovery
             $line = strtok(PHP_EOL);
         }
 
-        if (!$metadata) {
+        $chainMetadata = $this->processMetadata($metadata);
+
+        if (!$chainMetadata) {
             $this->files[$file]['messages'][] = $this->translatorManager
                 ->trans('commands.chain.messages.metadata-registration');
-            return '';
+            return [];
         }
 
-        $this->files[$file]['metadata'] = $metadata;
+        $this->files[$file]['metadata'] = $chainMetadata;
 
-        return $metadata;
+        return $chainMetadata;
+    }
+
+    private function processMetadata($metadata) {
+        if (!$metadata) {
+            return [];
+        }
+
+        $chainMetadata = Yaml::parse($metadata);
+
+        if (!$chainMetadata || !is_array($chainMetadata)) {
+            return [];
+        }
+
+        if (!array_key_exists('command', $chainMetadata) || !is_array($chainMetadata['command'])) {
+            return [];
+        }
+
+        if (!array_key_exists('name', $chainMetadata['command'])) {
+            return [];
+        }
+
+        if (!array_key_exists('description', $chainMetadata['command'])) {
+            $chainMetadata['command']['description']  = '';
+        }
+
+        return $chainMetadata;
     }
 
     /**
