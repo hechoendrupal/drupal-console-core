@@ -112,6 +112,6 @@ class DrupalFinder extends DrupalFinderBase
     }
 
     public function isValidDrupal() {
-        return ($this->getComposerRoot() && $this->getDrupalRoot())?true:false;
+        return ($this->getComposerRoot() && $this->getDrupalRoot());
     }
 }
