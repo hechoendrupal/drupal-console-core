@@ -154,10 +154,7 @@ class ConfigurationManager
     {
         $sitesDirectories = array_map(
             function ($directory) {
-                return sprintf(
-                    '%s/sites',
-                    $directory
-                );
+                return $directory . 'sites';
             },
             $this->getConfigurationDirectories()
         );
