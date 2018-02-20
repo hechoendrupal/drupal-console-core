@@ -54,12 +54,18 @@ class ChainDiscovery
     const INLINE_REGEX = '/{{(.*?)}}/';
     const ENV_REGEX =  '/%env\((.*?)\)%/';
 
-    const INLINE_REGEX_LEGACY = [
+    /**
+     * @var array
+     */
+    private $inlineRegexLegacy = [
         '/%{{(.*?)}}/',
         '/%{{ (.*?) }}/',
     ];
 
-    const ENV_REGEX_LEGACY = [
+    /**
+     * @var array
+     */
+    private $envRegexLegacy = [
         '/\${{(.*?)}}/',
         '/\${{ (.*?) }}/',
         '/%env\((.*?)\)%/',
@@ -131,7 +137,12 @@ class ChainDiscovery
                 ->name('*.yml')
                 ->in($directory);
             foreach ($finder as $file) {
+
                 $filePath = $file->getRealPath();
+                if (empty($filePath)) {
+                    $filePath = $directory . $file->getBasename();
+                }
+
                 if (!is_file($filePath)) {
                     continue;
                 }
@@ -182,18 +193,13 @@ class ChainDiscovery
         foreach ($files as $file) {
             $chainMetadata = $this->getFileMetadata($file);
 
-            $chain = Yaml::parse($chainMetadata);
-            if (!array_key_exists('command', $chain)) {
+            if (!$chainMetadata) {
                 continue;
             }
-            if (!array_key_exists('name', $chain['command'])) {
-                continue;
-            }
-            $name = $chain['command']['name'];
-            $description = '';
-            if (array_key_exists('description', $chain['command'])) {
-                $description = $chain['command']['description'];
-            }
+
+            $name = $chainMetadata['command']['name'];
+            $description = $chainMetadata['command']['description'];
+
             $chainCommands[$name] = [
                 'description' => $description,
                 'file' => $file,
@@ -276,15 +282,43 @@ class ChainDiscovery
             $line = strtok(PHP_EOL);
         }
 
-        if (!$metadata) {
+        $chainMetadata = $this->processMetadata($metadata);
+
+        if (!$chainMetadata) {
             $this->files[$file]['messages'][] = $this->translatorManager
                 ->trans('commands.chain.messages.metadata-registration');
-            return '';
+            return [];
         }
 
-        $this->files[$file]['metadata'] = $metadata;
+        $this->files[$file]['metadata'] = $chainMetadata;
 
-        return $metadata;
+        return $chainMetadata;
+    }
+
+    private function processMetadata($metadata) {
+        if (!$metadata) {
+            return [];
+        }
+
+        $chainMetadata = Yaml::parse($metadata);
+
+        if (!$chainMetadata || !is_array($chainMetadata)) {
+            return [];
+        }
+
+        if (!array_key_exists('command', $chainMetadata) || !is_array($chainMetadata['command'])) {
+            return [];
+        }
+
+        if (!array_key_exists('name', $chainMetadata['command'])) {
+            return [];
+        }
+
+        if (!array_key_exists('description', $chainMetadata['command'])) {
+            $chainMetadata['command']['description']  = '';
+        }
+
+        return $chainMetadata;
     }
 
     /**
@@ -308,7 +342,7 @@ class ChainDiscovery
 
         // Support BC for legacy inline variables.
         $inlineLegacyContent = preg_replace(
-            $this::INLINE_REGEX_LEGACY,
+            $this->inlineRegexLegacy,
             '{{ $1 }}',
             $contents
         );
@@ -321,7 +355,7 @@ class ChainDiscovery
 
         // Support BC for legacy environment variables.
         $envLegacyContent = preg_replace(
-            $this::ENV_REGEX_LEGACY,
+            $this->envRegexLegacy,
             '{{ env("$1") }}',
             $contents
         );

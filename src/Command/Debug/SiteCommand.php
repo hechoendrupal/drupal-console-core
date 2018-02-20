@@ -70,9 +70,9 @@ class SiteCommand extends Command
         $sites = $this->configurationManager->getSites();
 
         if (!$sites) {
-            $this->getIo()->error($this->trans('commands.debug.site.messages.invalid-sites'));
+            $this->getIo()->warning($this->trans('commands.debug.site.messages.invalid-sites'));
 
-            return 1;
+            return 0;
         }
 
         $target = $input->getArgument('target');

@@ -110,4 +110,8 @@ class DrupalFinder extends DrupalFinderBase
     {
         return $this->consoleLanguagePath;
     }
+
+    public function isValidDrupal() {
+        return ($this->getComposerRoot() && $this->getDrupalRoot());
+    }
 }
