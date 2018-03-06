@@ -77,7 +77,7 @@ class MaintenanceModeListener implements EventSubscriberInterface
         /* @var Command $command */
         $command = $event->getCommand();
 
-        if ($command->getMaintenance()) {
+        if ($command->isMaintenance()) {
 
             /* @var DrupalStyle $io */
             $io = new DrupalStyle($event->getInput(), $event->getOutput());

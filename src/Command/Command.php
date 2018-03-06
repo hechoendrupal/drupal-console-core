@@ -49,11 +49,11 @@ abstract class Command extends BaseCommand
     }
 
     /**
-     * Get maintenance mode.
+     * Check maintenance mode.
      *
      * @return bool
      */
-    public function getMaintenance()
+    public function isMaintenance()
     {
         return $this->maintenance;
     }
