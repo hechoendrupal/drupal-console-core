@@ -11,6 +11,7 @@ use Drupal\Console\Core\Utils\TwigRenderer;
 use Drupal\Console\Core\Utils\FileQueue;
 use Drupal\Console\Core\Utils\CountCodeLines;
 use Drupal\Console\Core\Utils\DrupalFinder;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class Generator
@@ -38,6 +39,11 @@ abstract class Generator
      * @var DrupalFinder
      */
     protected $drupalFinder;
+
+    /**
+     * @var DrupalStyle
+     */
+    protected $io;
 
     /**
      * @param $renderer
@@ -69,6 +75,20 @@ abstract class Generator
     public function setDrupalFinder($drupalFinder)
     {
         $this->drupalFinder = $drupalFinder;
+    }
+
+    /**
+     * @return \Drupal\Console\Core\Style\DrupalStyle
+     */
+    public function getIo() {
+        return $this->io;
+    }
+
+    /**
+     * @param \Drupal\Console\Core\Style\DrupalStyle $io
+     */
+    public function setIo($io) {
+        $this->io = $io;
     }
 
     /**
