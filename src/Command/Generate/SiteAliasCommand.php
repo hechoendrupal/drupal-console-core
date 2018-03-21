@@ -78,6 +78,12 @@ class SiteAliasCommand extends Command
             )
             ->setHelp($this->trans('commands.generate.site.alias.help'))
             ->addOption(
+                'site',
+                null,
+                InputOption::VALUE_NONE,
+                $this->trans('commands.generate.site.alias.options.site')
+            )
+            ->addOption(
                 'name',
                 null,
                 InputOption::VALUE_REQUIRED,
@@ -147,6 +153,7 @@ class SiteAliasCommand extends Command
         InputInterface $input,
         OutputInterface $output
     ) {
+        $site = $input->getOption('site');
         $name = $input->getOption('name');
         if (!$name) {
             $sites = $this->configurationManager->getSites();
@@ -269,6 +276,10 @@ class SiteAliasCommand extends Command
         }
 
         $directory = $input->getOption('directory');
+        if ($site && $this->drupalFinder->getComposerRoot()) {
+            $directory = $this->drupalFinder->getComposerRoot() . '/console/';
+        }
+
         if (!$directory) {
             $directory = $this->getIo()->choice(
                 $this->trans('commands.generate.site.alias.questions.directory'),
@@ -286,6 +297,11 @@ class SiteAliasCommand extends Command
         InputInterface $input,
         OutputInterface $output
     ) {
+        $site = $input->getOption('site');
+        $directory = $input->getOption('directory');
+        if ($site && $this->drupalFinder->isValidDrupal()) {
+            $directory = $this->drupalFinder->getComposerRoot() . '/console/';
+        }
         $this->generator->generate(
             [
                 'name' => $input->getOption('name'),
@@ -297,7 +313,7 @@ class SiteAliasCommand extends Command
                 'port' => $input->getOption('port'),
                 'user' => $input->getOption('user'),
                 'host' => $input->getOption('host'),
-                'directory' => $input->getOption('directory')
+                'directory' => $directory
             ]
         );
     }
