@@ -2,14 +2,14 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Core\Command\Command.
+ * Contains \Drupal\Console\Core\Command\GenerateCommand.
  */
 
 namespace Drupal\Console\Core\Command;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Webmozart\PathUtil\Path;
-use Drupal\Console\Core\Utils\DrupalFinder;
+
 /**
  * Class GenerateCommand
  *
