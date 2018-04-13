@@ -420,7 +420,7 @@ class ConfigurationManager
             foreach ($environments as $environment => $config) {
                 if (!array_key_exists('type', $config)) {
                     throw new \UnexpectedValueException(sprintf(
-                      "The 'type' parameter is required in sites configuration:\n %s.", $site->getPathname())
+                        "The 'type' parameter is required in sites configuration:\n %s.", $site->getPathname())
                     );
                 }
                 if ($config['type'] !== 'local') {
