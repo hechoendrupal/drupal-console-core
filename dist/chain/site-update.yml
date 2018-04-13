@@ -1,15 +1,20 @@
+command:
+  name: site:update
+  description: 'Execute update commands'
 commands:
-# Backup current database
+  # Backup current database
   - command: database:dump
     arguments:
       database: 'default'
-# Import configurations
+  # Import configurations
   - command: config:import
-# Run pending update hooks
+  # Run pending update hooks
   - command: update:execute
     arguments:
         module: 'all'
-# Rebuild caches
+  # Run pending update entities
+  - command: update:entities
+  # Rebuild caches
   - command: cache:rebuild
     arguments:
         cache: 'all'

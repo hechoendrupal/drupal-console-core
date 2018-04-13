@@ -12,7 +12,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Output\OutputInterface;
-use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Helper\DescriptorHelper;
 
 /**
@@ -54,20 +53,18 @@ class HelpCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
-
         if (null === $this->command) {
             $this->command = $this->getApplication()->find($input->getArgument('command_name'));
         }
 
         if ($input->getOption('xml')) {
-            $io->info($this->trans('commands.help.messages.deprecated'), E_USER_DEPRECATED);
+            $this->getIo()->info($this->trans('commands.help.messages.deprecated'), E_USER_DEPRECATED);
             $input->setOption('format', 'xml');
         }
 
         $helper = new DescriptorHelper();
         $helper->describe(
-            $io,
+            $this->getIo(),
             $this->command,
             [
                 'format' => $input->getOption('format'),
@@ -78,6 +75,7 @@ class HelpCommand extends Command
         );
 
         $this->command = null;
+        $this->getIo()->newLine();
     }
 
     /**

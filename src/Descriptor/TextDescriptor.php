@@ -98,10 +98,16 @@ class TextDescriptor extends Descriptor
      */
     protected function describeInputDefinition(InputDefinition $definition, array $options = [])
     {
+        $command_name = null;
+        if (array_key_exists('command', $options)) {
+            $command_name = $options['command']->getName();
+        }
+
         $totalWidth = $this->calculateTotalWidthForOptions($definition->getOptions());
         foreach ($definition->getArguments() as $argument) {
             $totalWidth = max($totalWidth, strlen($argument->getName()));
         }
+
         if ($definition->getArguments()) {
             $this->writeText($options['translator']->trans('commands.list.messages.arguments'), $options);
             $this->writeText("\n");
@@ -116,7 +122,17 @@ class TextDescriptor extends Descriptor
         if ($definition->getOptions()) {
             $laterOptions = [];
             $this->writeText($options['translator']->trans('commands.list.messages.options'), $options);
+
+            $exitOptionName = 'help';
+            if ($command_name === $exitOptionName) {
+                $exitOptionName = '';
+            }
+
             foreach ($definition->getOptions() as $option) {
+                if ($option->getName() === $exitOptionName) {
+                    break;
+                }
+
                 if (strlen($option->getShortcut()) > 1) {
                     $laterOptions[] = $option;
                     continue;
@@ -141,18 +157,21 @@ class TextDescriptor extends Descriptor
             (strpos($command->getName(), ':')?:0)
         );
         $commandData = $command->getApplication()->getData();
-        $commands = $commandData['commands'][$namespace];
         $examples = [];
-        foreach ($commands as $item) {
-            if ($item['name'] ==  $command->getName()) {
-                $examples = $item['examples'];
-                break;
+        if (array_key_exists($namespace, $commandData['commands'])) {
+            $commands = $commandData['commands'][$namespace];
+            foreach ($commands as $item) {
+                if ($item['name'] == $command->getName()) {
+                    $examples = $item['examples'];
+                    break;
+                }
             }
         }
 
         $command->getSynopsis(true);
         $command->getSynopsis(false);
         $command->mergeApplicationDefinition(false);
+
         $this->writeText($command->trans('commands.list.messages.usage'), $options);
         foreach (array_merge([$command->getSynopsis(true)], $command->getAliases(), $command->getUsages()) as $key => $usage) {
             if ($key > 0) {
@@ -165,6 +184,11 @@ class TextDescriptor extends Descriptor
         $definition = $command->getNativeDefinition();
         if ($definition->getOptions() || $definition->getArguments()) {
             $this->writeText("\n");
+            $options =
+                array_merge(
+                    $options,
+                    [ 'command' => $command ]
+                );
             $this->describeInputDefinition($definition, $options);
             $this->writeText("\n");
         }
@@ -208,12 +232,29 @@ class TextDescriptor extends Descriptor
             if ('' != $help = $application->getHelp()) {
                 $this->writeText("$help\n\n", $options);
             }
-            $this->writeText($application->trans('commands.list.messages.usage'), $options);
-            $this->writeText($application->trans('commands.list.messages.usage-details'), $options);
-            $options['application'] = $application;
-            $this->describeInputDefinition(new InputDefinition($application->getDefinition()->getOptions()), $options);
-            $this->writeText("\n");
-            $this->writeText("\n");
+            if (empty($describedNamespace)) {
+                $this->writeText(
+                    $application->trans('commands.list.messages.usage'),
+                    $options
+                );
+                $this->writeText(
+                    $application->trans(
+                        'commands.list.messages.usage-details'
+                    ),
+                    $options
+                );
+                $options['application'] = $application;
+
+                $this->describeInputDefinition(
+                    new InputDefinition(
+                        $application->getDefinition()->getOptions()
+                    ),
+                    $options
+                );
+                $this->writeText("\n");
+                $this->writeText("\n");
+            }
+
             $width = $this->getColumnWidth($description->getCommands()) + 4;
             if ($describedNamespace) {
                 $this->writeText(sprintf($application->trans('commands.list.messages.comment'), $describedNamespace), $options);
@@ -225,6 +266,7 @@ class TextDescriptor extends Descriptor
                 'about',
                 'chain',
                 'check',
+                'composerize',
                 'exec',
                 'help',
                 'init',
@@ -256,7 +298,7 @@ class TextDescriptor extends Descriptor
                     }
 
                     $spacingWidth = $width - strlen($name.$alias);
-                    if($spacingWidth < 0) {
+                    if ($spacingWidth < 0) {
                         $spacingWidth = 0;
                     }
 

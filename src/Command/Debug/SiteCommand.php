@@ -13,7 +13,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Dumper;
 use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Utils\ConfigurationManager;
-use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class SiteCommand
@@ -68,32 +67,37 @@ class SiteCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
-
-        $sites = array_keys($this->configurationManager->getSites());
+        $sites = $this->configurationManager->getSites();
 
         if (!$sites) {
-            $io->error($this->trans('commands.debug.site.messages.invalid-sites'));
+            $this->getIo()->warning($this->trans('commands.debug.site.messages.invalid-sites'));
 
-            return 1;
+            return 0;
         }
 
-
-        // --target argument
         $target = $input->getArgument('target');
         if (!$target) {
-            $tableHeader =[
-                $this->trans('commands.debug.site.messages.site'),
-            ];
+            foreach ($sites as $key => $site) {
+                $environments = array_keys($site);
+                unset($environments[0]);
 
-            $io->table($tableHeader, $sites);
+                $environments = array_map(
+                    function ($element) use ($key) {
+                        return $key . '.' . $element;
+                    },
+                    $environments
+                );
+
+                $this->getIo()->info($key);
+                $this->getIo()->listing($environments);
+            }
 
             return 0;
         }
 
         $targetConfig = $this->configurationManager->readTarget($target);
         if (!$targetConfig) {
-            $io->error($this->trans('commands.debug.site.messages.invalid-site'));
+            $this->getIo()->error($this->trans('commands.debug.site.messages.invalid-site'));
 
             return 1;
         }
@@ -108,13 +112,13 @@ class SiteCommand extends Command
                 $val = &$val[$property_key];
             }
 
-            $io->writeln($val);
+            $this->getIo()->writeln($val);
             return 0;
         }
 
-        $io->info($target);
+        $this->getIo()->info($target);
         $dumper = new Dumper();
-        $io->writeln($dumper->dump($targetConfig, 2));
+        $this->getIo()->writeln($dumper->dump($targetConfig, 4, 2));
 
         return 0;
     }

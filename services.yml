@@ -18,14 +18,23 @@ services:
     arguments: ['@console.translator_manager', '@console.string_converter']
   console.file_queue:
     class: Drupal\Console\Core\Utils\FileQueue
+    arguments: ['@app.root']
   console.shell_process:
     class: Drupal\Console\Core\Utils\ShellProcess
     arguments: ['@app.root', '@console.translator_manager']
   console.string_converter:
-      class: Drupal\Console\Core\Utils\StringConverter
+    class: Drupal\Console\Core\Utils\StringConverter
   console.chain_discovery:
     class: Drupal\Console\Core\Utils\ChainDiscovery
-    arguments: ['@console.root', '@console.configuration_manager']
+    arguments: ['@console.root', '@console.configuration_manager', '@console.message_manager', '@console.translator_manager']
+  console.count_code_lines:
+    class: Drupal\Console\Core\Utils\CountCodeLines
+  console.message_manager:
+    class: Drupal\Console\Core\Utils\MessageManager
+  console.drupal_finder:
+    class: Drupal\Console\Core\Utils\DrupalFinder
+  console.key_value_storage:
+    class: Drupal\Console\Core\Utils\KeyValueStorage
   # DrupalConsoleCore Commands
   console.about:
     class: Drupal\Console\Core\Command\AboutCommand
@@ -55,7 +64,7 @@ services:
       - { name: drupal.command }
   console.settings_debug:
     class: Drupal\Console\Core\Command\Debug\SettingsCommand
-    arguments: ['@console.configuration_manager', '@console.nested_array']
+    arguments: ['@console.configuration_manager']
     tags:
       - { name: drupal.command }
   console.settings_set:
@@ -83,13 +92,22 @@ services:
     arguments: ['@console.configuration_manager']
     tags:
       - { name: drupal.command }
-  # DrupalConsoleCore Generators
-  console.init_generator:
-    class: Drupal\Console\Core\Generator\InitGenerator
-    tags:
-      - { name: drupal.generator }
   console.drush:
     class: Drupal\Console\Core\Command\DrushCommand
     arguments: ['@console.configuration_manager', '@console.chain_queue']
     tags:
       - { name: drupal.command }
+  console.generate_site_alias:
+    class: Drupal\Console\Core\Command\Generate\SiteAliasCommand
+    arguments: ['@console.site_alias_generator', '@console.configuration_manager', '@console.drupal_finder']
+    tags:
+       - { name: drupal.command }
+  # DrupalConsoleCore Generators
+  console.init_generator:
+    class: Drupal\Console\Core\Generator\InitGenerator
+    tags:
+      - { name: drupal.generator }
+  console.site_alias_generator:
+    class: Drupal\Console\Core\Generator\SiteAliasGenerator
+    tags:
+      - { name: drupal.generator }

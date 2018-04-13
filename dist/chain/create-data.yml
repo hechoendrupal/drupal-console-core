@@ -1,5 +1,8 @@
+command:
+  name: create:data
+  description: 'Create dummy data'
 commands:
-# Create dummy data
+  # Create dummy data
   - command: create:users
     options:
       limit: 5

@@ -1,0 +1,21 @@
+command:
+  name: site:install:env
+  description: 'Install site using environment placeholders'
+commands:
+  # Install Drupal
+  - command: site:install
+    options:
+      langcode: en
+      db-type: '{{ env("DATABASE_TYPE") }}'
+      db-host: '{{ env("DATABASE_HOST") }}'
+      db-name: '{{ env("DATABASE_NAME") }}'
+      db-user: '{{ env("DATABASE_USER") }}'
+      db-pass: '{{ env("DATABASE_PASSWORD") }}'
+      db-port: '{{ env("DATABASE_PORT") }}'
+      site-name: 'Drupal 8 site'
+      site-mail: admin@example.org # default email
+      account-name: admin # default account
+      account-mail: admin@example.org # default email
+      account-pass: admin # default pass
+    arguments:
+      profile: 'standard'

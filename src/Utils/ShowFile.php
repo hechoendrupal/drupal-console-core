@@ -50,7 +50,7 @@ class ShowFile
         $pathKey = null;
         $path = null;
         if ($showPath) {
-            $pathKey = 'application.user.messages.path';
+            $pathKey = 'application.messages.path';
             $path = $this->root;
         }
         $this->showMMultiple(
@@ -64,7 +64,7 @@ class ShowFile
 
     /**
      * @param DrupalStyle $io
-     * @param string      $files
+     * @param array       $files
      * @param boolean     $showPath
      */
     public function copiedFiles($io, $files, $showPath = true)

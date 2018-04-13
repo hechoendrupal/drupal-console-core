@@ -1,3 +1,6 @@
+command:
+  name: generate:example:form
+  description: 'Generate form example'
 commands:
   - command: generate:form:config
     options:
@@ -31,5 +34,5 @@ commands:
       menu_link_title: 'Example Config Form'
       menu_parent: system.admin_config_system
       menu_link_desc: 'A Example Config Form.'
-# Rebuild routes
+  # Rebuild routes
   - command: router:rebuild

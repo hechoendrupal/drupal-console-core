@@ -1,0 +1,32 @@
+# How to use
+# update:gitbook --directory="/path/to/drupal-project/"
+command:
+  name: update:gitbook
+  description: 'Update gitbook'
+commands:
+  - command: 'module:install'
+    arguments:
+      module:
+        - rest
+        - taxonomy
+        - locale
+        - migrate
+        - simpletest
+        - breakpoint
+        - node
+        - views
+        - features
+{% set languages = ['en', 'es', 'hi', 'hu', 'pt_br', 'ro', 'vn', 'zh_hans'] %}
+{% for language in languages %}
+  - command: settings:set
+    arguments:
+      name: language
+      value: {{ language }}
+  - command: develop:doc:gitbook
+    options:
+      path: '{{ directory }}/{{ language }}'
+{% endfor %}
+  - command: settings:set
+    arguments:
+      name: language
+      value: en

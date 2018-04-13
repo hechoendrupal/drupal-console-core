@@ -1,5 +1,8 @@
+command:
+  name: site:install:sqlite
+  description: 'Install site using sqlite'
 commands:
-# Install Drupal
+  # Install Drupal
   - command: site:install
     options:
       langcode: en

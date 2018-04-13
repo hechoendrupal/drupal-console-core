@@ -1,0 +1,22 @@
+{{ environment }}:
+  type: {{ type }}
+  root: {{ root }}
+{% if host %}
+  host: {{ host }}
+{% endif %}
+{% if port %}
+  port: {{ port }}
+{% endif %}
+{% if user %}
+  user: {{ user }}
+{% endif %}
+{% if uri %}
+  options:
+    uri: {{ uri }}
+{% else %}
+#  options:
+{% endif %}
+#  arguments:
+{% if extra_options %}
+  extra-options: '{{ extra_options }}'
+{% endif %}

@@ -1,0 +1,20 @@
+# How to use
+# update:command:data --directory="/path/to/drupal-project/"
+command:
+  name: update:command:data
+  description: 'Update gitbook'
+commands:
+{% set languages = ['en', 'es', 'hi', 'hu', 'pt_br', 'ro', 'vn', 'zh_hans'] %}
+{% for language in languages %}
+  - command: settings:set
+    arguments:
+      name: language
+      value: {{ language }}
+  - command: generate:doc:data
+    options:
+      file: '{{ directory }}/{{ language }}.json'
+{% endfor %}
+  - command: settings:set
+    arguments:
+      name: language
+      value: en

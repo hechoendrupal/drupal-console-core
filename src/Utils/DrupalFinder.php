@@ -81,8 +81,8 @@ class DrupalFinder extends DrupalFinderBase
 
         if (!defined("DRUPAL_CONSOLE_LIBRARY")) {
             define(
-            "DRUPAL_CONSOLE_LIBRARY",
-            "/{$vendorDir}/drupal/%s/console/translations/%s"
+                "DRUPAL_CONSOLE_LIBRARY",
+                "/{$vendorDir}/drupal/%s/console/translations/%s"
             );
         }
     }
@@ -109,5 +109,9 @@ class DrupalFinder extends DrupalFinderBase
     public function getConsoleLanguagePath()
     {
         return $this->consoleLanguagePath;
+    }
+
+    public function isValidDrupal() {
+        return ($this->getComposerRoot() && $this->getDrupalRoot());
     }
 }

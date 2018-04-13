@@ -11,7 +11,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Utils\ChainDiscovery;
-use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ChainCommand
@@ -54,23 +53,37 @@ class ChainCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalStyle($input, $output);
-        $files = $this->chainDiscovery->getChainFiles();
+        $files = $this->chainDiscovery->getFiles();
+        $filesPerDirectory = $this->chainDiscovery->getFilesPerDirectory();
 
-        foreach ($files as $directory => $chainFiles) {
-            $io->info($this->trans('commands.debug.chain.messages.directory'), false);
-            $io->comment($directory);
+        if (!$files || !$filesPerDirectory) {
+            $this->getIo()->warning($this->trans('commands.debug.chain.messages.no-files'));
+
+            return 0;
+        }
+
+        foreach ($filesPerDirectory as $directory => $fileNames) {
+            $this->getIo()->info(' ' . $this->trans('commands.debug.chain.messages.directory'), false);
+            $this->getIo()->comment($directory);
 
             $tableHeader = [
-                $this->trans('commands.debug.chain.messages.file')
+                $this->trans('commands.debug.chain.messages.file'),
+                $this->trans('commands.debug.chain.messages.command')
             ];
 
             $tableRows = [];
-            foreach ($chainFiles as $file) {
-                $tableRows[] = $file;
+            foreach ($fileNames as $file) {
+                $commandName = '';
+                if (array_key_exists('command', $files[$directory.$file])) {
+                    $commandName = $files[$directory.$file]['command'];
+                }
+                $tableRows[] = [
+                    'file'  => $file,
+                    'command' => $commandName
+                ];
             }
 
-            $io->table($tableHeader, $tableRows);
+            $this->getIo()->table($tableHeader, $tableRows);
         }
 
         return 0;
