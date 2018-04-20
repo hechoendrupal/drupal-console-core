@@ -1,4 +1,6 @@
 application:
+  share:
+    statistics: false
   language: 'en'
   autowire:
     commands:

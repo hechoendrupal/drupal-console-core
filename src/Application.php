@@ -2,7 +2,9 @@
 
 namespace Drupal\Console\Core;
 
+use Drupal\Console\Core\EventSubscriber\CalculateStatisticsListener;
 use Drupal\Console\Core\EventSubscriber\RemoveMessagesListener;
+use Drupal\Console\Core\EventSubscriber\SaveStatisticsListener;
 use Drupal\Console\Core\EventSubscriber\ShowGenerateCountCodeLinesListener;
 use Drupal\Console\Core\Utils\TranslatorManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -301,6 +303,20 @@ class Application extends BaseApplication
                 new ShowGenerateCountCodeLinesListener(
                     $this->container->get('console.translator_manager'),
                     $this->container->get('console.count_code_lines')
+                )
+            );
+
+            $dispatcher->addSubscriber(
+                new SaveStatisticsListener(
+                    $this->container->get('console.count_code_lines'),
+                    $this->container->get('console.configuration_manager'),
+                    $this->container->get('console.translator_manager')
+                )
+            );
+
+            $dispatcher->addSubscriber(
+                new CalculateStatisticsListener(
+                    $this->container->get('console.configuration_manager')
                 )
             );
 
@@ -860,7 +876,8 @@ class Application extends BaseApplication
     /**
      * Add Drupal system messages.
      */
-    protected function addDrupalMessages($messageManager) {
+    protected function addDrupalMessages($messageManager)
+    {
         if (function_exists('drupal_get_messages')) {
             $drupalMessages = drupal_get_messages();
             foreach ($drupalMessages as $type => $messages) {
@@ -881,13 +898,14 @@ class Application extends BaseApplication
      * @return string
      *   Name of the method
      */
-    protected function getMessageMethod($type) {
+    protected function getMessageMethod($type)
+    {
         $methodName = 'info';
         switch ($type) {
-            case 'error':
-            case 'warning':
-                $methodName = $type;
-                break;
+        case 'error':
+        case 'warning':
+            $methodName = $type;
+            break;
         }
 
         return $methodName;

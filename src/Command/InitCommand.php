@@ -56,7 +56,8 @@ class InitCommand extends Command
         'sites' => false,
         'learning' => false,
         'generate_inline' => false,
-        'generate_chain' => false
+        'generate_chain' => false,
+        'statistics' => false
     ];
 
     private $directories = [
@@ -192,6 +193,21 @@ class InitCommand extends Command
             );
             $input->setOption('autocomplete', $autocomplete);
         }
+
+        $this->getIo()->commentBlock(
+            $this->trans('commands.init.messages.statistics')
+        );
+
+        $this->configParameters['statistics'] = $this->getIo()->confirm(
+            $this->trans('commands.init.questions.statistics'),
+            true
+        );
+
+        if ($this->configParameters['statistics']) {
+            $this->getIo()->commentBlock(
+                $this->trans('commands.init.messages.statistics-disable')
+            );
+        }
     }
 
     /**
@@ -269,13 +285,15 @@ class InitCommand extends Command
             $process->stop();
         }
 
-        $this->generator->generate([
-          'user_home' => $this->configurationManager->getConsoleDirectory(),
-          'executable_name' => $executableName,
-          'override' => $override,
-          'destination' => $destination,
-          'config_parameters' => $this->configParameters,
-        ]);
+        $this->generator->generate(
+            [
+            'user_home' => $this->configurationManager->getConsoleDirectory(),
+            'executable_name' => $executableName,
+            'override' => $override,
+            'destination' => $destination,
+            'config_parameters' => $this->configParameters,
+            ]
+        );
 
         $this->getIo()->writeln($this->trans('application.messages.autocomplete'));
 
