@@ -1,5 +1,5 @@
 # How to use
-# update:gitbook --directory="/path/to/drupal-project/"
+# update:gitbook --directory="/path/to/drupal-console/gitbook-repository/"
 command:
   name: update:gitbook
   description: 'Update gitbook'
@@ -16,12 +16,16 @@ commands:
         - node
         - views
         - features
-{% set languages = ['en', 'es', 'hi', 'hu', 'pt_br', 'ro', 'vn', 'zh_hans'] %}
+  - command: 'develop:translation:sync'
+{% set languages = ['en', 'ca', 'es', 'hi', 'hu', 'ja', 'mr', 'pt-br', 'ro', 'ru', 'vn' , 'zh-hans'] %}
 {% for language in languages %}
   - command: settings:set
     arguments:
       name: language
       value: {{ language }}
+  - command: exec
+    arguments:
+        bin: 'rm -Rf {{ directory }}/{{ language }}/commands'
   - command: develop:doc:gitbook
     options:
       path: '{{ directory }}/{{ language }}'
