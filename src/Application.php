@@ -469,6 +469,12 @@ class Application extends BaseApplication
                 );
             }
 
+            if (method_exists($command, 'setDrupalFinder')) {
+                $command->setDrupalFinder(
+                    $this->container->get('console.drupal_finder')
+                );
+            }
+
             if (array_key_exists($command->getName(), $aliases)) {
                 $commandAliases = $aliases[$command->getName()];
                 if (!is_array($commandAliases)) {
@@ -509,6 +515,7 @@ class Application extends BaseApplication
             if (!$generator) {
                 continue;
             }
+
             if (method_exists($generator, 'setRenderer')) {
                 $generator->setRenderer(
                     $this->container->get('console.renderer')
@@ -665,7 +672,7 @@ class Application extends BaseApplication
             ->loadExtendConfiguration();
     }
 
-    public function getData()
+    public function getData($filterNamespaces = null, $excludeNamespaces = [], $excludeChainCommands = false)
     {
         $singleCommands = [
             'about',
@@ -694,8 +701,15 @@ class Application extends BaseApplication
                 return (strpos($item, ':')<=0);
             }
         );
+
         sort($namespaces);
         array_unshift($namespaces, 'misc');
+
+        // Exclude specific namespaces
+        $namespaces = array_diff($namespaces, $excludeNamespaces);
+
+        // filter namespaces if available
+        if($filterNamespaces) $namespaces = array_intersect($namespaces, $filterNamespaces);
 
         foreach ($namespaces as $namespace) {
             $commands = $this->all($namespace);
@@ -706,6 +720,11 @@ class Application extends BaseApplication
             );
 
             foreach ($commands as $command) {
+                // Exclude command if is a chain command and was requested to exclude chain commands
+                if($excludeChainCommands && $command instanceof ChainCustomCommand) {
+                   continue;
+                }
+
                 if (method_exists($command, 'getModule')) {
                     if ($command->getModule() == 'Console') {
                         $data['commands'][$namespace][] = $this->commandData(
@@ -719,6 +738,11 @@ class Application extends BaseApplication
                 }
             }
         }
+
+        // Remove namepsaces without commands
+        $namespaces = array_filter($namespaces, function($namespace) use( $data) {
+            return count($data['commands'][$namespace]) > 0;
+        });
 
         $input = $this->getDefinition();
         $options = [];

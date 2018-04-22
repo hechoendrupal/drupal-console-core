@@ -1,12 +1,13 @@
 # How to use
-# quick:start --directory="/path/to/drupal-project/"
-# quick:start --directory="/path/to/drupal-project/" --profile="minimal"
-# quick:start --repository="acquia/lightning-project:^8.1" --directory="/path/to/drupal-project/" --profile="lightning"
+# quick:start --directory=/path/to/drupal-project/
+# quick:start --directory=/path/to/drupal-project/ --profile=minimal
+# quick:start --repository=weknowinc/drupal-project --directory=/path/to/drupal-project/ --profile=standard
 command:
   name: quick:start
   description: 'Download, install and serve a new Drupal project'
 vars:
   repository:
+    - weknowinc/drupal-project
     - drupal-composer/drupal-project:8.x-dev
     - acquia/lightning-project
     - acquia/reservoir-project

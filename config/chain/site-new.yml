@@ -1,14 +1,16 @@
 # How to use
 # site:new --directory=/path/to/drupal-project/
-# site:new --repository=acquia/lightning-project --directory=/path/to/drupal-project/
+# site:new --repository=weknowinc/drupal-project --directory=/path/to/drupal-project/
 command:
   name: site:new
   description: 'Download a new Drupal project'
 vars:
   repository:
+    - weknowinc/drupal-project
     - drupal-composer/drupal-project:8.x-dev
     - acquia/lightning-project
     - acquia/reservoir-project
+    - drupal/drupal
 commands:
   # Create Drupal project using Composer
   - command: exec

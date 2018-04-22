@@ -1,0 +1,13 @@
+command:
+  name: build:install
+  description: 'Build site by installing and importing configuration'
+commands:
+  # Install site
+  - command: site:install
+    options:
+      force: true
+      no-interaction: true
+    arguments:
+      profile: standard
+  # Import configuration
+  - command: build
