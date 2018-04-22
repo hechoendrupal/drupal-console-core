@@ -20,6 +20,7 @@ use Drupal\Console\Core\EventSubscriber\ValidateExecutionListener;
 use Drupal\Console\Core\EventSubscriber\ShowGeneratedFilesListener;
 use Drupal\Console\Core\EventSubscriber\ShowGenerateInlineListener;
 use Drupal\Console\Core\EventSubscriber\CallCommandListener;
+use Drupal\Console\Core\EventSubscriber\MaintenanceModeListener;
 use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Utils\ChainDiscovery;
@@ -307,6 +308,13 @@ class Application extends BaseApplication
             $dispatcher->addSubscriber(
                 new RemoveMessagesListener(
                     $this->container->get('console.message_manager')
+                )
+            );
+
+            $dispatcher->addSubscriber(
+                new MaintenanceModeListener(
+                    $this->container->get('console.translator_manager'),
+                    $this->container->get('state')
                 )
             );
 
