@@ -20,6 +20,7 @@ use Drupal\Console\Core\EventSubscriber\ValidateExecutionListener;
 use Drupal\Console\Core\EventSubscriber\ShowGeneratedFilesListener;
 use Drupal\Console\Core\EventSubscriber\ShowGenerateInlineListener;
 use Drupal\Console\Core\EventSubscriber\CallCommandListener;
+use Drupal\Console\Core\EventSubscriber\MaintenanceModeListener;
 use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Utils\ChainDiscovery;
@@ -307,6 +308,13 @@ class Application extends BaseApplication
             $dispatcher->addSubscriber(
                 new RemoveMessagesListener(
                     $this->container->get('console.message_manager')
+                )
+            );
+
+            $dispatcher->addSubscriber(
+                new MaintenanceModeListener(
+                    $this->container->get('console.translator_manager'),
+                    $this->container->get('state')
                 )
             );
 
@@ -664,7 +672,7 @@ class Application extends BaseApplication
             ->loadExtendConfiguration();
     }
 
-    public function getData()
+    public function getData($filterNamespaces = null, $excludeNamespaces = [], $excludeChainCommands = false)
     {
         $singleCommands = [
             'about',
@@ -693,8 +701,15 @@ class Application extends BaseApplication
                 return (strpos($item, ':')<=0);
             }
         );
+
         sort($namespaces);
         array_unshift($namespaces, 'misc');
+
+        // Exclude specific namespaces
+        $namespaces = array_diff($namespaces, $excludeNamespaces);
+
+        // filter namespaces if available
+        if($filterNamespaces) $namespaces = array_intersect($namespaces, $filterNamespaces);
 
         foreach ($namespaces as $namespace) {
             $commands = $this->all($namespace);
@@ -705,6 +720,11 @@ class Application extends BaseApplication
             );
 
             foreach ($commands as $command) {
+                // Exclude command if is a chain command and was requested to exclude chain commands
+                if($excludeChainCommands && $command instanceof ChainCustomCommand) {
+                   continue;
+                }
+
                 if (method_exists($command, 'getModule')) {
                     if ($command->getModule() == 'Console') {
                         $data['commands'][$namespace][] = $this->commandData(
@@ -718,6 +738,11 @@ class Application extends BaseApplication
                 }
             }
         }
+
+        // Remove namepsaces without commands
+        $namespaces = array_filter($namespaces, function($namespace) use( $data) {
+            return count($data['commands'][$namespace]) > 0;
+        });
 
         $input = $this->getDefinition();
         $options = [];
