@@ -441,11 +441,11 @@ class ConfigurationManager
     }
 
     /**
-     * Check if the config global exists and return the statistics config.
+     * Check if the config global exists and return the config.
      *
-     * @return bool
+     * @return array
      */
-    public function getStatisticsConfig()
+    public function getGlobalConfig()
     {
         $filePath = sprintf(
             '%s/config.global.yml',
@@ -458,10 +458,10 @@ class ConfigurationManager
             $yaml = new Yaml();
             $configGlobal = $yaml->parse(file_get_contents($filePath), true);
 
-            return $configGlobal['application']['share']['statistics'];
+            return $configGlobal;
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -470,17 +470,6 @@ class ConfigurationManager
     public function getConfigurationFiles()
     {
         return $this->configurationFiles;
-    }
-
-    /**
-     * @return string
-     */
-    public function getStatisticsDirectory()
-    {
-        return sprintf(
-            '%s/.console/stats/',
-            $this->getHomeDirectory()
-        );
     }
 
     public function getHomeDirectory()

@@ -71,11 +71,17 @@ class SaveStatisticsListener implements EventSubscriberInterface
             return;
         }
 
-        if (!$this->configurationManager->getStatisticsConfig()) {
+        $globalConfig = $this->configurationManager->getGlobalConfig();
+
+        if (is_null($globalConfig) || !$globalConfig['application']['share']['statistics']) {
             return;
         }
 
-        $path = $this->configurationManager->getStatisticsDirectory();
+        $path =  $path = sprintf(
+            '%s/.console/stats/',
+            $this->configurationManager->getHomeDirectory()
+        );
+
         $fileName = date('Y-m-d') . '-pending.csv';
 
         $information = $event->getCommand()->getName() . ';' . $this->translator->getLanguage();

@@ -59,11 +59,16 @@ class CalculateStatisticsListener implements EventSubscriberInterface
             return;
         }
 
-        if (!$this->configurationManager->getStatisticsConfig()) {
+        $globalConfig = $this->configurationManager->getGlobalConfig();
+
+        if (is_null($globalConfig) || !$globalConfig['application']['share']['statistics']) {
             return;
         }
 
-        $path = $this->configurationManager->getStatisticsDirectory();
+        $path = sprintf(
+            '%s/.console/stats/',
+            $this->configurationManager->getHomeDirectory()
+        );
 
         //Find all statistics with pending status from other days.
         $finder = new Finder();
@@ -98,18 +103,18 @@ class CalculateStatisticsListener implements EventSubscriberInterface
             $this->fs->rename($file->getPathname(), str_replace('pending', 'send', $file->getPathname()));
         }
 
-        //        $client = new Client();
-        //
-        //        $client->post(
-        //            'http://drupalconsole.com/statistics?_format=json',
-        //            [
-        //                'headers' => [
-        //                    'Accept' => 'application/json',
-        //                    'Authorization' => 'Basic YWRtaW46YWRtaW4='
-        //                ],
-        //                'json' => ['commands' => $commands, 'languages' => $languages]
-        //            ]
-        //        );
+        $client = new Client();
+
+        $client->post(
+            'http://drupalconsole.com/statistics?_format=json',
+            [
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Basic YWRtaW46YWRtaW4='
+                ],
+                'json' => ['commands' => $commands, 'languages' => $languages]
+            ]
+        );
     }
 
     /**
@@ -121,6 +126,7 @@ class CalculateStatisticsListener implements EventSubscriberInterface
      */
     private function getCommandStatisticsAsArray($commands, $content)
     {
+        //Check if in $commands with the $content['command'] key with the value 'executed' have value to sum.
         $executed = $commands[$content['command']]['executed'] + 1;
         $linesOfCode = $commands[$content['command']]['linesOfCode'] + $content['linesOfCode'];
 
@@ -138,6 +144,7 @@ class CalculateStatisticsListener implements EventSubscriberInterface
      */
     private function getLanguageStatisticsAsArray($languages, $content)
     {
+        //Check if in $commands with the $content['language'] key have value to sum.
         $languages[$content['language']] = $languages[$content['language']] + 1;
 
         return $languages;
