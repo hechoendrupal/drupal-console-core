@@ -53,7 +53,7 @@
         "twig/twig": "^1.23.1",
         "webflo/drupal-finder": "^1.0",
         "webmozart/path-util": "^2.3",
-        "guzzlehttp/guzzle": "^6.3"
+        "guzzlehttp/guzzle": "~6.1"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

@@ -6,6 +6,8 @@
  */
 namespace Drupal\Console\Core\Generator;
 
+use Symfony\Component\Filesystem\Filesystem;
+
 /**
  * Class InitGenerator
  *
@@ -16,12 +18,14 @@ class InitGenerator extends Generator
     /**
      * {@inheritdoc}
      */
-    public function generate(array $parameters) {
+    public function generate(array $parameters)
+    {
         $userHome = $parameters['user_home'];
         $executableName = $parameters['executable_name'];
         $override = $parameters['override'];
         $destination = $parameters['destination'];
         $configParameters = $parameters['config_parameters'];
+        $configGlobalDestination = $parameters['config_global_destination'];
 
         $configParameters = array_map(
             function ($item) {
@@ -50,6 +54,16 @@ class InitGenerator extends Generator
             $configFile,
             $configParameters
         );
+
+        //Render statistics config file if this is true by the user.
+        $fs = new Filesystem();
+        if ($fs->exists($configGlobalDestination) || filter_var($configParameters['statistics'], FILTER_VALIDATE_BOOLEAN)) {
+            $this->renderFile(
+                'core/init/config.global.yml.twig',
+                $configGlobalDestination,
+                $configParameters
+            );
+        }
 
         if ($executableName) {
             $parameters = [

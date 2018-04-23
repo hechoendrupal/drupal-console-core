@@ -71,12 +71,12 @@ class SaveStatisticsListener implements EventSubscriberInterface
             return;
         }
 
-        if (!$this->configurationManager->getConfiguration()->get('application.share.statistics')) {
+        if (!$this->configurationManager->getStatisticsConfig()) {
             return;
         }
 
-        $path = $this->configurationManager->getConsoleDirectory() . 'stats/';
-        $fileName = date('Y_m_d') . '-pending.csv';
+        $path = $this->configurationManager->getStatisticsDirectory();
+        $fileName = date('Y-m-d') . '-pending.csv';
 
         $information = $event->getCommand()->getName() . ';' . $this->translator->getLanguage();
 

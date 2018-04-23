@@ -34,6 +34,11 @@ class CalculateStatisticsListener implements EventSubscriberInterface
     protected $fs;
 
     /**
+     * string $homeDirectory
+     */
+    protected $homeDirectory;
+
+    /**
      * SaveStatisticsListener constructor.
      *
      * @param ConfigurationManager $configurationManager
@@ -54,51 +59,57 @@ class CalculateStatisticsListener implements EventSubscriberInterface
             return;
         }
 
-        if (!$this->configurationManager->getConfiguration()->get('application.share.statistics')) {
+        if (!$this->configurationManager->getStatisticsConfig()) {
             return;
         }
 
-        $path = $this->configurationManager->getConsoleDirectory() . 'stats';
+        $path = $this->configurationManager->getStatisticsDirectory();
 
+        //Find all statistics with pending status from other days.
         $finder = new Finder();
         $finder
             ->files()
             ->name('*-pending.csv')
-            ->notName(date('Y_m_d').'-pending.csv')
+            ->notName(date('Y-m-d').'-pending.csv')
             ->in($path);
 
-        $statistics_keys = ['command', 'language', 'linesOfCode'];
+        $statisticsKeys = ['command', 'language', 'linesOfCode'];
         $commands = [];
         $languages = [];
 
         foreach ($finder as $file) {
-            $file_content = array_filter(explode("\n", file_get_contents($file->getPathname())));
+            $file_content = array_filter(explode(PHP_EOL, file_get_contents($file->getPathname())));
             foreach ($file_content as $value) {
                 $content = explode(";", $value);
 
+                /**
+                 * If the command doesn't have linesOfCode,
+                 * we add a null value at the end to combine with statistics keys.
+                 */
                 if (count($content) === 2) {
                     array_push($content, 0);
                 }
 
-                $commands = $this->getCommandStatisticsAsArray($commands, array_combine($statistics_keys, $content));
-                $languages = $this->getLanguageStatisticsAsArray($languages, array_combine($statistics_keys, $content));
+                $commands = $this->getCommandStatisticsAsArray($commands, array_combine($statisticsKeys, $content));
+                $languages = $this->getLanguageStatisticsAsArray($languages, array_combine($statisticsKeys, $content));
             }
 
+            //Change statistics status after build array.
             $this->fs->rename($file->getPathname(), str_replace('pending', 'send', $file->getPathname()));
         }
 
-        $client = new Client();
-
-        $client->post(
-            'http://127.0.0.1:8088/statistics?_format=json',
-            [
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Authorization' => 'Basic YWRtaW46YWRtaW4='
-                ],
-                'json' => ['commands' => $commands, 'languages' => $languages]
-            ]
-        );
+        //        $client = new Client();
+        //
+        //        $client->post(
+        //            'http://drupalconsole.com/statistics?_format=json',
+        //            [
+        //                'headers' => [
+        //                    'Accept' => 'application/json',
+        //                    'Authorization' => 'Basic YWRtaW46YWRtaW4='
+        //                ],
+        //                'json' => ['commands' => $commands, 'languages' => $languages]
+        //            ]
+        //        );
     }
 
     /**

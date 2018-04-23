@@ -292,6 +292,7 @@ class InitCommand extends Command
             'override' => $override,
             'destination' => $destination,
             'config_parameters' => $this->configParameters,
+            'config_global_destination' => $this->configurationManager->getHomeDirectory() . '/config.global.yml'
             ]
         );
 

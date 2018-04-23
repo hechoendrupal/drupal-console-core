@@ -2,6 +2,7 @@
 
 namespace Drupal\Console\Core\Utils;
 
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Finder\Finder;
@@ -359,7 +360,7 @@ class ConfigurationManager
 
     public function loadExtendConfiguration()
     {
-        $directory = $this->getConsoleDirectory() . '/extend/';
+        $directory = $this->getConsoleDirectory() . 'extend/';
         if (!is_dir($directory)) {
             return null;
         }
@@ -440,11 +441,46 @@ class ConfigurationManager
     }
 
     /**
+     * Check if the config global exists and return the statistics config.
+     *
+     * @return bool
+     */
+    public function getStatisticsConfig()
+    {
+        $filePath = sprintf(
+            '%s/config.global.yml',
+            $this->getHomeDirectory()
+        );
+
+        $fs = new Filesystem();
+
+        if ($fs->exists($filePath)) {
+            $yaml = new Yaml();
+            $configGlobal = $yaml->parse(file_get_contents($filePath), true);
+
+            return $configGlobal['application']['share']['statistics'];
+        }
+
+        return false;
+    }
+
+    /**
      * @return array
      */
     public function getConfigurationFiles()
     {
         return $this->configurationFiles;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatisticsDirectory()
+    {
+        return sprintf(
+            '%s/.console/stats/',
+            $this->getHomeDirectory()
+        );
     }
 
     public function getHomeDirectory()
