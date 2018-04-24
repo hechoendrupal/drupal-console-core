@@ -66,7 +66,7 @@ class CalculateStatisticsListener implements EventSubscriberInterface
         }
 
         $path = sprintf(
-            '%s/.console/stats/',
+            '%s/.console/stats',
             $this->configurationManager->getHomeDirectory()
         );
 
@@ -82,21 +82,25 @@ class CalculateStatisticsListener implements EventSubscriberInterface
         $commands = [];
         $languages = [];
 
+
         foreach ($finder as $file) {
-            $file_content = array_filter(explode(PHP_EOL, file_get_contents($file->getPathname())));
-            foreach ($file_content as $value) {
-                $content = explode(";", $value);
+            if (($handle = fopen($file->getPathname(), "r")) !== FALSE) {
+                while (($content = fgetcsv($handle,0,';')) !== FALSE) {
 
-                /**
-                 * If the command doesn't have linesOfCode,
-                 * we add a null value at the end to combine with statistics keys.
-                 */
-                if (count($content) === 2) {
-                    array_push($content, 0);
+                    /**
+                     * If the command doesn't have linesOfCode,
+                     * we add a null value at the end to combine with statistics keys.
+                     */
+                    if (count($content) === 2) {
+                        array_push($content, 0);
+                    }
+
+                    $commands = $this->getCommandStatisticsAsArray($commands, array_combine($statisticsKeys, $content));
+                    $languages = $this->getLanguageStatisticsAsArray($languages, array_combine($statisticsKeys, $content));
+
                 }
-
-                $commands = $this->getCommandStatisticsAsArray($commands, array_combine($statisticsKeys, $content));
-                $languages = $this->getLanguageStatisticsAsArray($languages, array_combine($statisticsKeys, $content));
+                
+                fclose($handle);
             }
 
             //Change statistics status after build array.
