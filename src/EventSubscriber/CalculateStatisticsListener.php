@@ -81,6 +81,7 @@ class CalculateStatisticsListener implements EventSubscriberInterface
         $statisticsKeys = ['command', 'language', 'linesOfCode'];
         $commands = [];
         $languages = [];
+        $filePathToDelete = [];
 
 
         foreach ($finder as $file) {
@@ -99,26 +100,29 @@ class CalculateStatisticsListener implements EventSubscriberInterface
                     $languages = $this->getLanguageStatisticsAsArray($languages, array_combine($statisticsKeys, $content));
 
                 }
-                
-                fclose($handle);
-            }
 
-            //Change statistics status after build array.
-            $this->fs->rename($file->getPathname(), str_replace('pending', 'send', $file->getPathname()));
+                fclose($handle);
+
+                //Save file path to delete if the response is success.
+                array_push($filePathToDelete, $file->getPathname() );
+            }
         }
 
         $client = new Client();
 
-        $client->post(
+        $response = $client->post(
             'http://drupalconsole.com/statistics?_format=json',
             [
                 'headers' => [
                     'Accept' => 'application/json',
-                    'Authorization' => 'Basic YWRtaW46YWRtaW4='
                 ],
                 'json' => ['commands' => $commands, 'languages' => $languages]
             ]
         );
+
+        if($response->getStatusCode() === 200) {
+            $this->fs->remove($filePathToDelete);
+        }
     }
 
     /**
