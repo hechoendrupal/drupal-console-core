@@ -81,7 +81,6 @@ class SaveStatisticsListener implements EventSubscriberInterface
 
         //Check that the namespace starts with 'Drupal\Console'.
         $class = new \ReflectionClass($event->getCommand());
-        var_dump(strpos($class->getNamespaceName(), "Drupal\Console") !== 0);
         if (strpos($class->getNamespaceName(), "Drupal\Console") !== 0) {
             return;
         }
