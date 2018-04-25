@@ -91,49 +91,50 @@ class CalculateStatisticsListener implements EventSubscriberInterface
             ->notName(date('Y-m-d').'-pending.csv')
             ->in($path);
 
-        $statisticsKeys = ['command', 'language', 'linesOfCode'];
-        $commands = [];
-        $languages = [];
-        $filePathToDelete = [];
+        if ($finder->count() > 0) {
+            $statisticsKeys = ['command', 'language', 'linesOfCode'];
+            $commands = [];
+            $languages = [];
+            $filePathToDelete = [];
 
+            foreach ($finder as $file) {
+                if (($handle = fopen($file->getPathname(), "r")) !== false) {
+                    while (($content = fgetcsv($handle, 0, ';')) !== false) {
 
-        foreach ($finder as $file) {
-            if (($handle = fopen($file->getPathname(), "r")) !== false) {
-                while (($content = fgetcsv($handle, 0, ';')) !== false) {
+                        /**
+                         * If the command doesn't have linesOfCode,
+                         * we add a null value at the end to combine with statistics keys.
+                         */
+                        if (count($content) === 2) {
+                            array_push($content, 0);
+                        }
 
-                    /**
-                     * If the command doesn't have linesOfCode,
-                     * we add a null value at the end to combine with statistics keys.
-                     */
-                    if (count($content) === 2) {
-                        array_push($content, 0);
+                        $commands = $this->getCommandStatisticsAsArray($commands, array_combine($statisticsKeys, $content));
+                        $languages = $this->getLanguageStatisticsAsArray($languages, array_combine($statisticsKeys, $content));
                     }
 
-                    $commands = $this->getCommandStatisticsAsArray($commands, array_combine($statisticsKeys, $content));
-                    $languages = $this->getLanguageStatisticsAsArray($languages, array_combine($statisticsKeys, $content));
+                    fclose($handle);
+
+                    //Save file path to delete if the response is success.
+                    array_push($filePathToDelete, $file->getPathname());
                 }
-
-                fclose($handle);
-
-                //Save file path to delete if the response is success.
-                array_push($filePathToDelete, $file->getPathname());
             }
-        }
 
-        $client = new Client();
+            $client = new Client();
 
-        $response = $client->post(
-            'http://drupalconsole.com/statistics?_format=json',
-            [
-                'headers' => [
-                    'Accept' => 'application/json',
-                ],
-                'json' => ['commands' => $commands, 'languages' => $languages]
-            ]
-        );
+            $response = $client->post(
+                'http://drupalconsole.com/statistics?_format=json',
+                [
+                    'headers' => [
+                        'Accept' => 'application/json',
+                    ],
+                    'json' => ['commands' => $commands, 'languages' => $languages]
+                ]
+            );
 
-        if ($response->getStatusCode() === 200) {
-            $this->fs->remove($filePathToDelete);
+            if ($response->getStatusCode() === 200) {
+                $this->fs->remove($filePathToDelete);
+            }
         }
     }
 
