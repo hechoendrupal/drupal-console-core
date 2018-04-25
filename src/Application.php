@@ -692,8 +692,11 @@ class Application extends BaseApplication
             ->get('application.languages');
 
         $data = [];
-        foreach ($singleCommands as $singleCommand) {
-            $data['commands']['misc'][] = $this->commandData($singleCommand);
+        // Exclude misc if it is inside the $excludeNamespaces array.
+        if (!in_array('misc', $excludeNamespaces)) {
+            foreach ($singleCommands as $singleCommand) {
+                $data['commands']['misc'][] = $this->commandData($singleCommand);
+            }
         }
 
         $namespaces = array_filter(
@@ -760,25 +763,29 @@ class Application extends BaseApplication
             ];
         }
 
-        $data['application'] = [
-            'namespaces' => $namespaces,
-            'options' => $options,
-            'arguments' => $arguments,
-            'languages' => $languages,
-            'messages' => [
-                'title' => $this->trans('application.gitbook.messages.title'),
-                'note' =>  $this->trans('application.gitbook.messages.note'),
-                'note_description' =>  $this->trans('application.gitbook.messages.note-description'),
-                'command' =>  $this->trans('application.gitbook.messages.command'),
-                'options' => $this->trans('application.gitbook.messages.options'),
-                'option' => $this->trans('application.gitbook.messages.option'),
-                'details' => $this->trans('application.gitbook.messages.details'),
-                'arguments' => $this->trans('application.gitbook.messages.arguments'),
-                'argument' => $this->trans('application.gitbook.messages.argument'),
-                'examples' => $this->trans('application.gitbook.messages.examples')
-            ],
-            'examples' => []
-        ];
+
+        // Exclude application if it is inside the $excludeNamespaces array.
+        if (!in_array('application', $excludeNamespaces)) {
+            $data['application'] = [
+                'namespaces' => $namespaces,
+                'options' => $options,
+                'arguments' => $arguments,
+                'languages' => $languages,
+                'messages' => [
+                    'title' => $this->trans('application.gitbook.messages.title'),
+                    'note' =>  $this->trans('application.gitbook.messages.note'),
+                    'note_description' =>  $this->trans('application.gitbook.messages.note-description'),
+                    'command' =>  $this->trans('application.gitbook.messages.command'),
+                    'options' => $this->trans('application.gitbook.messages.options'),
+                    'option' => $this->trans('application.gitbook.messages.option'),
+                    'details' => $this->trans('application.gitbook.messages.details'),
+                    'arguments' => $this->trans('application.gitbook.messages.arguments'),
+                    'argument' => $this->trans('application.gitbook.messages.argument'),
+                    'examples' => $this->trans('application.gitbook.messages.examples')
+                ],
+                'examples' => []
+            ];
+        }
 
         return $data;
     }
