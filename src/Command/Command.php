@@ -34,6 +34,11 @@ abstract class Command extends BaseCommand
     private $io;
 
     /**
+     * @var bool
+     */
+    private $maintenance = false;
+
+    /**
      * {@inheritdoc}
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
@@ -49,6 +54,34 @@ abstract class Command extends BaseCommand
         return $this->io;
     }
 
+    /**
+     * Check maintenance mode.
+     *
+     * @return bool
+     */
+    public function isMaintenance()
+    {
+        return $this->maintenance;
+    }
+
+    /**
+     * Enable maintenance mode.
+     *
+     * @return $this
+     *   Command.
+     */
+    public function enableMaintenance()
+    {
+        $this->maintenance = true;
+        return $this;
+    }
+  
+    /**
+     * Create Exception
+     *
+     * @return void
+     * 
+     */ 
     public function createException($message) {
         $this->getIo()->error($message);
         exit(1);
