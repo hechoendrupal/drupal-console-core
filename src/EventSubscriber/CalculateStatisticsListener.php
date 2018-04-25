@@ -7,6 +7,7 @@
 
 namespace Drupal\Console\Core\EventSubscriber;
 
+use Drupal\Console\Core\Command\Chain\ChainCustomCommand;
 use Drupal\Console\Core\Utils\ConfigurationManager;
 use GuzzleHttp\Client;
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
@@ -61,7 +62,19 @@ class CalculateStatisticsListener implements EventSubscriberInterface
 
         $globalConfig = $this->configurationManager->getGlobalConfig();
 
+        //Validate if the config is enable.
         if (is_null($globalConfig) || !$globalConfig['application']['share']['statistics']) {
+            return;
+        }
+
+        //Check that the namespace starts with 'Drupal\Console'.
+        $class = new \ReflectionClass($event->getCommand());
+        if (strpos($class->getNamespaceName(), "Drupal\Console") !== 0) {
+            return;
+        }
+
+        //Validate if the command is not a custom chain command.
+        if ($event->getCommand() instanceof ChainCustomCommand) {
             return;
         }
 
@@ -85,8 +98,8 @@ class CalculateStatisticsListener implements EventSubscriberInterface
 
 
         foreach ($finder as $file) {
-            if (($handle = fopen($file->getPathname(), "r")) !== FALSE) {
-                while (($content = fgetcsv($handle,0,';')) !== FALSE) {
+            if (($handle = fopen($file->getPathname(), "r")) !== false) {
+                while (($content = fgetcsv($handle, 0, ';')) !== false) {
 
                     /**
                      * If the command doesn't have linesOfCode,
@@ -98,13 +111,12 @@ class CalculateStatisticsListener implements EventSubscriberInterface
 
                     $commands = $this->getCommandStatisticsAsArray($commands, array_combine($statisticsKeys, $content));
                     $languages = $this->getLanguageStatisticsAsArray($languages, array_combine($statisticsKeys, $content));
-
                 }
 
                 fclose($handle);
 
                 //Save file path to delete if the response is success.
-                array_push($filePathToDelete, $file->getPathname() );
+                array_push($filePathToDelete, $file->getPathname());
             }
         }
 
@@ -120,7 +132,7 @@ class CalculateStatisticsListener implements EventSubscriberInterface
             ]
         );
 
-        if($response->getStatusCode() === 200) {
+        if ($response->getStatusCode() === 200) {
             $this->fs->remove($filePathToDelete);
         }
     }

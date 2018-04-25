@@ -7,6 +7,7 @@
 
 namespace Drupal\Console\Core\EventSubscriber;
 
+use Drupal\Console\Core\Command\Chain\ChainCustomCommand;
 use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Utils\CountCodeLines;
 use Drupal\Console\Core\Utils\TranslatorManagerInterface;
@@ -73,7 +74,20 @@ class SaveStatisticsListener implements EventSubscriberInterface
 
         $globalConfig = $this->configurationManager->getGlobalConfig();
 
+        //Validate if the config is enable.
         if (is_null($globalConfig) || !$globalConfig['application']['share']['statistics']) {
+            return;
+        }
+
+        //Check that the namespace starts with 'Drupal\Console'.
+        $class = new \ReflectionClass($event->getCommand());
+        var_dump(strpos($class->getNamespaceName(), "Drupal\Console") !== 0);
+        if (strpos($class->getNamespaceName(), "Drupal\Console") !== 0) {
+            return;
+        }
+
+        //Validate if the command is not a custom chain command.
+        if ($event->getCommand() instanceof ChainCustomCommand) {
             return;
         }
 
@@ -81,8 +95,6 @@ class SaveStatisticsListener implements EventSubscriberInterface
             '%s/.console/stats/',
             $this->configurationManager->getHomeDirectory()
         );
-
-        $fileName = date('Y-m-d') . '-pending.csv';
 
         $information = $event->getCommand()->getName() . ';' . $this->translator->getLanguage();
 
@@ -93,7 +105,7 @@ class SaveStatisticsListener implements EventSubscriberInterface
 
 
         $this->fs->appendToFile(
-            $path . $fileName,
+            $path .  date('Y-m-d') . '-pending.csv',
             $information . PHP_EOL
         );
     }
