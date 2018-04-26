@@ -3,6 +3,7 @@
 namespace Drupal\Console\Core\Utils;
 
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Finder\Finder;
@@ -420,8 +421,10 @@ class ConfigurationManager
 
             foreach ($environments as $environment => $config) {
                 if (!array_key_exists('type', $config)) {
-                    throw new \UnexpectedValueException(sprintf(
-                        "The 'type' parameter is required in sites configuration:\n %s.", $site->getPathname())
+                    throw new \UnexpectedValueException(
+                        sprintf(
+                            "The 'type' parameter is required in sites configuration:\n %s.", $site->getPathname()
+                        )
                     );
                 }
                 if ($config['type'] !== 'local') {
@@ -443,21 +446,21 @@ class ConfigurationManager
     }
 
     /**
-     * Check if the config global exists and return the config.
+     * Get config as array.
      *
      * @return array
      */
-    public function getGlobalConfig()
+    public function getConfigAsArray()
     {
         $filePath = sprintf(
-            '%s/config.global.yml',
+            '%s/.console/config.yml',
             $this->getHomeDirectory()
         );
 
         $fs = new Filesystem();
 
         if ($fs->exists($filePath)) {
-            $yaml = new Yaml();
+            $yaml = new Parser();
             $configGlobal = $yaml->parse(file_get_contents($filePath), true);
 
             return $configGlobal;

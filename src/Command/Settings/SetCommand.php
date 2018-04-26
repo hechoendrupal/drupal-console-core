@@ -82,6 +82,11 @@ class SetCommand extends Command
         $settingName = $input->getArgument('name');
         $settingValue = $input->getArgument('value');
 
+        // Change the value type if it is boolean.
+        if ($settingValue == 'true' || $settingValue == 'false') {
+            $settingValue = filter_var($settingValue, FILTER_VALIDATE_BOOLEAN);
+        }
+
         $userConfigFile = sprintf(
             '%s/.console/config.yml',
             $this->configurationManager->getHomeDirectory()
@@ -162,15 +167,5 @@ class SetCommand extends Command
 
             return 1;
         }
-
-        $this->getIo()->success(
-            sprintf(
-                $this->trans('commands.settings.set.messages.success'),
-                $settingName,
-                $settingValue
-            )
-        );
-
-        return 0;
     }
 }

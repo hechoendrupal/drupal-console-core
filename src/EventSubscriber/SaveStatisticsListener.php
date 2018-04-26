@@ -72,7 +72,7 @@ class SaveStatisticsListener implements EventSubscriberInterface
             return;
         }
 
-        $globalConfig = $this->configurationManager->getGlobalConfig();
+        $globalConfig = $this->configurationManager->getConfigAsArray();
 
         //Validate if the config is enable.
         if (is_null($globalConfig) || !$globalConfig['application']['share']['statistics']) {

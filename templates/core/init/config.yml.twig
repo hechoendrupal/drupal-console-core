@@ -1,5 +1,9 @@
 application:
   environment: 'prod'
+{% if statistics is defined %}
+  share:
+    statistics: {{statistics}}
+{% endif %}
   language: '{{language}}'
 #  editor: 'vim'
   temp: '{{temp}}'
