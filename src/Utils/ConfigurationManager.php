@@ -446,11 +446,11 @@ class ConfigurationManager
     }
 
     /**
-     * Get config as array.
+     * Get config global as array.
      *
      * @return array
      */
-    public function getConfigAsArray()
+    public function getConfigGlobalAsArray()
     {
         $filePath = sprintf(
             '%s/.console/config.yml',
@@ -459,14 +459,14 @@ class ConfigurationManager
 
         $fs = new Filesystem();
 
-        if ($fs->exists($filePath)) {
-            $yaml = new Parser();
-            $configGlobal = $yaml->parse(file_get_contents($filePath), true);
-
-            return $configGlobal;
+        if (!$fs->exists($filePath)) {
+            return null;
         }
 
-        return null;
+        $yaml = new Parser();
+        $globalConfig = $yaml->parse(file_get_contents($filePath), true);
+
+        return $globalConfig;
     }
 
     /**
