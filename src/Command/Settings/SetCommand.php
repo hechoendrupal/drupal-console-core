@@ -167,5 +167,15 @@ class SetCommand extends Command
 
             return 1;
         }
+
+        $this->getIo()->success(
+            sprintf(
+                $this->trans('commands.settings.set.messages.success'),
+                $settingName,
+                $settingValue
+            )
+        );
+
+        return 0;
     }
 }
