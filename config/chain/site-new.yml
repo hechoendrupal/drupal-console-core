@@ -15,4 +15,4 @@ commands:
   # Create Drupal project using Composer
   - command: exec
     arguments:
-      bin: composer create-project {{repository}} {{directory}} --prefer-dist --no-progress --no-interaction
+      bin: composer create-project {{repository}} {{directory}} --stability dev --prefer-dist --no-progress --no-interaction
