@@ -2,7 +2,7 @@ application:
   statistics:
     enabled: false
     last-attempted: ~
-    count-attempted: 0
+    times-attempted: 0
   language: 'en'
   autowire:
     commands:

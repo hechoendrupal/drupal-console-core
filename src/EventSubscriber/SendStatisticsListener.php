@@ -68,12 +68,13 @@ class SendStatisticsListener implements EventSubscriberInterface
             return;
         }
 
-        //Validate if attempted is 10
-        if ($configGlobalAsArray['application']['statistics']['count-attempted'] >= 10) {
+        //Validate if the times attempted is 10
+        if ($configGlobalAsArray['application']['statistics']['times-attempted'] >= 10) {
+            $this->configurationManager->updateConfigGlobalParameter('statistics.enabled', false);
             return;
         }
 
-        //Validate if last attempted was today
+        //Validate if the last attempted was today
         if ($configGlobalAsArray['application']['statistics']['last-attempted'] === $date) {
             return;
         }
@@ -140,13 +141,13 @@ class SendStatisticsListener implements EventSubscriberInterface
                 $this->fs->remove($filePathToDelete);
 
                 //Reset the count attempted to 0.
-                $this->configurationManager->updateConfigGlobalParameter('statistics.count-attempted', 0);
+                $this->configurationManager->updateConfigGlobalParameter('statistics.times-attempted', 0);
             }
         } catch (\Exception $exception) {
 
             //Increase the count attempted in global config.
-            $countAttempted = $configGlobalAsArray['application']['statistics']['count-attempted'] + 1;
-            $this->configurationManager->updateConfigGlobalParameter('statistics.count-attempted', $countAttempted);
+            $countAttempted = $configGlobalAsArray['application']['statistics']['times-attempted'] + 1;
+            $this->configurationManager->updateConfigGlobalParameter('statistics.times-attempted', $countAttempted);
 
             /* @var DrupalStyle $io */
             $io = new DrupalStyle($event->getInput(), $event->getOutput());
