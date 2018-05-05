@@ -6,9 +6,8 @@
  */
 namespace Drupal\Console\Core\Generator;
 
+use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Utils\NestedArray;
-use Symfony\Component\Yaml\Dumper;
-use Symfony\Component\Yaml\Parser;
 
 /**
  * Class InitGenerator
@@ -24,14 +23,20 @@ class InitGenerator extends Generator
     protected $nestedArray;
 
     /**
+     * @var ConfigurationManager
+     */
+    protected $configurationManager;
+
+    /**
      * InitGenerator constructor.
      *
-     * @param NestedArray $nestedArray
+     * @param NestedArray          $nestedArray
+     * @param ConfigurationManager $configurationManager
      */
-    public function __construct(
-        NestedArray $nestedArray
-    ) {
+    public function __construct(NestedArray $nestedArray, ConfigurationManager $configurationManager)
+    {
         $this->nestedArray = $nestedArray;
+        $this->configurationManager = $configurationManager;
     }
 
     /**
@@ -44,16 +49,6 @@ class InitGenerator extends Generator
         $override = $parameters['override'];
         $destination = $parameters['destination'];
         $configParameters = $parameters['config_parameters'];
-
-        $configParameters = array_map(
-            function ($item) {
-                if (is_bool($item)) {
-                    return $item ? 'true' : 'false';
-                }
-                return $item;
-            },
-            $configParameters
-        );
 
         $configFile = $userHome . 'config.yml';
         if ($destination) {
@@ -70,9 +65,23 @@ class InitGenerator extends Generator
         // If configFile is an override, we only change the value of statistics in the global config.
         $consoleDestination = $userHome . 'config.yml';
         if ($configFile !== $consoleDestination) {
-            $this->resetStatisticsConfig($userHome, $configParameters['statistics']);
+            $this->configurationManager->updateConfigGlobalParameter(
+                'statistics.enabled',
+                $configParameters['statistics']
+            );
+
             unset($configParameters['statistics']);
         }
+
+        $configParameters = array_map(
+            function ($item) {
+                if (is_bool($item)) {
+                    return $item ? 'true' : 'false';
+                }
+                return $item;
+            },
+            $configParameters
+        );
 
         $this->renderFile(
             'core/init/config.yml.twig',
@@ -97,57 +106,6 @@ class InitGenerator extends Generator
                 $userHome . 'drupal.fish',
                 $parameters
             );
-        }
-    }
-
-    /**
-     * Reset only the value of statistics is the init command is an override.
-     *
-     * @param  $homeDirectory
-     * @param  $statisticsValue
-     * @return int
-     */
-    private function resetStatisticsConfig($homeDirectory, $statisticsValue)
-    {
-        $parser = new Parser();
-        $dumper = new Dumper();
-
-        $userConfigFile = $homeDirectory . 'config.yml';
-
-        if (!file_exists($userConfigFile)) {
-            $this->getIo()->error(
-                sprintf(
-                    $this->trans('commands.settings.set.messages.missing-file'),
-                    $userConfigFile
-                )
-            );
-            return 1;
-        }
-
-        try {
-            $userConfigFileParsed = $parser->parse(
-                file_get_contents($userConfigFile)
-            );
-        } catch (\Exception $e) {
-        }
-
-        $parents = array_merge(['application'], ['share', 'statistics']);
-
-        $this->nestedArray->setValue(
-            $userConfigFileParsed,
-            $parents,
-            filter_var($statisticsValue, FILTER_VALIDATE_BOOLEAN),
-            true
-        );
-
-        try {
-            $userConfigFileDump = $dumper->dump($userConfigFileParsed, 10);
-        } catch (\Exception $e) {
-        }
-
-        try {
-            file_put_contents($userConfigFile, $userConfigFileDump);
-        } catch (\Exception $e) {
         }
     }
 }

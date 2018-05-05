@@ -57,7 +57,7 @@ class InitCommand extends Command
         'learning' => false,
         'generate_inline' => false,
         'generate_chain' => false,
-        'statistics' => false
+        'statistics' => true
     ];
 
     private $directories = [

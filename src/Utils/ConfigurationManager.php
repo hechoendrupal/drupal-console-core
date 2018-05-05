@@ -3,6 +3,7 @@
 namespace Drupal\Console\Core\Utils;
 
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Console\Input\ArgvInput;
@@ -467,6 +468,57 @@ class ConfigurationManager
         $globalConfig = $yaml->parse(file_get_contents($filePath), true);
 
         return $globalConfig;
+    }
+
+    /**
+     * Update parameter in global config.
+     *
+     * @param  $configName
+     * @param  $value
+     * @return int
+     */
+    public function updateConfigGlobalParameter($configName, $value)
+    {
+        $parser = new Parser();
+        $dumper = new Dumper();
+
+        $userConfigFile = sprintf(
+            '%s/.console/config.yml',
+            $this->getHomeDirectory()
+        );
+
+        if (!file_exists($userConfigFile)) {
+            return 1;
+        }
+
+        try {
+            $userConfigFileParsed = $parser->parse(
+                file_get_contents($userConfigFile)
+            );
+        } catch (\Exception $e) {
+        }
+
+
+        $parents = array_merge(['application'], explode('.', $configName));
+
+        $nestedArray = new NestedArray();
+
+        $nestedArray->setValue(
+            $userConfigFileParsed,
+            $parents,
+            $value,
+            true
+        );
+
+        try {
+            $userConfigFileDump = $dumper->dump($userConfigFileParsed, 10);
+        } catch (\Exception $e) {
+        }
+
+        try {
+            file_put_contents($userConfigFile, $userConfigFileDump);
+        } catch (\Exception $e) {
+        }
     }
 
     /**

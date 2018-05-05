@@ -1,6 +1,8 @@
 application:
-  share:
-    statistics: false
+  statistics:
+    enabled: false
+    last-attempted: ~
+    count-attempted: 0
   language: 'en'
   autowire:
     commands:

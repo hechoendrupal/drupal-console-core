@@ -75,7 +75,12 @@ class SaveStatisticsListener implements EventSubscriberInterface
         $configGlobalAsArray = $this->configurationManager->getConfigGlobalAsArray();
 
         //Validate if the config is enable.
-        if (is_null($configGlobalAsArray) || !$configGlobalAsArray['application']['share']['statistics']) {
+        if (is_null($configGlobalAsArray) || !$configGlobalAsArray['application']['statistics']['enabled']) {
+            return;
+        }
+
+        //Validate if attempted is 10
+        if ($configGlobalAsArray['application']['statistics']['count-attempted'] >= 10) {
             return;
         }
 
@@ -104,7 +109,7 @@ class SaveStatisticsListener implements EventSubscriberInterface
 
 
         $this->fs->appendToFile(
-            $path .  date('Y-m-d') . '-pending.csv',
+            $path .  date('Y-m-d') . '.csv',
             $information . PHP_EOL
         );
     }

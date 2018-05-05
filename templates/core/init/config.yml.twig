@@ -1,8 +1,10 @@
 application:
   environment: 'prod'
 {% if statistics is defined %}
-  share:
-    statistics: {{statistics}}
+  statistics:
+    enabled: {{statistics}}
+    last-attempted: ~
+    count-attempted: 0
 {% endif %}
   language: '{{language}}'
 #  editor: 'vim'
