@@ -17,7 +17,7 @@ commands:
         - views
         - features
   - command: 'develop:translation:sync'
-{% set languages = ['en', 'ca', 'es', 'hi', 'hu', 'ja', 'mr', 'pt-br', 'ro', 'ru', 'vn' , 'zh-hans'] %}
+{% set languages = ['en', 'ca', 'es', 'fr', 'hi', 'hu', 'ja', 'mr', 'pt-br', 'ro', 'ru', 'vn' , 'zh-hans'] %}
 {% for language in languages %}
   - command: settings:set
     arguments:

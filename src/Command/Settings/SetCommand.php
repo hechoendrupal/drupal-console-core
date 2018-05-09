@@ -82,16 +82,14 @@ class SetCommand extends Command
         $settingName = $input->getArgument('name');
         $settingValue = $input->getArgument('value');
 
-        $userConfigFile = sprintf(
-            '%s/.console/config.yml',
-            $this->configurationManager->getHomeDirectory()
-        );
+        // get configuration file
+        $configFile = $this->configurationManager->getConfigurationFile();
 
-        if (!file_exists($userConfigFile)) {
+        if (!file_exists($configFile)) {
             $this->getIo()->error(
                 sprintf(
                     $this->trans('commands.settings.set.messages.missing-file'),
-                    $userConfigFile
+                    $configFile
                 )
             );
             return 1;
@@ -99,7 +97,7 @@ class SetCommand extends Command
 
         try {
             $userConfigFileParsed = $parser->parse(
-                file_get_contents($userConfigFile)
+                file_get_contents($configFile)
             );
         } catch (\Exception $e) {
             $this->getIo()->error(
@@ -151,7 +149,7 @@ class SetCommand extends Command
         }
 
         try {
-            file_put_contents($userConfigFile, $userConfigFileDump);
+            file_put_contents($configFile, $userConfigFileDump);
         } catch (\Exception $e) {
             $this->getIo()->error(
                 [

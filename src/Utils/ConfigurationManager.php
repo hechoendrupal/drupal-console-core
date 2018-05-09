@@ -54,6 +54,7 @@ class ConfigurationManager
                 true
             );
         }
+
         $input = new ArgvInput();
         $root = $input->getParameterOption(['--root']);
         if ($root && is_dir($root)) {
@@ -285,13 +286,31 @@ class ConfigurationManager
         return [];
     }
 
+    public function getConfigurationFile()
+    {
+        foreach (array_reverse($this->configurationDirectories) as $directory) {
+            $file = sprintf(
+                '%s/config.yml',
+                $directory
+            );
+
+            if (file_exists($file)) {
+                return $file;
+            }
+        }
+
+        return null;
+    }
+
     private function addConfigurationFilesByDirectory(
         $directory,
         $addDirectory = false
     ) {
+
         if ($addDirectory) {
             $this->configurationDirectories[] = $directory;
         }
+
         $configurationFiles = [
             'config' => 'config.yml',
             'drush' => 'drush.yml',
@@ -299,6 +318,7 @@ class ConfigurationManager
             'mappings' => 'mappings.yml',
             'defaults' => 'defaults.yml',
         ];
+
         foreach ($configurationFiles as $key => $file) {
             $configFile = $directory.$file;
             if (is_file($configFile)) {
