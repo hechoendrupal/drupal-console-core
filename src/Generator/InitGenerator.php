@@ -7,7 +7,6 @@
 namespace Drupal\Console\Core\Generator;
 
 use Drupal\Console\Core\Utils\ConfigurationManager;
-use Drupal\Console\Core\Utils\NestedArray;
 
 /**
  * Class InitGenerator
@@ -18,11 +17,6 @@ class InitGenerator extends Generator
 {
 
     /**
-     * @var NestedArray
-     */
-    protected $nestedArray;
-
-    /**
      * @var ConfigurationManager
      */
     protected $configurationManager;
@@ -30,12 +24,10 @@ class InitGenerator extends Generator
     /**
      * InitGenerator constructor.
      *
-     * @param NestedArray          $nestedArray
      * @param ConfigurationManager $configurationManager
      */
-    public function __construct(NestedArray $nestedArray, ConfigurationManager $configurationManager)
+    public function __construct(ConfigurationManager $configurationManager)
     {
-        $this->nestedArray = $nestedArray;
         $this->configurationManager = $configurationManager;
     }
 
@@ -68,6 +60,14 @@ class InitGenerator extends Generator
             $this->configurationManager->updateConfigGlobalParameter(
                 'statistics.enabled',
                 $configParameters['statistics']
+            );
+            $this->configurationManager->updateConfigGlobalParameter(
+                'statistics.last-attempted',
+                null
+            );
+            $this->configurationManager->updateConfigGlobalParameter(
+                'statistics.times-attempted',
+                0
             );
 
             unset($configParameters['statistics']);

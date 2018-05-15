@@ -9,6 +9,7 @@ namespace Drupal\Console\Core\EventSubscriber;
 
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Utils\ConfigurationManager;
+use Drupal\Console\Core\Utils\TranslatorManagerInterface;
 use GuzzleHttp\Client;
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -35,19 +36,22 @@ class SendStatisticsListener implements EventSubscriberInterface
     protected $fs;
 
     /**
-     * string $homeDirectory
+     * @var TranslatorManagerInterface
      */
-    protected $homeDirectory;
+    protected $translator;
 
     /**
      * SaveStatisticsListener constructor.
      *
      * @param ConfigurationManager $configurationManager
+     * @param TranslatorManagerInterface $translator
      */
     public function __construct(
-        ConfigurationManager $configurationManager
+        ConfigurationManager $configurationManager,
+        TranslatorManagerInterface $translator
     ) {
         $this->configurationManager = $configurationManager;
+        $this->translator = $translator;
         $this->fs = new Filesystem();
     }
 
@@ -70,6 +74,10 @@ class SendStatisticsListener implements EventSubscriberInterface
 
         //Validate if the times attempted is 10
         if ($configGlobalAsArray['application']['statistics']['times-attempted'] >= 10) {
+            /* @var DrupalStyle $io */
+            $io = new DrupalStyle($event->getInput(), $event->getOutput());
+            $io->error($this->translator->trans('application.errors.statistics-failed'));
+
             $this->configurationManager->updateConfigGlobalParameter('statistics.enabled', false);
             return;
         }
@@ -144,14 +152,9 @@ class SendStatisticsListener implements EventSubscriberInterface
                 $this->configurationManager->updateConfigGlobalParameter('statistics.times-attempted', 0);
             }
         } catch (\Exception $exception) {
-
             //Increase the count attempted in global config.
             $countAttempted = $configGlobalAsArray['application']['statistics']['times-attempted'] + 1;
             $this->configurationManager->updateConfigGlobalParameter('statistics.times-attempted', $countAttempted);
-
-            /* @var DrupalStyle $io */
-            $io = new DrupalStyle($event->getInput(), $event->getOutput());
-            $io->error(trim($exception->getMessage()));
         }
 
         //Update last attempted in global config.

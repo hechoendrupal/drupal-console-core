@@ -87,6 +87,18 @@ class SetCommand extends Command
             $settingValue = filter_var($settingValue, FILTER_VALIDATE_BOOLEAN);
         }
 
+        // Reset the default values ​​of the statistics.
+        if ($settingName == 'statistics.enabled') {
+            $this->configurationManager->updateConfigGlobalParameter(
+                'statistics.last-attempted',
+                null
+            );
+            $this->configurationManager->updateConfigGlobalParameter(
+                'statistics.times-attempted',
+                0
+            );
+        }
+
         $userConfigFile = sprintf(
             '%s/.console/config.yml',
             $this->configurationManager->getHomeDirectory()

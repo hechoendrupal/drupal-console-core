@@ -498,7 +498,6 @@ class ConfigurationManager
         } catch (\Exception $e) {
         }
 
-
         $parents = array_merge(['application'], explode('.', $configName));
 
         $nestedArray = new NestedArray();
