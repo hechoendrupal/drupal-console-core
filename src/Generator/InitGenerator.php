@@ -57,18 +57,14 @@ class InitGenerator extends Generator
         // If configFile is an override, we only change the value of statistics in the global config.
         $consoleDestination = $userHome . 'config.yml';
         if ($configFile !== $consoleDestination) {
-            $this->configurationManager->updateConfigGlobalParameter(
-                'statistics.enabled',
-                $configParameters['statistics']
-            );
-            $this->configurationManager->updateConfigGlobalParameter(
-                'statistics.last-attempted',
-                null
-            );
-            $this->configurationManager->updateConfigGlobalParameter(
-                'statistics.times-attempted',
-                0
-            );
+            if ($configParameters['statistics'] || file_exists($consoleDestination)) {
+                $configParameters['statistics'] = $configParameters['statistics'] ? 'true' : 'false';
+                $this->renderFile(
+                    'core/init/statistics.config.yml.twig',
+                    $consoleDestination,
+                    $configParameters
+                );
+            }
 
             unset($configParameters['statistics']);
         }

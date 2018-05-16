@@ -43,7 +43,7 @@ class SendStatisticsListener implements EventSubscriberInterface
     /**
      * SaveStatisticsListener constructor.
      *
-     * @param ConfigurationManager $configurationManager
+     * @param ConfigurationManager       $configurationManager
      * @param TranslatorManagerInterface $translator
      */
     public function __construct(
@@ -112,7 +112,7 @@ class SendStatisticsListener implements EventSubscriberInterface
 
         foreach ($finder as $file) {
             if (($handle = fopen($file->getPathname(), "r")) !== false) {
-                while (($content = fgetcsv($handle, 0, ';')) !== false) {
+                while (($content = fgetcsv($handle, 0, ',')) !== false) {
 
                     /**
                      * If the command doesn't have linesOfCode,

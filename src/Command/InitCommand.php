@@ -195,7 +195,13 @@ class InitCommand extends Command
         }
 
         $this->getIo()->commentBlock(
-            $this->trans('commands.init.messages.statistics')
+            sprintf(
+                $this->trans('commands.init.messages.statistics'),
+                sprintf(
+                    '%sconfig.yml',
+                    $this->configurationManager->getConsoleDirectory()
+                )
+            )
         );
 
         $this->configParameters['statistics'] = $this->getIo()->confirm(

@@ -95,11 +95,11 @@ class SaveStatisticsListener implements EventSubscriberInterface
             $this->configurationManager->getHomeDirectory()
         );
 
-        $information = $event->getCommand()->getName() . ';' . $this->translator->getLanguage();
+        $information = $event->getCommand()->getName() . ',' . $this->translator->getLanguage();
 
         $countCodeLines = $this->countCodeLines->getCountCodeLines();
         if ($countCodeLines > 0) {
-            $information = $information . ';' . $countCodeLines;
+            $information = $information . ',' . $countCodeLines;
         }
 
 
