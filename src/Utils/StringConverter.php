@@ -37,11 +37,7 @@ class StringConverter
         $machine_name = preg_replace(self::REGEX_MACHINE_NAME_CHARS, '_', strtolower($name));
         $machine_name = trim($machine_name, '_');
 
-        if (strlen($machine_name) > self::MAX_MACHINE_NAME) {
-            $machine_name = substr($machine_name, 0, self::MAX_MACHINE_NAME);
-        }
-
-        return $machine_name;
+        return $this->trimMachineNameToMaxLength($machine_name);
     }
 
     /**
@@ -57,6 +53,22 @@ class StringConverter
         $machine_name = preg_replace(self::REGEX_MACHINE_NAME_CHARS, '_', strtolower($machine_name));
         $machine_name = trim($machine_name, '_');
 
+        return $this->trimMachineNameToMaxLength($machine_name);
+    }
+
+    /**
+     * Trim machine name if it exceed max number of symbols for machine names.
+     *
+     * @param string $machine_name
+     *   Machine name.
+     *
+     * @return string
+     *   Machine name.
+     */
+    public function trimMachineNameToMaxLength($machine_name) {
+        if (strlen($machine_name) > self::MAX_MACHINE_NAME) {
+            $machine_name = substr($machine_name, 0, self::MAX_MACHINE_NAME);
+        }
         return $machine_name;
     }
 
