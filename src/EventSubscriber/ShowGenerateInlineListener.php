@@ -116,7 +116,7 @@ class ShowGenerateInlineListener implements EventSubscriberInterface
                     foreach ($optionValue as $optionItem) {
                         if (is_array($optionItem)) {
                             $inlineValue = implode(
-                                ', ', array_map(
+                                ' | ', array_map(
                                     function ($v, $k) {
                                         return '"'.$k . '":"' . $v . '"';
                                     },
