@@ -118,8 +118,7 @@ class ConfigurationManager
             $site = $exploded[0];
             $environment = $exploded[1];
         }
-
-        $sites = $this->getSites();
+        $sites = $this->getSites($site);
         if (!array_key_exists($site, $sites)) {
             return [];
         }
@@ -387,9 +386,11 @@ class ConfigurationManager
     }
 
     /**
+     * @param string $target
+     *
      * @return array
      */
-    public function getSites()
+    public function getSites($target = "*")
     {
         if ($this->sites) {
             return $this->sites;
@@ -403,7 +404,7 @@ class ConfigurationManager
 
         $finder = new Finder();
         $finder->in($sitesDirectories);
-        $finder->name("*.yml");
+        $finder->name($target.".yml");
 
         foreach ($finder as $site) {
             $siteName = $site->getBasename('.yml');
