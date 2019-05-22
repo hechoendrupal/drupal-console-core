@@ -311,12 +311,14 @@ class Application extends BaseApplication
                 )
             );
 
-            $dispatcher->addSubscriber(
-                new MaintenanceModeListener(
-                    $this->container->get('console.translator_manager'),
-                    $this->container->get('state')
-                )
-            );
+            if($this->container->has('state')) {
+                $dispatcher->addSubscriber(
+                    new MaintenanceModeListener(
+                        $this->container->get('console.translator_manager'),
+                        $this->container->get('state')
+                    )
+                );
+            }
 
             $this->setDispatcher($dispatcher);
             $this->eventRegistered = true;
