@@ -7,6 +7,9 @@
 
 namespace Drupal\Console\Core\Utils;
 
+use Drupal\Console\Core\Style\DrupalStyle;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 use Symfony\Component\Translation\Loader\ArrayLoader;
@@ -48,12 +51,21 @@ class TranslatorManager implements TranslatorManagerInterface
     protected $coreLanguageRoot;
 
     /**
+     * @var DrupalStyle
+     */
+    private $io;
+
+    /**
      * Translator constructor.
      */
     public function __construct()
     {
         $this->parser = new Parser();
         $this->filesystem = new Filesystem();
+
+        $output = new ConsoleOutput();
+        $input = new ArrayInput([]);
+        $this->io = new DrupalStyle($input, $output);
     }
 
     /**
@@ -164,7 +176,7 @@ class TranslatorManager implements TranslatorManagerInterface
                 try {
                     $this->loadTranslationByFile($resource, 'application');
                 } catch (ParseException $e) {
-                    echo 'application.yml'.' '.$e->getMessage();
+                    $this->io->error('application.yml'.' '.$e->getMessage());
                 }
 
                 continue;
@@ -173,7 +185,7 @@ class TranslatorManager implements TranslatorManagerInterface
             try {
                 $this->loadTranslationByFile($resource, $key);
             } catch (ParseException $e) {
-                echo $key.'.yml '.$e->getMessage();
+                $this->io->error($key.'.yml '.$e->getMessage());
             }
         }
 
