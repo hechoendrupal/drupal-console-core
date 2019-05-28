@@ -1,4 +1,8 @@
 application:
+  statistics:
+    enabled: false
+    last-attempted: ~
+    times-attempted: 0
   language: 'en'
   autowire:
     commands:

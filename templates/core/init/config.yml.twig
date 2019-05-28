@@ -1,5 +1,12 @@
 application:
   environment: 'prod'
+{% if statistics is defined %}
+  statistics:
+    enabled: {{statistics}}
+    url: 'https://drupalconsole.com/statistics?_format=json'
+    last-attempted: ~
+    times-attempted: 0
+{% endif %}
   language: '{{language}}'
 #  editor: 'vim'
   temp: '{{temp}}'
