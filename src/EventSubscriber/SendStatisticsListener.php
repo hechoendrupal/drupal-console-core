@@ -72,10 +72,11 @@ class SendStatisticsListener implements EventSubscriberInterface
             return;
         }
 
+        /* @var DrupalStyle $io */
+        $io = new DrupalStyle($event->getInput(), $event->getOutput());
+
         //Validate if the times attempted is 10
         if ($configGlobalAsArray['application']['statistics']['times-attempted'] >= 10) {
-            /* @var DrupalStyle $io */
-            $io = new DrupalStyle($event->getInput(), $event->getOutput());
             $io->error($this->translator->trans('application.errors.statistics-failed'));
 
             $this->configurationManager->updateConfigGlobalParameter('statistics.enabled', false);
@@ -134,9 +135,14 @@ class SendStatisticsListener implements EventSubscriberInterface
         }
 
         try {
+            if(!isset($configGlobalAsArray['application']['statistics']['url']) || empty($configGlobalAsArray['application']['statistics']['url'])){
+                $io->error($this->translator->trans('application.errors.statistics-url-failed'));
+                return;
+            }
+
             $client = new Client();
             $response = $client->post(
-                'https://drupalconsole.com/statistics?_format=json',
+                $configGlobalAsArray['application']['statistics']['url'],
                 [
                     'headers' => [
                         'Accept' => 'application/json',
