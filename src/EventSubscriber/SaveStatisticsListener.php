@@ -102,11 +102,13 @@ class SaveStatisticsListener implements EventSubscriberInterface
             $information = $information . ',' . $countCodeLines;
         }
 
-
-        $this->fs->appendToFile(
-            $path .  date('Y-m-d') . '.csv',
-            $information . PHP_EOL
-        );
+        try{
+            $this->fs->appendToFile(
+                $path .  date('Y-m-d') . '.csv',
+                $information . PHP_EOL
+            );
+        }catch (\Exception $exception) {
+        }
     }
 
     /**
