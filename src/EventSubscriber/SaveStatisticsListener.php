@@ -108,6 +108,7 @@ class SaveStatisticsListener implements EventSubscriberInterface
                 $information . PHP_EOL
             );
         }catch (\Exception $exception) {
+            return;
         }
     }
 
