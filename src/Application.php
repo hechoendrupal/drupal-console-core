@@ -2,7 +2,9 @@
 
 namespace Drupal\Console\Core;
 
+use Drupal\Console\Core\EventSubscriber\SendStatisticsListener;
 use Drupal\Console\Core\EventSubscriber\RemoveMessagesListener;
+use Drupal\Console\Core\EventSubscriber\SaveStatisticsListener;
 use Drupal\Console\Core\EventSubscriber\ShowGenerateCountCodeLinesListener;
 use Drupal\Console\Core\Utils\TranslatorManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -306,17 +308,34 @@ class Application extends BaseApplication
             );
 
             $dispatcher->addSubscriber(
+                new SaveStatisticsListener(
+                    $this->container->get('console.count_code_lines'),
+                    $this->container->get('console.configuration_manager'),
+                    $this->container->get('console.translator_manager')
+                )
+            );
+
+            $dispatcher->addSubscriber(
+                new SendStatisticsListener(
+                    $this->container->get('console.configuration_manager'),
+                    $this->container->get('console.translator_manager')
+                )
+            );
+
+            $dispatcher->addSubscriber(
                 new RemoveMessagesListener(
                     $this->container->get('console.message_manager')
                 )
             );
 
-            $dispatcher->addSubscriber(
-                new MaintenanceModeListener(
-                    $this->container->get('console.translator_manager'),
-                    $this->container->get('state')
-                )
-            );
+            if($this->container->has('state')) {
+                $dispatcher->addSubscriber(
+                    new MaintenanceModeListener(
+                        $this->container->get('console.translator_manager'),
+                        $this->container->get('state')
+                    )
+                );
+            }
 
             $this->setDispatcher($dispatcher);
             $this->eventRegistered = true;
@@ -712,7 +731,9 @@ class Application extends BaseApplication
         $namespaces = array_diff($namespaces, $excludeNamespaces);
 
         // filter namespaces if available
-        if($filterNamespaces) $namespaces = array_intersect($namespaces, $filterNamespaces);
+        if ($filterNamespaces) {
+            $namespaces = array_intersect($namespaces, $filterNamespaces);
+        }
 
         foreach ($namespaces as $namespace) {
             $commands = $this->all($namespace);
@@ -724,8 +745,8 @@ class Application extends BaseApplication
 
             foreach ($commands as $command) {
                 // Exclude command if is a chain command and was requested to exclude chain commands
-                if($excludeChainCommands && $command instanceof ChainCustomCommand) {
-                   continue;
+                if ($excludeChainCommands && $command instanceof ChainCustomCommand) {
+                    continue;
                 }
 
                 if (method_exists($command, 'getModule')) {
@@ -743,9 +764,11 @@ class Application extends BaseApplication
         }
 
         // Remove namepsaces without commands
-        $namespaces = array_filter($namespaces, function($namespace) use( $data) {
-            return count($data['commands'][$namespace]) > 0;
-        });
+        $namespaces = array_filter(
+            $namespaces, function ($namespace) use ($data) {
+                return count($data['commands'][$namespace]) > 0;
+            }
+        );
 
         $input = $this->getDefinition();
         $options = [];
@@ -892,7 +915,8 @@ class Application extends BaseApplication
     /**
      * Add Drupal system messages.
      */
-    protected function addDrupalMessages($messageManager) {
+    protected function addDrupalMessages($messageManager)
+    {
         if (function_exists('drupal_get_messages')) {
             $drupalMessages = drupal_get_messages();
             foreach ($drupalMessages as $type => $messages) {
@@ -913,13 +937,14 @@ class Application extends BaseApplication
      * @return string
      *   Name of the method
      */
-    protected function getMessageMethod($type) {
+    protected function getMessageMethod($type)
+    {
         $methodName = 'info';
         switch ($type) {
-            case 'error':
-            case 'warning':
-                $methodName = $type;
-                break;
+        case 'error':
+        case 'warning':
+            $methodName = $type;
+            break;
         }
 
         return $methodName;

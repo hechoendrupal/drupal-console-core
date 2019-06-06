@@ -2,6 +2,9 @@
 
 namespace Drupal\Console\Core\Utils;
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Yaml\Dumper;
+use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Finder\Finder;
@@ -119,8 +122,7 @@ class ConfigurationManager
             $site = $exploded[0];
             $environment = $exploded[1];
         }
-
-        $sites = $this->getSites();
+        $sites = $this->getSites($site);
         if (!array_key_exists($site, $sites)) {
             return [];
         }
@@ -379,7 +381,7 @@ class ConfigurationManager
 
     public function loadExtendConfiguration()
     {
-        $directory = $this->getConsoleDirectory() . '/extend/';
+        $directory = $this->getConsoleDirectory() . 'extend/';
         if (!is_dir($directory)) {
             return null;
         }
@@ -407,9 +409,11 @@ class ConfigurationManager
     }
 
     /**
+     * @param string $target
+     *
      * @return array
      */
-    public function getSites()
+    public function getSites($target = "*")
     {
         if ($this->sites) {
             return $this->sites;
@@ -423,7 +427,7 @@ class ConfigurationManager
 
         $finder = new Finder();
         $finder->in($sitesDirectories);
-        $finder->name("*.yml");
+        $finder->name($target.".yml");
 
         foreach ($finder as $site) {
             $siteName = $site->getBasename('.yml');
@@ -439,8 +443,10 @@ class ConfigurationManager
 
             foreach ($environments as $environment => $config) {
                 if (!array_key_exists('type', $config)) {
-                    throw new \UnexpectedValueException(sprintf(
-                        "The 'type' parameter is required in sites configuration:\n %s.", $site->getPathname())
+                    throw new \UnexpectedValueException(
+                        sprintf(
+                            "The 'type' parameter is required in sites configuration:\n %s.", $site->getPathname()
+                        )
                     );
                 }
                 if ($config['type'] !== 'local') {
@@ -459,6 +465,80 @@ class ConfigurationManager
         }
 
         return $this->sites;
+    }
+
+    /**
+     * Get config global as array.
+     *
+     * @return array
+     */
+    public function getConfigGlobalAsArray()
+    {
+        $filePath = sprintf(
+            '%s/.console/config.yml',
+            $this->getHomeDirectory()
+        );
+
+        $fs = new Filesystem();
+
+        if (!$fs->exists($filePath)) {
+            return null;
+        }
+
+        $yaml = new Parser();
+        $globalConfig = $yaml->parse(file_get_contents($filePath), true);
+
+        return $globalConfig;
+    }
+
+    /**
+     * Update parameter in global config.
+     *
+     * @param  $configName
+     * @param  $value
+     * @return int
+     */
+    public function updateConfigGlobalParameter($configName, $value)
+    {
+        $parser = new Parser();
+        $dumper = new Dumper();
+
+        $userConfigFile = sprintf(
+            '%s/.console/config.yml',
+            $this->getHomeDirectory()
+        );
+
+        if (!file_exists($userConfigFile)) {
+            return 1;
+        }
+
+        try {
+            $userConfigFileParsed = $parser->parse(
+                file_get_contents($userConfigFile)
+            );
+        } catch (\Exception $e) {
+        }
+
+        $parents = array_merge(['application'], explode('.', $configName));
+
+        $nestedArray = new NestedArray();
+
+        $nestedArray->setValue(
+            $userConfigFileParsed,
+            $parents,
+            $value,
+            true
+        );
+
+        try {
+            $userConfigFileDump = $dumper->dump($userConfigFileParsed, 10);
+        } catch (\Exception $e) {
+        }
+
+        try {
+            file_put_contents($userConfigFile, $userConfigFileDump);
+        } catch (\Exception $e) {
+        }
     }
 
     /**

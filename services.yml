@@ -105,6 +105,7 @@ services:
   # DrupalConsoleCore Generators
   console.init_generator:
     class: Drupal\Console\Core\Generator\InitGenerator
+    arguments: ['@console.configuration_manager']
     tags:
       - { name: drupal.generator }
   console.site_alias_generator:

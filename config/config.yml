@@ -1,4 +1,8 @@
 application:
+  statistics:
+    enabled: false
+    last-attempted: ~
+    times-attempted: 0
   language: 'en'
   autowire:
     commands:
@@ -22,6 +26,7 @@ application:
     ca: 'Català'
     fr: 'Français'
     ko: '한국어'
+    he: 'בעברית'
     hi: 'हिन्दी'
     hu: 'Magyar'
     id: 'Bahasa Indonesia'
