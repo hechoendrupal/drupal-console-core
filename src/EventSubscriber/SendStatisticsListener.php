@@ -67,8 +67,13 @@ class SendStatisticsListener implements EventSubscriberInterface
         $date = date('Y-m-d');
         $configGlobalAsArray = $this->configurationManager->getConfigGlobalAsArray();
 
-        //Validate if the config is enable.
-        if (is_null($configGlobalAsArray) || !$configGlobalAsArray['application']['statistics']['enabled']) {
+        //Validate if the config is defined.
+        if (is_null($configGlobalAsArray) || !isset($configGlobalAsArray['application']['statistics'])) {
+            return;
+        }
+
+        //Validate if the statistics is enabled.
+        if (!isset($configGlobalAsArray['application']['statistics']['enabled']) || !$configGlobalAsArray['application']['statistics']['enabled']) {
             return;
         }
 
