@@ -703,7 +703,8 @@ class Application extends BaseApplication
             'init',
             'list',
             'shell',
-            'server'
+            'server',
+            'snippet'
         ];
 
         $languages = $this->container->get('console.configuration_manager')
