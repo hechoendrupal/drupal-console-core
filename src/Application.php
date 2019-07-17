@@ -703,7 +703,8 @@ class Application extends BaseApplication
             'init',
             'list',
             'shell',
-            'server'
+            'server',
+            'snippet'
         ];
 
         $languages = $this->container->get('console.configuration_manager')
@@ -786,6 +787,9 @@ class Application extends BaseApplication
             ];
         }
 
+        //Add default Language
+        $language = $this->container->get('console.translator_manager')->getLanguage();
+        $data['default_language'] = $language;
 
         // Exclude application if it is inside the $excludeNamespaces array.
         if (!in_array('application', $excludeNamespaces)) {
