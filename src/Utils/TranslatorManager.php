@@ -109,8 +109,24 @@ class TranslatorManager implements TranslatorManagerInterface
                 DRUPAL_CONSOLE_LANGUAGE,
                 $language
             );
+        $installersLanguageDirectory =
+          $directoryRoot .
+          sprintf(
+            DRUPAL_CONSOLE_LANGUAGE_INSTALLERS,
+            $language
+          );
 
-        if (!is_dir($coreLanguageDirectory)) {
+        $languageDirectory = null;
+        foreach ([$coreLanguageDirectory, $installersLanguageDirectory] as $candidate) {
+            if (is_dir($candidate)) {
+              $languageDirectory = $candidate;
+            }
+        }
+
+        if (!isset($languageDirectory)) {
+            if ($language == 'en') {
+              throw new \Exception('No languages found. Make sure you have installed a console language package in a supported directory');
+            }
             return $this->buildCoreLanguageDirectory('en', $directoryRoot);
         }
 
@@ -118,7 +134,7 @@ class TranslatorManager implements TranslatorManagerInterface
             $this->coreLanguageRoot = $directoryRoot;
         }
 
-        return [$language, $coreLanguageDirectory];
+        return [$language, $languageDirectory];
     }
 
     /**
