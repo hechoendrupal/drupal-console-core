@@ -103,6 +103,7 @@ class TwigRenderer
             $this->engine->addFunction($this->getArgumentsFromRoute());
             $this->engine->addFunction($this->getServicesClassInitialization());
             $this->engine->addFunction($this->getServicesClassInjection());
+            $this->engine->addFunction($this->getServicesClassInjectionNoOverride());
             $this->engine->addFunction($this->getTagsAsArray());
             $this->engine->addFunction($this->getTranslationAsYamlComment());
             $this->engine->addFilter($this->createMachineName());
@@ -204,6 +205,25 @@ class TwigRenderer
                 }
 
                 return implode(','.PHP_EOL, $returnValues);
+            }
+        );
+
+        return $returnValue;
+    }
+
+    /**
+     * @return \Twig_SimpleFunction
+     */
+    public function getServicesClassInjectionNoOverride()
+    {
+        $returnValue = new \Twig_SimpleFunction(
+            'serviceClassInjectionNoOverride', function ($services) {
+                $returnValues = [];
+                foreach ($services as $service) {
+                    $returnValues[] = sprintf('    $instance->%s = $container->get(\'%s\');', $service['camel_case_name'], $service['name']);
+                }
+
+                return implode(PHP_EOL, $returnValues);
             }
         );
 
