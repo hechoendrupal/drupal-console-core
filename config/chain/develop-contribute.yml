@@ -18,18 +18,9 @@ commands:
   - command: exec
     arguments:
       bin: drupal site:install standard --root={{drupal}} --db-type="sqlite" --no-interaction
-  - command: 'module:install'
+  - command: exec
     arguments:
-      module:
-        - rest
-        - taxonomy
-        - locale
-        - migrate
-        - simpletest
-        - breakpoint
-        - node
-        - views
-        - features
+      bin: drupal module:install rest taxonomy locale migrate simpletest breakpoint node views features --root={{drupal}}
   - command: exec
     arguments:
       bin: drupal develop:create:symlinks --code-directory={{code}} --root={{drupal}}
