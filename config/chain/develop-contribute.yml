@@ -20,7 +20,7 @@ commands:
       bin: drupal site:install standard --root={{drupal}} --db-type="sqlite" --no-interaction
   - command: exec
     arguments:
-      bin: drupal module:install rest taxonomy locale migrate simpletest breakpoint node views features --root={{drupal}}
+      bin: drupal module:install --root={{drupal}} rest taxonomy locale migrate simpletest breakpoint node views features
   - command: exec
     arguments:
-      bin: drupal develop:create:symlinks --code-directory={{code}} --root={{drupal}}
+      bin: drupal develop:create:symlinks --root={{drupal}} --code-directory={{code}}
