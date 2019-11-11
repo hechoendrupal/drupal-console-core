@@ -11,13 +11,25 @@ commands:
       bin: composer create-project {{repository}} {{drupal}} --prefer-dist --no-progress --no-interaction --no-install
   - command: exec
     arguments:
-      bin: composer require drupal/console-develop --dev --working-dir={{drupal}} --no-update
+      bin: composer require drupal/features drupal/console-develop --dev --working-dir={{drupal}} --no-update
   - command: exec
     arguments:
       bin: composer install --working-dir={{drupal}}
   - command: exec
     arguments:
       bin: drupal site:install standard --root={{drupal}} --db-type="sqlite" --no-interaction
+  - command: 'module:install'
+    arguments:
+      module:
+        - rest
+        - taxonomy
+        - locale
+        - migrate
+        - simpletest
+        - breakpoint
+        - node
+        - views
+        - features
   - command: exec
     arguments:
       bin: drupal develop:create:symlinks --code-directory={{code}} --root={{drupal}}
