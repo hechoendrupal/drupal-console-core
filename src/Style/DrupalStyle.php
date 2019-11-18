@@ -237,7 +237,7 @@ class DrupalStyle extends SymfonyStyle
      */
     public function warning($message)
     {
-        $this->block($message, 'WARNING', 'fg=white;bg=yellow', ' ', true);
+        $this->block($message, 'WARNING', 'fg=black;bg=yellow', ' ', true);
     }
 
     /**
