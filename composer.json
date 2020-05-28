@@ -50,7 +50,7 @@
         "symfony/process": "~2.8|~3.0",
         "symfony/translation": "~2.8|~3.0",
         "symfony/yaml": "~2.8|~3.0",
-        "twig/twig": "^1.23.1",
+        "twig/twig": "^3.0",
         "webflo/drupal-finder": "^1.0",
         "webmozart/path-util": "^2.3",
         "guzzlehttp/guzzle": "~6.1"
