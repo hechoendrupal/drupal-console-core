@@ -36,7 +36,7 @@
         "docs": "http://docs.drupalconsole.com/"
     },
     "require": {
-        "php": "^5.5.9 || ^7.0",
+        "php": ">=7.0.8",
         "dflydev/dot-access-configuration": "^1.0",
         "drupal/console-en": "1.9.4",
         "stecman/symfony-console-completion": "~0.7",
