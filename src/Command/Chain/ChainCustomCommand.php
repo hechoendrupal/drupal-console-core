@@ -62,7 +62,7 @@ class ChainCustomCommand extends BaseCommand
             'file',
             null,
             InputOption::VALUE_OPTIONAL,
-            null,
+            "File",
             $file
         );
     }
