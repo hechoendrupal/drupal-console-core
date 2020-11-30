@@ -1,33 +1,38 @@
 {
     "name": "drupal/console-core",
     "description": "Drupal Console Core",
-    "keywords": ["Drupal", "Console", "Development", "Symfony"],
+    "keywords": [
+        "Drupal",
+        "Console",
+        "Development",
+        "Symfony"
+    ],
     "homepage": "http://drupalconsole.com/",
     "type": "library",
     "license": "GPL-2.0-or-later",
     "authors": [
         {
-            "name":      "David Flores",
-            "email":     "dmousex@gmail.com",
-            "homepage":  "http://dmouse.net"
+            "name": "David Flores",
+            "email": "dmousex@gmail.com",
+            "homepage": "http://dmouse.net"
         },
         {
-            "name":      "Jesus Manuel Olivas",
-            "email":     "jesus.olivas@gmail.com",
-            "homepage":  "http://jmolivas.com"
+            "name": "Jesus Manuel Olivas",
+            "email": "jesus.olivas@gmail.com",
+            "homepage": "http://jmolivas.com"
         },
         {
-            "name":      "Eduardo Garcia",
-            "email":     "enzo@enzolutions.com",
-            "homepage":  "http://enzolutions.com/"
+            "name": "Eduardo Garcia",
+            "email": "enzo@enzolutions.com",
+            "homepage": "http://enzolutions.com/"
         },
         {
-            "name":      "Omar Aguirre",
-            "email":     "omersguchigu@gmail.com"
+            "name": "Omar Aguirre",
+            "email": "omersguchigu@gmail.com"
         },
         {
-            "name":      "Drupal Console Contributors",
-            "homepage":  "https://github.com/hechoendrupal/DrupalConsole/graphs/contributors"
+            "name": "Drupal Console Contributors",
+            "homepage": "https://github.com/hechoendrupal/DrupalConsole/graphs/contributors"
         }
     ],
     "support": {
@@ -38,7 +43,7 @@
     "require": {
         "php": ">=7.0.8",
         "dflydev/dot-access-configuration": "^1.0",
-        "drupal/console-en": "1.9.5",
+        "drupal/console-en": "1.9.7",
         "stecman/symfony-console-completion": "~0.7",
         "symfony/config": "~3.0|^4.4",
         "symfony/console": "~3.0|^4.4",
@@ -61,6 +66,8 @@
         "files": [
             "src/functions.php"
         ],
-        "psr-4": {"Drupal\\Console\\Core\\": "src"}
+        "psr-4": {
+            "Drupal\\Console\\Core\\": "src"
+        }
     }
 }
