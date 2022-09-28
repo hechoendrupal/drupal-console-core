@@ -58,7 +58,7 @@
         "twig/twig": "^2.15.13|^3.0",
         "webflo/drupal-finder": "^1.0",
         "webmozart/path-util": "^2.3",
-        "guzzlehttp/guzzle": "~6.1"
+        "guzzlehttp/guzzle": "^6.5.8|^7.4.5"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
