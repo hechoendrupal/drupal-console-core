@@ -4,7 +4,7 @@ command:
   name: develop:contribute
   description: 'Download Drupal + Drupal Console to contribute.'
 vars:
-  repository: drupal-composer/drupal-project:8.x-dev
+  repository: drupal/recommended-project:9.x-dev
 commands:
   - command: exec
     arguments:

@@ -8,7 +8,7 @@ command:
 vars:
   repository:
     - weknowinc/drupal-project
-    - drupal-composer/drupal-project:8.x-dev
+    - drupal/recommended-project:9.x-dev
     - acquia/lightning-project
     - acquia/reservoir-project
   profile: standard
