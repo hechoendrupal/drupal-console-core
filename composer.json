@@ -1,33 +1,38 @@
 {
     "name": "drupal/console-core",
     "description": "Drupal Console Core",
-    "keywords": ["Drupal", "Console", "Development", "Symfony"],
+    "keywords": [
+        "Drupal",
+        "Console",
+        "Development",
+        "Symfony"
+    ],
     "homepage": "http://drupalconsole.com/",
     "type": "library",
     "license": "GPL-2.0-or-later",
     "authors": [
         {
-            "name":      "David Flores",
-            "email":     "dmousex@gmail.com",
-            "homepage":  "http://dmouse.net"
+            "name": "David Flores",
+            "email": "dmousex@gmail.com",
+            "homepage": "http://dmouse.net"
         },
         {
-            "name":      "Jesus Manuel Olivas",
-            "email":     "jesus.olivas@gmail.com",
-            "homepage":  "http://jmolivas.com"
+            "name": "Jesus Manuel Olivas",
+            "email": "jesus.olivas@gmail.com",
+            "homepage": "http://jmolivas.com"
         },
         {
-            "name":      "Eduardo Garcia",
-            "email":     "enzo@enzolutions.com",
-            "homepage":  "http://enzolutions.com/"
+            "name": "Eduardo Garcia",
+            "email": "enzo@enzolutions.com",
+            "homepage": "http://enzolutions.com/"
         },
         {
-            "name":      "Omar Aguirre",
-            "email":     "omersguchigu@gmail.com"
+            "name": "Omar Aguirre",
+            "email": "omersguchigu@gmail.com"
         },
         {
-            "name":      "Drupal Console Contributors",
-            "homepage":  "https://github.com/hechoendrupal/DrupalConsole/graphs/contributors"
+            "name": "Drupal Console Contributors",
+            "homepage": "https://github.com/hechoendrupal/DrupalConsole/graphs/contributors"
         }
     ],
     "support": {
@@ -36,21 +41,21 @@
         "docs": "http://docs.drupalconsole.com/"
     },
     "require": {
-        "php": "^5.5.9 || ^7.0",
+        "php": ">=7.0.8",
         "dflydev/dot-access-configuration": "^1.0",
-        "drupal/console-en": "1.9.4",
+        "drupal/console-en": "1.9.7",
         "stecman/symfony-console-completion": "~0.7",
-        "symfony/config": "~2.8|~3.0",
-        "symfony/console": "~2.8|~3.0",
-        "symfony/debug": "~2.8|~3.0",
-        "symfony/dependency-injection": "~2.8|~3.0",
-        "symfony/event-dispatcher": "~2.8|~3.0",
-        "symfony/filesystem": "~2.8|~3.0",
-        "symfony/finder": "~2.8|~3.0",
-        "symfony/process": "~2.8|~3.0",
-        "symfony/translation": "~2.8|~3.0",
-        "symfony/yaml": "~2.8|~3.0",
-        "twig/twig": "^3.0",
+        "symfony/config": "~3.0|^4.4",
+        "symfony/console": "~3.0|^4.4",
+        "symfony/debug": "~3.0|^4.4",
+        "symfony/dependency-injection": "~3.0|^4.4",
+        "symfony/event-dispatcher": "~3.0|^4.4",
+        "symfony/filesystem": "~3.0|^4.4",
+        "symfony/finder": "~3.0|^4.4",
+        "symfony/process": "~3.0|^4.4",
+        "symfony/translation": "~3.0|^4.4",
+        "symfony/yaml": "~3.0|^4.4",
+        "twig/twig": "^2.15.13|^3.0",
         "webflo/drupal-finder": "^1.0",
         "webmozart/path-util": "^2.3",
         "guzzlehttp/guzzle": "~6.1"
@@ -61,6 +66,8 @@
         "files": [
             "src/functions.php"
         ],
-        "psr-4": {"Drupal\\Console\\Core\\": "src"}
+        "psr-4": {
+            "Drupal\\Console\\Core\\": "src"
+        }
     }
 }
