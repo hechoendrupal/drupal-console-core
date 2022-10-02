@@ -55,7 +55,7 @@
         "symfony/process": "~3.0|^4.4",
         "symfony/translation": "~3.0|^4.4",
         "symfony/yaml": "~3.0|^4.4",
-        "twig/twig": "^2.15.3|^3.0",
+        "twig/twig": "^2.15.3|^3.4.3",
         "webflo/drupal-finder": "^1.0",
         "webmozart/path-util": "^2.3",
         "guzzlehttp/guzzle": "^6.5.8|^7.4.5"
