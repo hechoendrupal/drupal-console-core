@@ -73,7 +73,7 @@
     "repositories": {
         "dot-access-configuration": {
             "url": "https://github.com/LOBsTerr/dflydev-dot-access-configuration.git",
-            "type": "git"
+            "type": "vcs"
         }
     }
 }
