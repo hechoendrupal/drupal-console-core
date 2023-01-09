@@ -42,7 +42,7 @@
     },
     "require": {
         "php": ">=7.0.8",
-        "dflydev/dot-access-configuration": "^1.0.4",
+        "dflydev/dot-access-configuration": "^1.0.4 || ^2.0",
         "drupal/console-en": "1.9.7",
         "stecman/symfony-console-completion": "~0.7",
         "symfony/config": "~3.0|^4.4",
@@ -68,12 +68,6 @@
         ],
         "psr-4": {
             "Drupal\\Console\\Core\\": "src"
-        }
-    },
-    "repositories": {
-        "dot-access-configuration": {
-            "url": "https://github.com/LOBsTerr/dflydev-dot-access-configuration.git",
-            "type": "git"
         }
     }
 }
