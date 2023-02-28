@@ -43,7 +43,7 @@
     "require": {
         "php": ">=7.0.8",
         "dflydev/dot-access-configuration": "^1.0.4",
-        "drupal/console-en": "1.9.7",
+        "drupal/console-en": "~1.9.7",
         "stecman/symfony-console-completion": "~0.7",
         "symfony/config": "~3.0|^4.4",
         "symfony/console": "~3.0|^4.4",
