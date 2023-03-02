@@ -1,0 +1,58 @@
+# How to use
+# site:mode --mode="dev"
+command:
+  name: site:mode
+  description: 'Changes the site mode'
+vars:
+  mode:
+    - dev
+    - prod
+commands:
+# System Performance
+{% set keys = ['cache.page.use_internal', 'css.preprocess', 'css.gzip', 'js.preprocess', 'js.gzip', 'response.gzip'] %}
+{% for key in keys %}
+  - command: config:override
+    arguments:
+      name: system.performance
+      key: {{ key }}
+      value: {{ (mode == 'dev') ? 0 : 1 }}
+{% endfor %}
+
+# Views settings
+{% set keys = ['ui.show.sql_query.enabled', 'ui.show.performance_statistics'] %}
+{% for key in keys %}
+  - command: config:override
+    arguments:
+      name: views.settings
+      key: {{ key }}
+      value: {{ (mode == 'dev') ? 1 : 0 }}
+{% endfor %}
+
+# System Logging
+  - command: config:override
+    arguments:
+      name: system.logging
+      key: error_level
+      value: {{ (mode == 'dev') ? 'all' : 'none' }}
+
+# Services http.response.debug_cacheability_headers
+  - command: service:override
+    arguments:
+      name: http.response.debug_cacheability_headers
+      key: error_level
+      value: {{ (mode == 'dev') ? 1 : 0 }}
+
+# Services Twig config
+{% set keys = ['debug', 'auto_reload', 'cache'] %}
+{% for key in keys %}
+  - command: service:override
+    arguments:
+      name: twig.config
+      key: {{ key }}
+      value: {{ (mode == 'dev') ? 1 : 0 }}
+{% endfor %}
+
+# Cache rebuild
+  - command: cache:rebuild
+    arguments:
+      cache: all
