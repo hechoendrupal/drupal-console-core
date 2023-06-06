@@ -46,7 +46,7 @@
         "drupal/console-en": "1.9.7",
         "stecman/symfony-console-completion": "~0.7",
         "symfony/config": "~3.0 || ^4.4 || ^5 || ^6",
-        "symfony/console": "~3.0|^4.4",
+        "symfony/console": "~3.0 || ^4.4 || ^5.4 || ^6.0",
         "symfony/debug": "~3.0|^4.4",
         "symfony/dependency-injection": "~3.0 || ^4.4 || ^5.4 || ^6.0",
         "symfony/event-dispatcher": "~3.0|^4.4",
